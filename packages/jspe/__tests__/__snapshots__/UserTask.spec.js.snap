@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserTask Pauses a token and controls continuing it 1`] = `
+Array [
+  Object {
+    "elementId": "StartEvent_1",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "ready",
+  },
+  Object {
+    "elementId": "StartEvent_1",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "active",
+  },
+  Object {
+    "elementId": "StartEvent_1",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "complete",
+  },
+  Object {
+    "elementId": "SequenceFlow_00jvsas",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "ready",
+  },
+  Object {
+    "elementId": "SequenceFlow_00jvsas",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "active",
+  },
+  Object {
+    "elementId": "SequenceFlow_00jvsas",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "complete",
+  },
+  Object {
+    "elementId": "Task_123acd6",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "ready",
+  },
+  Object {
+    "elementId": "Task_123acd6",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "active",
+  },
+  Object {
+    "elementId": "Task_123acd6",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "complete",
+  },
+  Object {
+    "elementId": "SequenceFlow_0xem89z",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "ready",
+  },
+  Object {
+    "elementId": "SequenceFlow_0xem89z",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "active",
+  },
+  Object {
+    "elementId": "SequenceFlow_0xem89z",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "complete",
+  },
+  Object {
+    "elementId": "EndEvent_1dwx5c0",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "ready",
+  },
+  Object {
+    "elementId": "EndEvent_1dwx5c0",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "active",
+  },
+  Object {
+    "elementId": "EndEvent_1dwx5c0",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "complete",
+  },
+]
+`;

@@ -1,0 +1,38 @@
+{
+  "name": "jspe",
+  "version": "1.0.0",
+  "description": "JavaScript Process Engine",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run clean:dist && babel src --copy-files --out-dir dist/",
+    "watch": "npm run clean:dist && babel src --watch --copy-files --out-dir dist/",
+    "browserify": "browserify index.js -o browser/engine.js -s JSPE",
+    "clean:dist": "del 'dist/**/!(.gitkeep)'",
+    "clean:browser": "del 'browser/**/!(.gitkeep)'",
+    "uglify": "uglifyjs --compress --mangle -o browser/engine.min.js -- browser/engine.js",
+    "build:browser":
+      "npm run clean:browser && npm run build && npm run browserify && npm run uglify"
+  },
+  "files": ["dist/", "browser/", "index.js"],
+  "keywords": ["bpmn", "workflow", "engine"],
+  "author": {
+    "name": "Linus-Alexander Maximilian Gubenis",
+    "email": "linus.gubenis@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/componentDidMount/jspe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/componentDidMount/jspe/issues"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "babel-runtime": "^6.26.0",
+    "bpmn-moddle": "2",
+    "debug": "^3.1.0",
+    "jexl": "^1.1.4",
+    "shortid": "^2.2.8",
+    "source-map-support": "^0.5.0"
+  }
+}

@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubProcess Can run multiple subProcesses in parallel 1`] = `"EndEvent_1q0mwkn"`;

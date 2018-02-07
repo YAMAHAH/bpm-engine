@@ -1,0 +1,31 @@
+{
+  "presets": [
+    [
+      "env",
+      {
+        "targets": {
+          "node": "0.12"
+        }
+      }
+    ]
+  ],
+  "plugins": [
+    "transform-es2015-modules-commonjs",
+    "transform-object-rest-spread",
+    [
+      "module-resolver",
+      {
+        "root": ["./src"]
+      }
+    ],
+    "transform-class-properties",
+    [
+      "transform-runtime",
+      {
+        "polyfill": true,
+        "regenerator": true
+      }
+    ]
+  ],
+  "sourceMaps": "inline"
+}

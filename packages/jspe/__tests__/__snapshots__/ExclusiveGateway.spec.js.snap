@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExclusiveGateway Continues to the evaluated conditions paths 1`] = `
+Base {
+  "$type": "bpmn:EndEvent",
+  "id": "EndEvent_1915ikh",
+  "name": "End",
+}
+`;
+
+exports[`ExclusiveGateway Continues to the evaluated conditions paths 2`] = `
+Base {
+  "$type": "bpmn:EndEvent",
+  "id": "EndEvent_1915ikh",
+  "name": "End",
+}
+`;
+
+exports[`ExclusiveGateway Continues to the evaluated conditions paths 3`] = `
+Base {
+  "$type": "bpmn:EndEvent",
+  "id": "EndEvent_1915ikh",
+  "name": "End",
+}
+`;
+
+exports[`ExclusiveGateway Continues to the evaluated conditions paths 4`] = `
+Array [
+  "Task_02ex5w4",
+  "Task_1tasl7x",
+  "Task_1tasl7x",
+]
+`;
+
+exports[`ExclusiveGateway Does not continue if no DefaultSequenceFlow was found 1`] = `
+Base {
+  "$type": "bpmn:ExclusiveGateway",
+  "id": "ExclusiveGateway_1kcsj1f",
+}
+`;

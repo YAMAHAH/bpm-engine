@@ -1,0 +1,279 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SwimLane Pauses a token and controls continuing it 1`] = `
+Array [
+  Object {
+    "elementId": "StartEvent_1",
+    "lanes": Array [
+      Object {
+        "id": "Lane_1oypp6e",
+        "name": "A",
+      },
+    ],
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "ready",
+  },
+  Object {
+    "elementId": "StartEvent_1",
+    "lanes": Array [
+      Object {
+        "id": "Lane_1oypp6e",
+        "name": "A",
+      },
+    ],
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "active",
+  },
+  Object {
+    "elementId": "StartEvent_1",
+    "lanes": Array [
+      Object {
+        "id": "Lane_1oypp6e",
+        "name": "A",
+      },
+    ],
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "complete",
+  },
+  Object {
+    "elementId": "SequenceFlow_02qqmbt",
+    "lanes": undefined,
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "ready",
+  },
+  Object {
+    "elementId": "SequenceFlow_02qqmbt",
+    "lanes": undefined,
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "active",
+  },
+  Object {
+    "elementId": "SequenceFlow_02qqmbt",
+    "lanes": undefined,
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "complete",
+  },
+  Object {
+    "elementId": "Task_0qvmu3d",
+    "lanes": Array [
+      Object {
+        "id": "Lane_1kmmx7p",
+        "name": "B",
+      },
+      Object {
+        "id": "Lane_0n7eabp",
+        "name": "B2",
+      },
+    ],
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "ready",
+  },
+  Object {
+    "elementId": "Task_0qvmu3d",
+    "lanes": Array [
+      Object {
+        "id": "Lane_1kmmx7p",
+        "name": "B",
+      },
+      Object {
+        "id": "Lane_0n7eabp",
+        "name": "B2",
+      },
+    ],
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "active",
+  },
+  Object {
+    "elementId": "Task_0qvmu3d",
+    "lanes": Array [
+      Object {
+        "id": "Lane_1kmmx7p",
+        "name": "B",
+      },
+      Object {
+        "id": "Lane_0n7eabp",
+        "name": "B2",
+      },
+    ],
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "complete",
+  },
+  Object {
+    "elementId": "SequenceFlow_03yb0xa",
+    "lanes": undefined,
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "ready",
+  },
+  Object {
+    "elementId": "SequenceFlow_03yb0xa",
+    "lanes": undefined,
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "active",
+  },
+  Object {
+    "elementId": "SequenceFlow_03yb0xa",
+    "lanes": undefined,
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "complete",
+  },
+  Object {
+    "elementId": "Task_0qjan9z",
+    "lanes": Array [
+      Object {
+        "id": "Lane_1kmmx7p",
+        "name": "B",
+      },
+      Object {
+        "id": "Lane_0x63534",
+        "name": "B1",
+      },
+    ],
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "ready",
+  },
+  Object {
+    "elementId": "Task_0qjan9z",
+    "lanes": Array [
+      Object {
+        "id": "Lane_1kmmx7p",
+        "name": "B",
+      },
+      Object {
+        "id": "Lane_0x63534",
+        "name": "B1",
+      },
+    ],
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "active",
+  },
+  Object {
+    "elementId": "Task_0qjan9z",
+    "lanes": Array [
+      Object {
+        "id": "Lane_1kmmx7p",
+        "name": "B",
+      },
+      Object {
+        "id": "Lane_0x63534",
+        "name": "B1",
+      },
+    ],
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "complete",
+  },
+  Object {
+    "elementId": "SequenceFlow_0eeydo7",
+    "lanes": undefined,
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "ready",
+  },
+  Object {
+    "elementId": "SequenceFlow_0eeydo7",
+    "lanes": undefined,
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "active",
+  },
+  Object {
+    "elementId": "SequenceFlow_0eeydo7",
+    "lanes": undefined,
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "complete",
+  },
+  Object {
+    "elementId": "EndEvent_1vv0vt4",
+    "lanes": Array [
+      Object {
+        "id": "Lane_1oypp6e",
+        "name": "A",
+      },
+    ],
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "ready",
+  },
+  Object {
+    "elementId": "EndEvent_1vv0vt4",
+    "lanes": Array [
+      Object {
+        "id": "Lane_1oypp6e",
+        "name": "A",
+      },
+    ],
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "active",
+  },
+  Object {
+    "elementId": "EndEvent_1vv0vt4",
+    "lanes": Array [
+      Object {
+        "id": "Lane_1oypp6e",
+        "name": "A",
+      },
+    ],
+    "participant": Object {
+      "id": "Participant_1aicb0m",
+      "name": "SwimLane",
+    },
+    "state": "complete",
+  },
+]
+`;

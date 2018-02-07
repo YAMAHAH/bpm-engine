@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Plugins Can setup a ServiceTask Plugin 1`] = `
+Object {
+  "0": ExternalServices {
+    "onActive": [Function],
+  },
+}
+`;
+
+exports[`Plugins Can setup a UserTask Plugin 1`] = `
+Object {
+  "0": TaskManager {
+    "onActive": [Function],
+  },
+}
+`;

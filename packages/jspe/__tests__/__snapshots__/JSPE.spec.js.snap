@@ -1,0 +1,301 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JSPE JSPE uses a default slowMotion time, when active 1`] = `
+JSPE {
+  "evalCondition": [Function],
+  "generateId": [Function],
+  "persist": Object {
+    "createStore": [Function],
+    "processInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+    "tokenInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+  },
+  "plugins": Object {
+    "element": Object {},
+    "serviceTask": Object {},
+    "userTask": Object {},
+  },
+  "slowMotion": 500,
+  "store": Object {},
+}
+`;
+
+exports[`JSPE User can define a custom slowMotion time 1`] = `
+JSPE {
+  "evalCondition": [Function],
+  "generateId": [Function],
+  "persist": Object {
+    "createStore": [Function],
+    "processInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+    "tokenInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+  },
+  "plugins": Object {
+    "element": Object {},
+    "serviceTask": Object {},
+    "userTask": Object {},
+  },
+  "slowMotion": 100,
+  "store": Object {},
+}
+`;
+
+exports[`JSPE User can define his own method for generation of resource ids 1`] = `
+JSPE {
+  "evalCondition": [Function],
+  "generateId": [Function],
+  "persist": Object {
+    "createStore": [Function],
+    "processInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+    "tokenInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+  },
+  "plugins": Object {
+    "element": Object {},
+    "serviceTask": Object {},
+    "userTask": Object {},
+  },
+  "slowMotion": false,
+  "store": Object {},
+}
+`;
+
+exports[`JSPE User can define his own method for validation of conditions 1`] = `
+JSPE {
+  "evalCondition": [Function],
+  "generateId": [Function],
+  "persist": Object {
+    "createStore": [Function],
+    "processInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+    "tokenInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+  },
+  "plugins": Object {
+    "element": Object {},
+    "serviceTask": Object {},
+    "userTask": Object {},
+  },
+  "slowMotion": false,
+  "store": Object {},
+}
+`;
+
+exports[`JSPE User can define his own persistance methods 1`] = `
+JSPE {
+  "evalCondition": [Function],
+  "generateId": [Function],
+  "persist": Object {},
+  "plugins": Object {
+    "element": Object {},
+    "serviceTask": Object {},
+    "userTask": Object {},
+  },
+  "slowMotion": false,
+  "store": Object {},
+}
+`;
+
+exports[`JSPE User can define his own store for volatile persistance 1`] = `
+JSPE {
+  "evalCondition": [Function],
+  "generateId": [Function],
+  "persist": Object {
+    "createStore": [Function],
+    "processInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+    "tokenInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+  },
+  "plugins": Object {
+    "element": Object {},
+    "serviceTask": Object {},
+    "userTask": Object {},
+  },
+  "slowMotion": false,
+  "store": Array [],
+}
+`;
+
+exports[`jspe User can define a custom slowMotion time 1`] = `
+JSPE {
+  "evalCondition": [Function],
+  "generateId": [Function],
+  "persist": Object {
+    "createStore": [Function],
+    "processInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+    "tokenInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+  },
+  "plugins": Object {
+    "element": Object {},
+    "serviceTask": Object {},
+    "userTask": Object {},
+  },
+  "slowMotion": 100,
+  "store": Object {},
+}
+`;
+
+exports[`jspe User can define his own method for generation of resource ids 1`] = `
+JSPE {
+  "evalCondition": [Function],
+  "generateId": [Function],
+  "persist": Object {
+    "createStore": [Function],
+    "processInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+    "tokenInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+  },
+  "plugins": Object {
+    "element": Object {},
+    "serviceTask": Object {},
+    "userTask": Object {},
+  },
+  "slowMotion": false,
+  "store": Object {},
+}
+`;
+
+exports[`jspe User can define his own method for validation of conditions 1`] = `
+JSPE {
+  "evalCondition": [Function],
+  "generateId": [Function],
+  "persist": Object {
+    "createStore": [Function],
+    "processInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+    "tokenInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+  },
+  "plugins": Object {
+    "element": Object {},
+    "serviceTask": Object {},
+    "userTask": Object {},
+  },
+  "slowMotion": false,
+  "store": Object {},
+}
+`;
+
+exports[`jspe User can define his own persistance methods 1`] = `
+JSPE {
+  "evalCondition": [Function],
+  "generateId": [Function],
+  "persist": Object {},
+  "plugins": Object {
+    "element": Object {},
+    "serviceTask": Object {},
+    "userTask": Object {},
+  },
+  "slowMotion": false,
+  "store": Object {},
+}
+`;
+
+exports[`jspe User can define his own store for volatile persistance 1`] = `
+JSPE {
+  "evalCondition": [Function],
+  "generateId": [Function],
+  "persist": Object {
+    "createStore": [Function],
+    "processInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+    "tokenInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+  },
+  "plugins": Object {
+    "element": Object {},
+    "serviceTask": Object {},
+    "userTask": Object {},
+  },
+  "slowMotion": false,
+  "store": Array [],
+}
+`;
+
+exports[`jspe jspe uses a default slowMotion time, when active 1`] = `
+JSPE {
+  "evalCondition": [Function],
+  "generateId": [Function],
+  "persist": Object {
+    "createStore": [Function],
+    "processInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+    "tokenInstance": Object {
+      "create": [Function],
+      "find": [Function],
+      "update": [Function],
+    },
+  },
+  "plugins": Object {
+    "element": Object {},
+    "serviceTask": Object {},
+    "userTask": Object {},
+  },
+  "slowMotion": 500,
+  "store": Object {},
+}
+`;

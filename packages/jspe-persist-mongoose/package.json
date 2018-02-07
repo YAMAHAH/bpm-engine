@@ -1,0 +1,32 @@
+{
+  "name": "jspe-persist-mongoose",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --copy-files --out-dir dist/",
+    "watch": "babel src --watch --copy-files --out-dir dist/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["jspe", "persist", "mongodb", "mongoose"],
+  "author": {
+    "name": "Linus-Alexander Maximilian Gubenis",
+    "email": "linus.gubenis@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/componentDidMount/jspe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/componentDidMount/jspe/issues"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^4.13.7",
+    "source-map-support": "^0.5.0",
+    "jspe": "^1.0.0"
+  },
+  "devDependencies": {
+    "bluebird": "^3.5.1"
+  }
+}

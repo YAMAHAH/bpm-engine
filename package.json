@@ -1,0 +1,50 @@
+{
+  "name": "jspe-build",
+  "private": true,
+  "version": "0.0.1",
+  "description": "JavaScript Process Engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watchAll",
+    "deps:all": "lerna exec --parallel \"npm install\"",
+    "build:all": "lerna exec --parallel \"npm run build\"",
+    "codeclimate": "codeclimate-test-reporter < ./coverage/lcov.info"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-jest": "^21.2.0",
+    "babel-plugin-module-resolver": "^2.7.1",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "browserify": "^14.5.0",
+    "codeclimate-test-reporter": "^0.5.0",
+    "del-cli": "^1.1.0",
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-import-resolver-babel-module": "^3.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "jest": "^21.2.1",
+    "lerna": "^2.5.1",
+    "uglify-es": "3.1.10"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Linus-Alexander Maximilian Gubenis",
+    "email": "linus.gubenis@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/componentDidMount/jspe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/componentDidMount/jspe/issues"
+  },
+  "license": "Apache-2.0"
+}
