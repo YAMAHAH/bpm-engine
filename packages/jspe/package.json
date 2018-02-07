@@ -10,11 +10,18 @@
     "clean:dist": "del 'dist/**/!(.gitkeep)'",
     "clean:browser": "del 'browser/**/!(.gitkeep)'",
     "uglify": "uglifyjs --compress --mangle -o browser/engine.min.js -- browser/engine.js",
-    "build:browser":
-      "npm run clean:browser && npm run build && npm run browserify && npm run uglify"
+    "build:browser": "npm run clean:browser && npm run build && npm run browserify && npm run uglify"
   },
-  "files": ["dist/", "browser/", "index.js"],
-  "keywords": ["bpmn", "workflow", "engine"],
+  "files": [
+    "dist/",
+    "browser/",
+    "index.js"
+  ],
+  "keywords": [
+    "bpmn",
+    "workflow",
+    "engine"
+  ],
   "author": {
     "name": "Linus-Alexander Maximilian Gubenis",
     "email": "linus.gubenis@gmail.com"
