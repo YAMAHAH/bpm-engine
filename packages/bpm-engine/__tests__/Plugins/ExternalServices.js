@@ -1,6 +1,6 @@
-import JSPE from '../../index';
+import BPMEngine from '../../index';
 
-export default class ExternalServices extends JSPE.Plugins.ServiceTask {
+export default class ExternalServices extends BPMEngine.Plugins.ServiceTask {
   onActive = (activity, tokenInstance) => {
     console.log(`this is running onActive on a ServiceTask for activity: ${
       activity.id

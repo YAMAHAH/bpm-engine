@@ -1,17 +1,17 @@
 import fs from 'fs';
 
-import JSPE from 'jspe';
+import BPMEngine from 'bpm-engine';
 import History from './Plugins/History';
 
 describe('SubProcess', () => {
   it('Can run multiple subProcesses in parallel', async () => {
     const history = new History();
-    const jspe = new JSPE({
+    const bpm = new BPMEngine({
       plugins: [history],
     });
 
     // start the process and the flow
-    const token = await jspe.createProcessInstance({
+    const token = await bpm.createProcessInstance({
       workflowDefinition: fs.readFileSync(`${__dirname}/diagrams/SubProcess.bpmn`, 'utf-8'),
     });
 

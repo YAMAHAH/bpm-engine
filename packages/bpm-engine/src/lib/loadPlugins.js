@@ -34,8 +34,8 @@ export default plugins =>
       log(`Plugin "${plugin}" will be required or searched on the global window`);
       const PluginConstructor =
           typeof window === 'undefined'
-            ? require(`jspe-plugin-${plugin}`)
-            : window.JSPE.Plugins[plugin];
+            ? require(`bpm-plugin-${plugin}`)
+            : window.BPMEngine.Plugins[plugin];
 
       if (!PluginConstructor) {
         throw new Error(`Unable to load plugin "${plugin}"`);

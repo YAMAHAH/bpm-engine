@@ -1,12 +1,8 @@
-![](images/engine.png)
+![](images/engine.gif)
 
-# JSPE
+# BPM Engine
 
-[![Build Status](https://travis-ci.org/componentDidMount/jspe.svg?branch=master)](https://travis-ci.org/componentDidMount/jspe)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/97631fdb0dc96428f1b5/test_coverage)](https://codeclimate.com/github/componentDidMount/jspe/test_coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/97631fdb0dc96428f1b5/maintainability)](https://codeclimate.com/github/componentDidMount/jspe/maintainability)
-
-JSPE is a JavaScript BPMN workflow execution engine.
+BPM Engine is a JavaScript BPMN workflow execution engine.
 
 ## Goals
 
@@ -27,21 +23,21 @@ JSPE is a JavaScript BPMN workflow execution engine.
 First, install using npm or yarn
 
 ```sh
-$ npm install jspe --save
+$ npm install bpm-engine --save
 ```
 
-Then use JSPE with Node.JS or in the browser.
+Then use the BPM Engine with Node.JS or in the browser.
 
 ##### To start a processInstance
 
 ```js
-const JSPE = require('jspe');
+const BPMEngine = require('bpm-engine');
 
 // Instantiate an engine
-const jspe = new JSPE();
+const bpm = new BPMEngine();
 
 // Create a new process instance, specify a valid bpmn definition (returns a token)
-const token = await jspe
+const token = await bpm
   .createProcessInstance({
     workflowDefinition: 'valid bpmn'
   }).catch(console.error);
@@ -55,7 +51,7 @@ await token.exec().catch(console.error);
 ```js
 // At some later point in time, in a different part of
 // your app (e.g. when a User task is handled as complete by your own app)
-const token = await jspe.continueTokenInstance({
+const token = await bpm.continueTokenInstance({
   tokenId: '<id of the token you want to execute>',
   // set the payload you want to merge into the existing payload
   payload: {}
@@ -124,24 +120,22 @@ await token.exec().catch(console.error);
 
 You can install one of the following packages to add persistency to the state of your processes.
 
-* jspe-persist-mongoose
-* jspe-persist-sequelize (supported dialects: mysql (MySQL 5.7.\*), postgres sqlite3)
-* jspe-persist-redis
+* bpm-engine-persist-mongoose
 
-Use one of the persistency plugins in jspe
+Use one of the persistency plugins in the BPM Engine:
 
 ```js
-const JSPE = require('jspe');
-const PersistMongoose = require('jspe-persist-mongoose');
+const BPM = require('bpm-engine');
+const PersistMongoose = require('bpm-engine-persist-mongoose');
 
 const persistMongoose = new PersistMongoose(<mongodb:url>);
 
-const jspe = new JSPE({
+const bpm = new BPM({
   persist: persistMongoose,
 });
 ```
 
-## Develop JSPE
+## Develop BPM Engine
 
 ...
 
@@ -156,9 +150,9 @@ Currently you can develop plugins for the following elements:
 You create plugins by extending from one of the above classes and instantiating a class into the plugins array when creating the engine.
 
 ```js
-const JSPE = require('jspe');
+const BPMEngine = require('bpm-engine');
 
-class History extends JSPE.Plugins.Element {
+class History extends BPMEngine.Plugins.Element {
   constructor({ store = [] } = {}) {
     super();
     this.store = store;
@@ -177,7 +171,7 @@ class History extends JSPE.Plugins.Element {
 
 const history = new History();
 
-const jspe = new JSPE({ plugins: [history] });
+const bpm = new BPMEngine({ plugins: [history] });
 ```
 
 The above plugin will push executed elements' id's into an array, which serves as some kind of log.

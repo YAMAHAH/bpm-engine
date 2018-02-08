@@ -63,9 +63,12 @@ const ProcessInstanceSchema = new Schema(
 );
 
 export default (client, names = {}) => ({
-  tokenInstance: client.model(names.tokenInstance || 'jspe_tokenInstance', TokenInstanceSchema),
+  tokenInstance: client.model(
+    names.tokenInstance || 'bpmEngine_tokenInstance',
+    TokenInstanceSchema,
+  ),
   processInstance: client.model(
-    names.processInstance || 'jspe_processInstance',
+    names.processInstance || 'bpmEngine_processInstance',
     ProcessInstanceSchema,
   ),
 });

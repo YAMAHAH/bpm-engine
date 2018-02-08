@@ -12,7 +12,7 @@ module.exports = {
   },
   moduleFileExtensions: ['js'],
   moduleNameMapper: {
-    '^jspe(.*?)$': '<rootDir>/packages/jspe$1/index.js',
+    '^bpm-engine(.*?)$': '<rootDir>/packages/bpm-engine$1/index.js',
   },
   rootDir: __dirname,
   testMatch: ['<rootDir>/packages/*/__tests__/**/*spec.js'],

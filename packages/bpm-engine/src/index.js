@@ -1,4 +1,3 @@
-// TODO(lg): investigate why exactly and when this needs to be imported.
 import 'source-map-support/register';
 
 import defaults from 'lib/defaults';
@@ -27,7 +26,7 @@ const log = debug('engine');
 /**
  *
  */
-class JSPE {
+class BPMEngine {
   constructor({
     generateId = defaults.generateId,
     evalCondition = defaults.evalCondition,
@@ -148,5 +147,5 @@ class JSPE {
   }
 }
 
-export default JSPE;
+export default BPMEngine;
 export { default as Plugins } from 'lib/Plugins';

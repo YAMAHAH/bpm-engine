@@ -1,12 +1,12 @@
 import fs from 'fs';
 
-import JSPE from 'jspe';
+import BPMEngine from 'bpm-engine';
 
 describe('ExclusiveGateway', () => {
   it('Does not continue if no DefaultSequenceFlow was found', async () => {
-    const jspe = new JSPE();
+    const bpm = new BPMEngine();
 
-    const token = await jspe.createProcessInstance({
+    const token = await bpm.createProcessInstance({
       workflowDefinition: fs.readFileSync(
         `${__dirname}/diagrams/ExclusiveGatewayWithoutDefaultSequenceFlow.bpmn`,
         'utf-8',
@@ -20,7 +20,7 @@ describe('ExclusiveGateway', () => {
   it('Continues to the evaluated conditions paths', async () => {
     const passedTasks = [];
 
-    class TaskPlugin extends jspe.Plugins.Element {
+    class TaskPlugin extends BPMEngine.Plugins.Element {
       // eslint-disable-next-line
       onActive(definition) {
         if (definition.id === 'Task_02ex5w4') {
@@ -34,25 +34,25 @@ describe('ExclusiveGateway', () => {
 
     const taskPlugin = new TaskPlugin();
 
-    const jspe = new JSPE({
+    const bpm = new BPMEngine({
       plugins: [taskPlugin],
     });
 
-    const tiTop = await jspe.createProcessInstance({
+    const tiTop = await bpm.createProcessInstance({
       workflowDefinition: fs.readFileSync(`${__dirname}/diagrams/ExclusiveGateway.bpmn`, 'utf-8'),
       payload: {
         top: true,
       },
     });
 
-    const tiBottom = await jspe.createProcessInstance({
+    const tiBottom = await bpm.createProcessInstance({
       workflowDefinition: fs.readFileSync(`${__dirname}/diagrams/ExclusiveGateway.bpmn`, 'utf-8'),
       payload: {
         bottom: true,
       },
     });
 
-    const tiDefault = await jspe.createProcessInstance({
+    const tiDefault = await bpm.createProcessInstance({
       workflowDefinition: fs.readFileSync(`${__dirname}/diagrams/ExclusiveGateway.bpmn`, 'utf-8'),
       payload: {},
     });

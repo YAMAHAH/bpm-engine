@@ -1,17 +1,18 @@
-import JSPE from 'jspe';
+import BPMEngine from 'bpm-engine';
 import fs from 'fs';
 import Promise from 'bluebird';
+
 import mongoose from 'mongoose';
 
 mongoose.Promise = Promise;
 
-import PersistMongoose from 'jspe-persist-mongoose';
+import PersistMongoose from 'bpm-engine-persist-mongoose';
 
-import History from '../../jspe/__tests__/Plugins/History';
+import History from '../../bpm-engine/__tests__/Plugins/History';
 
 describe('PersistMongoose', () => {
   it('Work', async () => {
-    const persistMongoose = new PersistMongoose('mongodb://localhost:27017/jspe-testing', {
+    const persistMongoose = new PersistMongoose('mongodb://localhost:27017/bpm-engine-testing', {
       useMongoClient: true,
     });
 
@@ -20,12 +21,12 @@ describe('PersistMongoose', () => {
 
     const history = new History();
 
-    const jspe = new JSPE({
+    const bpm = new BPMEngine({
       plugins: [history],
       persist: persistMongoose,
     });
 
-    const token = await jspe.createProcessInstance({
+    const token = await bpm.createProcessInstance({
       workflowDefinition: fs.readFileSync(`${__dirname}/ParallelServices.bpmn`, 'utf-8'),
     });
 
@@ -33,6 +34,6 @@ describe('PersistMongoose', () => {
     expect((await persistMongoose.schemas.processInstance.find({})).length).toMatchSnapshot();
     expect((await persistMongoose.schemas.tokenInstance.find({})).length).toMatchSnapshot();
     expect(history.store).toMatchSnapshot();
-    await persistMongoose.client.close();
+    await persistMongoose.connection.close();
   });
 });

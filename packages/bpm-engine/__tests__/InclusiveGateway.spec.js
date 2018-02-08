@@ -1,16 +1,16 @@
 import fs from 'fs';
 
-import jspe from 'jspe';
+import BPMEngine from 'bpm-engine';
 import History from './Plugins/History';
 
 describe('InclusiveGateway', () => {
   it('Continues on all paths', async (done) => {
     const history = new History();
-    const jspe = new JSPE({
+    const bpm = new BPMEngine({
       plugins: [history],
     });
 
-    const token = await jspe.createProcessInstance({
+    const token = await bpm.createProcessInstance({
       workflowDefinition: fs.readFileSync(`${__dirname}/diagrams/InclusiveGateway.bpmn`, 'utf-8'),
       payload: {
         top: true,
@@ -27,11 +27,11 @@ describe('InclusiveGateway', () => {
 
   it('Continues on one path', async (done) => {
     const history = new History();
-    const jspe = new JSPE({
+    const bpm = new BPMEngine({
       plugins: [history],
     });
 
-    const token = await jspe.createProcessInstance({
+    const token = await bpm.createProcessInstance({
       workflowDefinition: fs.readFileSync(`${__dirname}/diagrams/InclusiveGateway.bpmn`, 'utf-8'),
       payload: {
         top: true,

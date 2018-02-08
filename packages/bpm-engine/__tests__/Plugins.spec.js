@@ -1,4 +1,4 @@
-import jspe from 'jspe';
+import BPMEngine from 'bpm-engine';
 
 import TaskManager from './Plugins/TaskManager';
 import ExternalServices from './Plugins/ExternalServices';
@@ -6,17 +6,17 @@ import ExternalServices from './Plugins/ExternalServices';
 describe('Plugins', () => {
   it('Can setup a UserTask Plugin', async () => {
     const taskManager = new TaskManager();
-    const jspe = new JSPE({
+    const bpm = new BPMEngine({
       plugins: [taskManager],
     });
-    expect(jspe.plugins.userTask).toMatchSnapshot();
+    expect(bpm.plugins.userTask).toMatchSnapshot();
   });
 
   it('Can setup a ServiceTask Plugin', async () => {
     const externalServices = new ExternalServices();
-    const jspe = new JSPE({
+    const bpm = new BPMEngine({
       plugins: [externalServices],
     });
-    expect(jspe.plugins.serviceTask).toMatchSnapshot();
+    expect(bpm.plugins.serviceTask).toMatchSnapshot();
   });
 });

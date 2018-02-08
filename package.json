@@ -1,8 +1,8 @@
 {
-  "name": "jspe-build",
+  "name": "bpm-engine-build",
   "private": true,
   "version": "0.0.1",
-  "description": "JavaScript Process Engine",
+  "description": "Business Process Management Engine Build",
   "main": "index.js",
   "scripts": {
     "test": "jest",
@@ -34,17 +34,5 @@
     "lerna": "^2.5.1",
     "uglify-es": "3.1.10"
   },
-  "keywords": [],
-  "author": {
-    "name": "Linus-Alexander Maximilian Gubenis",
-    "email": "linus.gubenis@gmail.com"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+ssh://git@github.com/componentDidMount/jspe.git"
-  },
-  "bugs": {
-    "url": "https://github.com/componentDidMount/jspe/issues"
-  },
-  "license": "Apache-2.0"
+  "keywords": []
 }

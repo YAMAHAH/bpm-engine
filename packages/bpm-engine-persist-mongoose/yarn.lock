@@ -23,6 +23,17 @@ bluebird@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 
+bpm-engine@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/bpm-engine/-/bpm-engine-1.0.0.tgz#c4ef4dde26bc54a2effc3295bbad4b06ea3def48"
+  dependencies:
+    babel-runtime "^6.26.0"
+    bpmn-moddle "2"
+    debug "^3.1.0"
+    jexl "^1.1.4"
+    shortid "^2.2.8"
+    source-map-support "^0.5.0"
+
 bpmn-moddle@2:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/bpmn-moddle/-/bpmn-moddle-2.0.1.tgz#1d088d2c1a38f2fed40e7c9d77a0467a368f654d"

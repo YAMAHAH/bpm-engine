@@ -1,0 +1,20 @@
+{
+  "name": "bpm-engine-persist-mongoose",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --copy-files --out-dir dist/",
+    "watch": "babel src --watch --copy-files --out-dir dist/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["bpm", "persist", "mongodb", "mongoose"],
+  "dependencies": {
+    "bpm-engine": "^1.0.0",
+    "mongoose": "^4.13.7",
+    "source-map-support": "^0.5.0"
+  },
+  "devDependencies": {
+    "bluebird": "^3.5.1"
+  }
+}

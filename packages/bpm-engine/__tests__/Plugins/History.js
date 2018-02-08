@@ -1,6 +1,6 @@
-import JSPE from '../../index';
+import BPMEngine from '../../index';
 
-export default class History extends JSPE.Plugins.Element {
+export default class History extends BPMEngine.Plugins.Element {
   constructor({ store = [] } = {}) {
     super();
     this.store = store;

@@ -1,16 +1,16 @@
 import fs from 'fs';
 
-import jspe from 'jspe';
+import BPMEngine from 'bpm-engine';
 import History from './Plugins/History';
 
 describe('ParallelGateway', () => {
   it('Continues on all paths', async (done) => {
     const history = new History();
-    const jspe = new JSPE({
+    const bpm = new BPMEngine({
       plugins: [history],
     });
 
-    const token = await jspe.createProcessInstance({
+    const token = await bpm.createProcessInstance({
       workflowDefinition: fs.readFileSync(`${__dirname}/diagrams/ParallelGateway.bpmn`, 'utf-8'),
     });
 
@@ -23,11 +23,11 @@ describe('ParallelGateway', () => {
 
   it('Runs services in parallel', async (done) => {
     const history = new History();
-    const jspe = new JSPE({
+    const bpm = new BPMEngine({
       plugins: [history],
     });
 
-    const token = await jspe.createProcessInstance({
+    const token = await bpm.createProcessInstance({
       workflowDefinition: fs.readFileSync(`${__dirname}/diagrams/ParallelServices.bpmn`, 'utf-8'),
     });
 
