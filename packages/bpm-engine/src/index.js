@@ -53,7 +53,7 @@ class BPMEngine {
     }
 
     const processId = this.generateId();
-    log(`Creating PI ${processId}`);
+    log(`Creating processInstance ${processId}`);
     await this.persist.processInstance.create(
       {
         processId,
@@ -62,7 +62,7 @@ class BPMEngine {
       },
       this.store.processInstances,
     );
-    log(`Created PI ${processId}`);
+    log(`Created processInstance ${processId}`);
 
     const tokenInstance = await this.createTokenInstance({
       processId,
@@ -88,7 +88,7 @@ class BPMEngine {
   }) {
     const tid = tokenId || this.generateId();
 
-    log(`Creating TI ${tid}`);
+    log(`Creating tokenInstance ${tid}`);
     const tokenInstance = new TokenInstance({
       processId,
       tokenId: tid,
@@ -107,35 +107,43 @@ class BPMEngine {
     else {
       tokenInstance.flowObjects = flowObjects;
     }
-    log(`Created TI ${tid}`);
+    log(`Created tokenInstance ${tid}`);
 
     return tokenInstance;
   }
 
   async continueTokenInstance({ tokenId, payload, meta }) {
-    log(`Continuing TI ${tokenId}`);
-    const persistedTI = await this.findTokenInstance(tokenId);
-    const persistedPI = await this.findProcessInstance(persistedTI.processId);
+    log(`Continuing tokenInstance ${tokenId}`);
+    const persistedTokenInstance = await this.findTokenInstance(tokenId);
+    const persistedProcessInstance = await this.findProcessInstance(persistedTokenInstance.processId);
 
-    const { workflowDefinition } = persistedPI;
-    const mergedPayload = Object.assign(persistedPI.payload, persistedTI.payload, payload);
+    const { workflowDefinition } = persistedProcessInstance;
+    const mergedPayload = Object.assign(
+      persistedProcessInstance.payload,
+      persistedTokenInstance.payload,
+      payload,
+    );
 
-    const ti = await this.createTokenInstance({
-      processId: persistedPI.processId,
+    const tokenInstance = await this.createTokenInstance({
+      processId: persistedProcessInstance.processId,
       payload: mergedPayload,
       workflowDefinition,
       meta,
       tokenId,
       status: 'paused',
-      currentActivity: persistedTI.next,
-      isSubProcess: persistedTI.isSubProcess,
-      parent: persistedTI.parent,
+      currentActivity: persistedTokenInstance.next,
+      isSubProcess: persistedTokenInstance.isSubProcess,
+      parent: persistedTokenInstance.parent,
     });
 
-    ti.flowObjects = getNextFlowObjects(ti.flowObjects, persistedTI.currentActivity);
-    ti.next = ti.flowObjects.find(el => el.id === persistedTI.currentActivity);
+    tokenInstance.flowObjects = getNextFlowObjects(
+      tokenInstance.flowObjects,
+      persistedTokenInstance.currentActivity,
+    );
 
-    return ti;
+    tokenInstance.next = tokenInstance.flowObjects.find(el => el.id === persistedTokenInstance.currentActivity);
+
+    return tokenInstance;
   }
 
   findTokenInstance(tokenId) {

@@ -34,7 +34,7 @@ export default plugins =>
       log(`Plugin "${plugin}" will be required or searched on the global window`);
       const PluginConstructor =
           typeof window === 'undefined'
-            ? require(`bpm-plugin-${plugin}`)
+            ? require(`bpm-engine-plugin-${plugin}`)
             : window.BPMEngine.Plugins[plugin];
 
       if (!PluginConstructor) {
