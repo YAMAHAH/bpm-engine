@@ -20,7 +20,7 @@ export default class InclusiveGateway extends Gateway {
     }
   };
 
-  getNext = async () => {
+  async getNext() {
     const { outgoing } = this.definition;
     const { payload } = this.tokenInstance;
 
@@ -37,7 +37,7 @@ export default class InclusiveGateway extends Gateway {
       next.push(outgoing[0]);
     }
     return next;
-  };
+  }
 
   makeComplete = async () => {
     const { outgoing } = this.definition;

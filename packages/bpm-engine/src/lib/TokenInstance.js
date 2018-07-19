@@ -92,7 +92,7 @@ export default class TokenInstance {
     });
   }
 
-  toJSON = () => {
+  toJSON() {
     const result = {};
     result.currentActivity = this.next && this.next.id;
     result.processId = this.processId;
@@ -103,7 +103,7 @@ export default class TokenInstance {
     result.status = this.status;
 
     return result;
-  };
+  }
 
   initialize = () =>
     new Promise((resolve, reject) => {
@@ -128,7 +128,7 @@ export default class TokenInstance {
       });
     });
 
-  createFlowObject = (definition) => {
+  createFlowObject(definition) {
     const FlowObjectType = getFlowObjectType(definition);
     const scopedPlugins = this.engine.plugins;
 
@@ -148,7 +148,7 @@ export default class TokenInstance {
     });
 
     return flowObject;
-  };
+  }
 
   execute = async () => {
     if (this.next) {

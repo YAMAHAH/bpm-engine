@@ -1,26 +1,29 @@
 import Activity from 'lib/Elements/Activity';
 import serial from 'lib/serial';
 
-const getSubProcessItems = async (loop, evalCondition, payload) => {
-  const collectionLocation = loop.$attrs['camunda:collection'];
-  const cardinality = loop.loopCardinality && Number(loop.loopCardinality.body);
-
-  let collection = [];
-
-  if (collectionLocation) {
-    collection = await evalCondition(collectionLocation, payload);
-  }
-
-  if (cardinality) {
-    for (let i = 0; i < cardinality; i += 1) {
-      collection.push(i);
-    }
-  }
-
-  return collection;
-};
-
 export default class SubProcess extends Activity {
+  async getSubProcessItems(loop) {
+    const { evalCondition, tokenInstance } = this;
+    const { payload } = tokenInstance;
+
+    const collectionLocation = loop.$attrs['camunda:collection'];
+    const cardinality = loop.loopCardinality && Number(loop.loopCardinality.body);
+
+    let collection = [];
+
+    if (collectionLocation) {
+      collection = await evalCondition(collectionLocation, payload);
+    }
+
+    if (cardinality) {
+      for (let i = 0; i < cardinality; i += 1) {
+        collection.push(i);
+      }
+    }
+
+    return collection;
+  }
+
   makeActive = async () => {
     await this.callPlugins('onActive');
     this.tokenInstance.status = 'paused';
@@ -44,11 +47,7 @@ export default class SubProcess extends Activity {
     }
     else {
       // get cardinality or collection
-      const subProcessItems = await getSubProcessItems(
-        loop,
-        this.evalCondition,
-        this.tokenInstance.payload,
-      );
+      const subProcessItems = await this.getSubProcessItems(loop);
 
       if (!subProcessItems || subProcessItems.length === 0) {
         this.tokenInstance.status = 'running';
