@@ -6,9 +6,6 @@ export default class StartEvent extends Event {
 
     await this.triggerState('ready');
 
-    await this.persist.tokenInstance.create(
-      this.tokenInstance.toJSON(),
-      this.engine.store.tokenInstances,
-    );
+    await this.persist.tokenInstance.create(this.tokenInstance.toJSON());
   };
 }

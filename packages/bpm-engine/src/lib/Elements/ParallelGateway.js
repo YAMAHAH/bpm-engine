@@ -7,14 +7,11 @@ export default class ParallelGateway extends Gateway {
     const { incoming } = this.definition;
     if (incoming.length > 1) {
       // did any other waiting token arrive here yet?
-      const anyOtherToken = await this.persist.tokenInstance.find(
-        {
-          processId: this.tokenInstance.processId,
-          status: 'paused',
-          currentActivity: this.definition.id,
-        },
-        this.engine.store.tokenInstances,
-      );
+      const anyOtherToken = await this.persist.tokenInstance.find({
+        processId: this.tokenInstance.processId,
+        status: 'paused',
+        currentActivity: this.definition.id,
+      });
 
       // use this token as the first which arrived
       if (!anyOtherToken) {
@@ -36,7 +33,6 @@ export default class ParallelGateway extends Gateway {
               pending,
             },
           },
-          this.engine.store.tokenInstances,
         );
         this.tokenInstance.status = 'paused';
       }
@@ -53,7 +49,6 @@ export default class ParallelGateway extends Gateway {
               pending: this.tokenInstance.lastActivity,
             },
           },
-          this.engine.store.tokenInstances,
         );
 
         if (updatedOtherToken.pending.length > 0) {
@@ -72,7 +67,7 @@ export default class ParallelGateway extends Gateway {
       const childs = await this.setupChilds(outgoing);
 
       await childs.forEach(async (child) => {
-        await this.persist.tokenInstance.create(child.toJSON(), this.engine.store.tokenInstances);
+        await this.persist.tokenInstance.create(child.toJSON());
       });
 
       const funcs = childs.map(child => () => child.exec());

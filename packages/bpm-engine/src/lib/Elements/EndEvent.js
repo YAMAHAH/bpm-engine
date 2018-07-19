@@ -10,7 +10,6 @@ export default class EndEvent extends Event {
         tokenId: this.tokenInstance.tokenId,
       },
       { $set: this.tokenInstance.toJSON() },
-      this.engine.store.tokenInstances,
     );
 
     if (this.tokenInstance.parent && this.tokenInstance.isSubProcess) {
@@ -21,7 +20,6 @@ export default class EndEvent extends Event {
         {
           $pull: { childs: this.tokenInstance.tokenId },
         },
-        this.engine.store.tokenInstances,
       );
 
       // continue with parent token
@@ -50,7 +48,6 @@ export default class EndEvent extends Event {
             status: 'ended',
           },
         },
-        this.engine.store.processInstances,
       );
     }
   };

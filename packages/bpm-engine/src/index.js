@@ -30,16 +30,14 @@ class BPMEngine {
   constructor({
     generateId = defaults.generateId,
     evalCondition = defaults.evalCondition,
-    persist = defaults.persist,
+    persist = new defaults.MemoryPersist(),
     plugins = [],
     slowMotion = false,
-    store = defaults.persist.createStore(),
   } = {}) {
     Object.assign(this, {
       generateId,
       evalCondition,
       persist,
-      store,
       slowMotion: slowMotion && (typeof slowMotion === 'number' ? slowMotion : 500),
       plugins: loadPlugins(plugins),
     });
@@ -54,14 +52,11 @@ class BPMEngine {
 
     const processId = this.generateId();
     log(`Creating processInstance ${processId}`);
-    await this.persist.processInstance.create(
-      {
-        processId,
-        workflowDefinition,
-        payload,
-      },
-      this.store.processInstances,
-    );
+    await this.persist.processInstance.create({
+      processId,
+      workflowDefinition,
+      payload,
+    });
     log(`Created processInstance ${processId}`);
 
     const tokenInstance = await this.createTokenInstance({
@@ -147,11 +142,11 @@ class BPMEngine {
   }
 
   findTokenInstance(tokenId) {
-    return this.persist.tokenInstance.find({ tokenId }, this.store.tokenInstances);
+    return this.persist.tokenInstance.find({ tokenId });
   }
 
   findProcessInstance(processId) {
-    return this.persist.processInstance.find({ processId }, this.store.processInstances);
+    return this.persist.processInstance.find({ processId });
   }
 }
 

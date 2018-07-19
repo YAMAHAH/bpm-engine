@@ -3,9 +3,12 @@ import mongoose from 'mongoose';
 
 import schemas from 'schemas';
 
-export default class PersistMongoose {
+export default class MongoosePersist {
   constructor(options, connectionOptions = {}, names) {
-    this.connection = mongoose.connect(options, connectionOptions);
+    this.connection = mongoose.connect(
+      options,
+      connectionOptions,
+    );
     this.schemas = schemas(this.connection, names);
   }
 

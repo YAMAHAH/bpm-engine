@@ -63,7 +63,6 @@ export default class Element {
           childs: childIds,
         },
       },
-      this.engine.store.tokenInstances,
     );
   }
 

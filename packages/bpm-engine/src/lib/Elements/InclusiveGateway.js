@@ -12,7 +12,6 @@ export default class InclusiveGateway extends Gateway {
         {
           $pull: { childs: this.tokenInstance.tokenId },
         },
-        this.engine.store.tokenInstances,
       );
 
       if (parentToken.childs.length > 0) {
@@ -59,7 +58,7 @@ export default class InclusiveGateway extends Gateway {
       await this.persistChildIdsToParent(childIds);
 
       await childs.forEach(async (child) => {
-        await this.persist.tokenInstance.create(child.toJSON(), this.engine.store.tokenInstances);
+        await this.persist.tokenInstance.create(child.toJSON());
       });
 
       const funcs = childs.map(child => () => child.exec());
