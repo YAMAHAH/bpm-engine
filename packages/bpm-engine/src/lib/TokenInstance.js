@@ -150,7 +150,7 @@ export default class TokenInstance {
     return flowObject;
   };
 
-  exec = async () => {
+  execute = async () => {
     if (this.next) {
       this.lastActivity = this.next.id;
     }
@@ -191,7 +191,7 @@ export default class TokenInstance {
           : [flowObject.definition.targetRef];
 
       if (this.status === 'running') {
-        return this.exec();
+        return this.execute();
       }
     }
 

@@ -6,16 +6,16 @@ BPM Engine is a JavaScript BPMN workflow execution engine.
 
 ## Goals
 
-* [ ] Everything needs to be extensible. (Plugins)
-* [ ] Vendor independent. (Understands various modeler's properties through
+- [ ] Everything needs to be extensible. (Plugins)
+- [ ] Vendor independent. (Understands various modeler's properties through
       plugins)
-* [ ] Run in the browser and in node. (Browserify)
-* [ ] Every variable value can also be a function which when executed returns
+- [ ] Run in the browser and in node. (Browserify)
+- [ ] Every variable value can also be a function which when executed returns
       'the value' to use.
-* [ ] Needs to be able to execute a BPMN 2.0 workflow. (BPMN conformance)
-* [ ] Be safe.
-* [ ] Try to be fast.
-* [ ] Optionally spawn child processes (on node) or workers (in the browser) to
+- [ ] Needs to be able to execute a BPMN 2.0 workflow. (BPMN conformance)
+- [ ] Be safe.
+- [ ] Try to be fast.
+- [ ] Optionally spawn child processes (on node) or workers (in the browser) to
       optimize the execution of the flow. (not sure yet)
 
 ## Install and use
@@ -43,7 +43,7 @@ const token = await bpm
   }).catch(console.error);
 
 // Tell the initial token to continue execution
-await token.exec().catch(console.error);
+await token.execute().catch(console.error);
 ```
 
 ##### To continue execution of a processInstance (by token)
@@ -57,70 +57,70 @@ const token = await bpm.continueTokenInstance({
   payload: {}
 });
 
-await token.exec().catch(console.error);
+await token.execute().catch(console.error);
 ```
 
 ## Currently supported flow objects
 
 ### Events:
 
-* [x] Start
-* [x] End
-* [ ] IntermediateThrow
-* [ ] MessageIntermediateThrow
-* [ ] MessageIntermediateCatch
-* [ ] MessageEnd
-* [ ] TimerIntermediateCatch
-* [ ] EscalationIntermediateThrow
-* [ ] EscalationEnd
-* [ ] ErrorEnd
-* [ ] ConditionalIntermediateThrow
-* [ ] LinkIntermediateCatch
-* [ ] LinkIntermediateThrow
-* [ ] CompensationIntermediateThrow
-* [ ] CompensationEnd
-* [ ] SignalIntermediateThrow
-* [ ] SignalIntermediateCatch
-* [ ] MessageStart
-* [ ] TimerStart
-* [ ] ConditionalStart
-* [ ] SignalStart
-* [ ] SignalEnd
-* [ ] TerminateEnd
+- [x] Start
+- [x] End
+- [ ] IntermediateThrow
+- [ ] MessageIntermediateThrow
+- [ ] MessageIntermediateCatch
+- [ ] MessageEnd
+- [ ] TimerIntermediateCatch
+- [ ] EscalationIntermediateThrow
+- [ ] EscalationEnd
+- [ ] ErrorEnd
+- [ ] ConditionalIntermediateThrow
+- [ ] LinkIntermediateCatch
+- [ ] LinkIntermediateThrow
+- [ ] CompensationIntermediateThrow
+- [ ] CompensationEnd
+- [ ] SignalIntermediateThrow
+- [ ] SignalIntermediateCatch
+- [ ] MessageStart
+- [ ] TimerStart
+- [ ] ConditionalStart
+- [ ] SignalStart
+- [ ] SignalEnd
+- [ ] TerminateEnd
 
 ### Activities:
 
-* [x] Task
-* [x] Service
-* [x] User
-* [x] Manual
-* [ ] Send
-* [ ] Receive
-* [ ] BusinessRule
-* [ ] Script
+- [x] Task
+- [x] Service
+- [x] User
+- [x] Manual
+- [ ] Send
+- [ ] Receive
+- [ ] BusinessRule
+- [ ] Script
 
 ### Gateways:
 
-* [x] Exclusive
-* [x] Inclusive
-* [x] Parallel
-* [ ] EventBased
-* [ ] Complex
+- [x] Exclusive
+- [x] Inclusive
+- [x] Parallel
+- [ ] EventBased
+- [ ] Complex
 
 ### Other:
 
-* [x] Swimlanes
-* [ ] CallActivity
-* [x] SubProcess
-* [x] Loop
-* [x] ParallelMultiInstance
-* [ ] SequentialMultiInstance
+- [x] Swimlanes
+- [ ] CallActivity
+- [x] SubProcess
+- [x] Loop
+- [x] ParallelMultiInstance
+- [ ] SequentialMultiInstance
 
 ## Persistency layer
 
 You can install one of the following packages to add persistency to the state of your processes.
 
-* bpm-engine-persist-mongoose
+- bpm-engine-persist-mongoose
 
 Use one of the persistency plugins in the BPM Engine:
 
@@ -143,9 +143,9 @@ const bpm = new BPM({
 
 Currently you can develop plugins for the following elements:
 
-* Element
-* UserTask
-* ServiceTask
+- Element
+- UserTask
+- ServiceTask
 
 You create plugins by extending from one of the above classes and instantiating a class into the plugins array when creating the engine.
 

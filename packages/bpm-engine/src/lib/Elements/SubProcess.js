@@ -82,7 +82,7 @@ export default class SubProcess extends Activity {
 
     await this.persistChildIdsToParent(childIds);
 
-    const funcs = childs.map(child => () => child.exec());
+    const funcs = childs.map(child => () => child.execute());
 
     return serial(funcs);
   };

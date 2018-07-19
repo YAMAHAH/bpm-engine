@@ -14,7 +14,7 @@ describe('SwimLane', () => {
     const token = await bpm.createProcessInstance({
       workflowDefinition: fs.readFileSync(`${__dirname}/diagrams/SwimLane.bpmn`, 'utf-8'),
     });
-    await token.exec();
+    await token.execute();
 
     setTimeout(() => {
       expect(history.store).toMatchSnapshot();

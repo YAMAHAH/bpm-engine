@@ -18,7 +18,7 @@ describe('InclusiveGateway', () => {
       },
     });
 
-    await token.exec();
+    await token.execute();
     setTimeout(() => {
       expect(history.store).toMatchSnapshot();
       done();
@@ -38,7 +38,7 @@ describe('InclusiveGateway', () => {
       },
     });
 
-    await token.exec();
+    await token.execute();
     setTimeout(() => {
       expect(history.store).toMatchSnapshot();
       done();

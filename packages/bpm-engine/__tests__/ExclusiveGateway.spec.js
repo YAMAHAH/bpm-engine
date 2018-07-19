@@ -13,7 +13,7 @@ describe('ExclusiveGateway', () => {
       ),
     });
 
-    await token.exec();
+    await token.execute();
     expect(token.next).toMatchSnapshot();
   });
 
@@ -57,9 +57,9 @@ describe('ExclusiveGateway', () => {
       payload: {},
     });
 
-    await tiTop.exec();
-    await tiBottom.exec();
-    await tiDefault.exec();
+    await tiTop.execute();
+    await tiBottom.execute();
+    await tiDefault.execute();
 
     expect(tiTop.next).toMatchSnapshot();
     expect(tiBottom.next).toMatchSnapshot();

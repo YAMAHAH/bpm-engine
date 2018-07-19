@@ -26,7 +26,7 @@ describe('BPMEngine', () => {
       workflowDefinition: fs.readFileSync(`${__dirname}/diagrams/UserTask.bpmn`, 'utf-8'),
     });
 
-    await token.exec();
+    await token.execute();
   });
 
   it('User can define his own store for volatile persistance', () => {

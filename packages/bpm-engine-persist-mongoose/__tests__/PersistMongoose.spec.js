@@ -11,14 +11,23 @@ import PersistMongoose from 'bpm-engine-persist-mongoose';
 import History from '../../bpm-engine/__tests__/Plugins/History';
 
 describe('PersistMongoose', () => {
-  it('Work', async () => {
-    const persistMongoose = new PersistMongoose('mongodb://localhost:27017/bpm-engine-testing', {
+  let persistMongoose;
+
+  beforeEach(async () => {
+    persistMongoose = new PersistMongoose('mongodb://localhost:27017/bpm-engine-testing', {
       useMongoClient: true,
     });
 
+    // clear process instances and token instances
     await persistMongoose.schemas.processInstance.remove({}).exec();
     await persistMongoose.schemas.tokenInstance.remove({}).exec();
+  });
 
+  afterEach(async () => {
+    await persistMongoose.connection.close();
+  });
+
+  it('Work', async () => {
     const history = new History();
 
     const bpm = new BPMEngine({
@@ -26,14 +35,14 @@ describe('PersistMongoose', () => {
       persist: persistMongoose,
     });
 
-    const token = await bpm.createProcessInstance({
+    const processInstance = await bpm.createProcessInstance({
       workflowDefinition: fs.readFileSync(`${__dirname}/ParallelServices.bpmn`, 'utf-8'),
     });
 
-    await token.exec();
-    expect((await persistMongoose.schemas.processInstance.find({})).length).toMatchSnapshot();
-    expect((await persistMongoose.schemas.tokenInstance.find({})).length).toMatchSnapshot();
+    await processInstance.execute();
+
+    expect((await persistMongoose.schemas.processInstance.find()).length).toMatchSnapshot();
+    expect((await persistMongoose.schemas.tokenInstance.find()).length).toMatchSnapshot();
     expect(history.store).toMatchSnapshot();
-    await persistMongoose.connection.close();
   });
 });

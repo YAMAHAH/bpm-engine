@@ -70,7 +70,7 @@ export default class ParallelGateway extends Gateway {
         await this.persist.tokenInstance.create(child.toJSON());
       });
 
-      const funcs = childs.map(child => () => child.exec());
+      const funcs = childs.map(child => () => child.execute());
 
       return serial(funcs);
     }

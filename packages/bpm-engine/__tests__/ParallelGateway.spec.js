@@ -14,7 +14,7 @@ describe('ParallelGateway', () => {
       workflowDefinition: fs.readFileSync(`${__dirname}/diagrams/ParallelGateway.bpmn`, 'utf-8'),
     });
 
-    await token.exec();
+    await token.execute();
     setTimeout(() => {
       expect(history.store).toMatchSnapshot();
       done();
@@ -31,7 +31,7 @@ describe('ParallelGateway', () => {
       workflowDefinition: fs.readFileSync(`${__dirname}/diagrams/ParallelServices.bpmn`, 'utf-8'),
     });
 
-    await token.exec();
+    await token.execute();
     setTimeout(() => {
       expect(history.store).toMatchSnapshot();
       done();

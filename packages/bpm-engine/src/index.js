@@ -57,7 +57,7 @@ class BPMEngine {
       workflowDefinition,
       payload,
     });
-    log(`Created processInstance ${processId}`);
+    log(`processInstance ${processId} created`);
 
     const tokenInstance = await this.createTokenInstance({
       processId,
@@ -102,7 +102,7 @@ class BPMEngine {
     else {
       tokenInstance.flowObjects = flowObjects;
     }
-    log(`Created tokenInstance ${tid}`);
+    log(`tokenInstance ${tid} created`);
 
     return tokenInstance;
   }

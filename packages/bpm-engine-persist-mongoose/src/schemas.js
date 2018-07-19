@@ -8,15 +8,17 @@ const TokenInstanceSchema = new Schema(
     processId: {
       type: String,
       required: true,
+      index: true,
     },
     tokenId: {
       type: String,
       required: true,
       unique: true,
+      index: true,
     },
     status: {
       type: String,
-      enum: ['started', 'running', 'paused', 'ended'],
+      enum: ['running', 'paused', 'ended'],
     },
     currentActivity: {
       type: String,
@@ -47,6 +49,7 @@ const ProcessInstanceSchema = new Schema(
       type: String,
       required: true,
       unique: true,
+      index: true,
     },
     status: {
       type: String,

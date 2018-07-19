@@ -15,7 +15,7 @@ describe('SubProcess', () => {
       workflowDefinition: fs.readFileSync(`${__dirname}/diagrams/SubProcess.bpmn`, 'utf-8'),
     });
 
-    await token.exec();
+    await token.execute();
 
     // we only check if the desired end goal was reached, since
     // the flow sometimes takes differing paths

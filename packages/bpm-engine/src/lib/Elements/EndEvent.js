@@ -35,7 +35,7 @@ export default class EndEvent extends Event {
           isSubProcess: parentToken.isSubProcess,
         });
 
-        return ti.exec();
+        return ti.execute();
       }
     }
     else {

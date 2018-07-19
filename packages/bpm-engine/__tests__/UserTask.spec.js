@@ -14,13 +14,13 @@ describe('UserTask', () => {
     const token = await bpm.createProcessInstance({
       workflowDefinition: fs.readFileSync(`${__dirname}/diagrams/UserTask.bpmn`, 'utf-8'),
     });
-    await token.exec();
+    await token.execute();
 
     // continue the flow
     const continueToken = await bpm.continueTokenInstance({
       tokenId: token.tokenId,
     });
-    await continueToken.exec();
+    await continueToken.execute();
 
     setTimeout(() => {
       expect(history.store).toMatchSnapshot();
