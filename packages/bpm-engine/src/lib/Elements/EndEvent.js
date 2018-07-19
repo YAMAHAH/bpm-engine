@@ -3,7 +3,7 @@ import Event from 'lib/Elements/Event';
 export default class EndEvent extends Event {
   makeComplete = async () => {
     this.tokenInstance.status = 'ended';
-    await this.triggerState('complete');
+    await this.callPlugins('onComplete');
 
     await this.persist.tokenInstance.update(
       {

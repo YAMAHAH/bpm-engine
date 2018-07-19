@@ -173,13 +173,24 @@ export default class TokenInstance {
 
     const flowObject = this.createFlowObject(this.next);
 
+    // if we execute a paused token
+    // make it move
     if (this.status === 'paused') {
       this.status = 'running';
     }
     else {
+      // call the makeReady of the current flowObject
       await flowObject.makeReady();
-      await flowObject.makeActive();
+
+      // if the token is still moving (makeReady did not make it pause)
+      // then call the makeActive of the current flowObject
+      if (this.status === 'running') {
+        await flowObject.makeActive();
+      }
     }
+
+    // if we are in a moving token
+    // complete the activity
     if (this.status === 'running') {
       await flowObject.makeComplete();
 
@@ -190,6 +201,8 @@ export default class TokenInstance {
           ? flowObject.definition.outgoing
           : [flowObject.definition.targetRef];
 
+      // if the token is still moving
+      // continue execution (automation KEY-concept)
       if (this.status === 'running') {
         return this.execute();
       }

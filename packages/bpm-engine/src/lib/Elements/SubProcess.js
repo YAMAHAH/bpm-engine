@@ -22,7 +22,7 @@ const getSubProcessItems = async (loop, evalCondition, payload) => {
 
 export default class SubProcess extends Activity {
   makeActive = async () => {
-    await this.triggerState('active');
+    await this.callPlugins('onActive');
     this.tokenInstance.status = 'paused';
 
     const loop = this.definition.loopCharacteristics;

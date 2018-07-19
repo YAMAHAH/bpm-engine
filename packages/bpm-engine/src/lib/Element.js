@@ -1,7 +1,6 @@
 import debug from 'lib/debug';
 
-const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
-const log = debug('process');
+const log = debug('process:plugins');
 
 export default class Element {
   constructor({ definition, plugins, tokenInstance }) {
@@ -13,25 +12,9 @@ export default class Element {
     this.persist = this.engine.persist;
   }
 
-  triggerState = async (state) => {
-    if (this.engine.slowMotion) {
-      await sleep(this.engine.slowMotion);
-    }
+  callPlugins = (fn) => {
+    log(`${this.tokenInstance.tokenId} > ${this.definition.id} > ${fn}`);
 
-    log(`${this.tokenInstance.tokenId} > ${this.definition.id} > ${state}`);
-
-    if (state === 'ready') {
-      return this.runOnAllPlugins('onReady');
-    }
-    else if (state === 'active') {
-      return this.runOnAllPlugins('onActive');
-    }
-    else if (state === 'complete') {
-      return this.runOnAllPlugins('onComplete');
-    }
-  };
-
-  runOnAllPlugins = (fn) => {
     const promises = [];
     Object.keys(this.plugins).forEach((pluginName) => {
       if (this.plugins[pluginName][fn]) {
@@ -42,20 +25,12 @@ export default class Element {
     return Promise.all(promises);
   };
 
-  makeReady() {
-    return this.triggerState('ready');
-  }
+  makeReady = () => this.callPlugins('onReady');
+  makeActive = () => this.callPlugins('onActive');
+  makeComplete = () => this.callPlugins('onComplete');
 
-  makeActive() {
-    return this.triggerState('active');
-  }
-
-  makeComplete() {
-    return this.triggerState('complete');
-  }
-
-  persistChildIdsToParent(childIds) {
-    return this.persist.tokenInstance.update(
+  persistChildIdsToParent = childIds =>
+    this.persist.tokenInstance.update(
       { tokenId: this.tokenInstance.tokenId },
       {
         $set: {
@@ -64,10 +39,9 @@ export default class Element {
         },
       },
     );
-  }
 
-  setupChilds(outgoing) {
-    return Promise.all(outgoing.map(async (path) => {
+  setupChilds = outgoing =>
+    Promise.all(outgoing.map(async (path) => {
       const token = await this.engine.createTokenInstance({
         workflowDefinition: this.tokenInstance.workflowDefinition,
         payload: this.tokenInstance.payload,
@@ -84,5 +58,4 @@ export default class Element {
 
       return token;
     }));
-  }
 }

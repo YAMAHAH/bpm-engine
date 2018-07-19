@@ -3,7 +3,7 @@ import serial from 'lib/serial';
 
 export default class ParallelGateway extends Gateway {
   makeReady = async () => {
-    await this.triggerState('ready');
+    await this.callPlugins('onReady');
     const { incoming } = this.definition;
     if (incoming.length > 1) {
       // did any other waiting token arrive here yet?
@@ -59,7 +59,7 @@ export default class ParallelGateway extends Gateway {
   };
 
   makeComplete = async () => {
-    await this.triggerState('complete');
+    await this.callPlugins('onComplete');
     const { outgoing } = this.definition;
     if (outgoing.length > 1) {
       this.tokenInstance.status = 'paused';

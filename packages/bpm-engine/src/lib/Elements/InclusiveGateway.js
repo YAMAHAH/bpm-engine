@@ -3,7 +3,7 @@ import serial from 'lib/serial';
 
 export default class InclusiveGateway extends Gateway {
   makeReady = async () => {
-    await this.triggerState('ready');
+    await this.callPlugins('onReady');
     if (this.tokenInstance.parent) {
       const parentToken = await this.persist.tokenInstance.update(
         {
@@ -20,28 +20,32 @@ export default class InclusiveGateway extends Gateway {
     }
   };
 
+  getNext = async () => {
+    const { outgoing } = this.definition;
+    const { payload } = this.tokenInstance;
+
+    const next = [];
+    if (outgoing.length > 1) {
+      for (const path of outgoing) {
+        if (path.conditionExpression) {
+          const { conditionExpression } = path;
+          (await this.evalCondition(conditionExpression.body, payload)) && next.push(path);
+        }
+      }
+    }
+    else {
+      next.push(outgoing[0]);
+    }
+    return next;
+  };
+
   makeComplete = async () => {
     const { outgoing } = this.definition;
     if (outgoing.length > 1) {
       this.tokenInstance.status = 'paused';
-      await this.triggerState('complete');
+      await this.callPlugins('onComplete');
 
-      const { payload } = this.tokenInstance;
-      const next = [];
-
-      if (outgoing.length > 1) {
-        // eslint-disable-next-line
-        for (const path of outgoing) {
-          if (path.conditionExpression) {
-            const { conditionExpression } = path;
-            // eslint-disable-next-line
-            (await this.evalCondition(conditionExpression.body, payload)) && next.push(path);
-          }
-        }
-      }
-      else {
-        next.push(outgoing[0]);
-      }
+      const next = await this.getNext();
 
       if (!next.length) {
         if (this.definition.default) {

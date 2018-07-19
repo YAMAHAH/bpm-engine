@@ -5,7 +5,7 @@ export default class ExclusiveGateway extends Gateway {
     const { outgoing } = this.definition;
     const { payload } = this.tokenInstance;
 
-    await this.triggerState('active');
+    await this.callPlugins('onActive');
 
     const next = [];
 
