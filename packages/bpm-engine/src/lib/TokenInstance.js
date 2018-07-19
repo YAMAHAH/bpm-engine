@@ -35,6 +35,14 @@ const setLanes = (flowElements, lane) => {
   });
 };
 
+const getNexts = flowObject =>
+  // eslint-disable-next-line
+  (flowObject.next
+    ? [flowObject.next]
+    : flowObject.definition.outgoing
+      ? flowObject.definition.outgoing
+      : [flowObject.definition.targetRef]);
+
 const parseParticipantsAndLanes = (rootElements) => {
   // set participant for all flowElements
   rootElements.forEach((el) => {
@@ -173,39 +181,38 @@ export default class TokenInstance {
 
     const flowObject = this.createFlowObject(this.next);
 
-    // if we execute a paused token
-    // make it move
-    if (this.status === 'paused') {
-      this.status = 'running';
-    }
-    else {
-      // call the makeReady of the current flowObject
-      await flowObject.makeReady();
+    // if thhe current flow object is not a sequenceflow
+    // - make it ready
+    // - make it active
+    if (flowObject.constructor.name !== 'SequenceFlow') {
+      // if we execute a paused token
+      // make it move
+      if (this.status === 'paused') {
+        this.status = 'running';
+      }
+      else {
+        // call the makeReady of the current flowObject
+        await flowObject.makeReady();
 
-      // if the token is still moving (makeReady did not make it pause)
-      // then call the makeActive of the current flowObject
+        // if the token is still moving (makeReady did not make it pause)
+        // then call the makeActive of the current flowObject
+        if (this.status === 'running') {
+          await flowObject.makeActive();
+        }
+      }
+
+      // if we are in a moving token
+      // - complete the activity
       if (this.status === 'running') {
-        await flowObject.makeActive();
+        await flowObject.makeComplete();
       }
     }
 
-    // if we are in a moving token
-    // complete the activity
+    // if the token is still moving
+    // continue execution (automation KEY-concept)
     if (this.status === 'running') {
-      await flowObject.makeComplete();
-
-      // eslint-disable-next-line
-      this.nexts = flowObject.next
-        ? [flowObject.next]
-        : flowObject.definition.outgoing
-          ? flowObject.definition.outgoing
-          : [flowObject.definition.targetRef];
-
-      // if the token is still moving
-      // continue execution (automation KEY-concept)
-      if (this.status === 'running') {
-        return this.execute();
-      }
+      this.nexts = getNexts(flowObject);
+      return this.execute();
     }
 
     return Promise.resolve();

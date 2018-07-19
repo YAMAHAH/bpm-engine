@@ -45,33 +45,6 @@ Array [
     "state": "complete",
   },
   Object {
-    "elementId": "SequenceFlow_02qqmbt",
-    "lanes": undefined,
-    "participant": Object {
-      "id": "Participant_1aicb0m",
-      "name": "SwimLane",
-    },
-    "state": "ready",
-  },
-  Object {
-    "elementId": "SequenceFlow_02qqmbt",
-    "lanes": undefined,
-    "participant": Object {
-      "id": "Participant_1aicb0m",
-      "name": "SwimLane",
-    },
-    "state": "active",
-  },
-  Object {
-    "elementId": "SequenceFlow_02qqmbt",
-    "lanes": undefined,
-    "participant": Object {
-      "id": "Participant_1aicb0m",
-      "name": "SwimLane",
-    },
-    "state": "complete",
-  },
-  Object {
     "elementId": "Task_0qvmu3d",
     "lanes": Array [
       Object {
@@ -126,33 +99,6 @@ Array [
     "state": "complete",
   },
   Object {
-    "elementId": "SequenceFlow_03yb0xa",
-    "lanes": undefined,
-    "participant": Object {
-      "id": "Participant_1aicb0m",
-      "name": "SwimLane",
-    },
-    "state": "ready",
-  },
-  Object {
-    "elementId": "SequenceFlow_03yb0xa",
-    "lanes": undefined,
-    "participant": Object {
-      "id": "Participant_1aicb0m",
-      "name": "SwimLane",
-    },
-    "state": "active",
-  },
-  Object {
-    "elementId": "SequenceFlow_03yb0xa",
-    "lanes": undefined,
-    "participant": Object {
-      "id": "Participant_1aicb0m",
-      "name": "SwimLane",
-    },
-    "state": "complete",
-  },
-  Object {
     "elementId": "Task_0qjan9z",
     "lanes": Array [
       Object {
@@ -200,33 +146,6 @@ Array [
         "name": "B1",
       },
     ],
-    "participant": Object {
-      "id": "Participant_1aicb0m",
-      "name": "SwimLane",
-    },
-    "state": "complete",
-  },
-  Object {
-    "elementId": "SequenceFlow_0eeydo7",
-    "lanes": undefined,
-    "participant": Object {
-      "id": "Participant_1aicb0m",
-      "name": "SwimLane",
-    },
-    "state": "ready",
-  },
-  Object {
-    "elementId": "SequenceFlow_0eeydo7",
-    "lanes": undefined,
-    "participant": Object {
-      "id": "Participant_1aicb0m",
-      "name": "SwimLane",
-    },
-    "state": "active",
-  },
-  Object {
-    "elementId": "SequenceFlow_0eeydo7",
-    "lanes": undefined,
     "participant": Object {
       "id": "Participant_1aicb0m",
       "name": "SwimLane",

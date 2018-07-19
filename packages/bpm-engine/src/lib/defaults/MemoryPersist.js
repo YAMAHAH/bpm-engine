@@ -1,3 +1,8 @@
+import debug from 'lib/debug';
+import fs from 'fs';
+
+const log = debug('persist');
+
 const findByProcessId = processId => el => el.processId === processId;
 
 /**
@@ -50,29 +55,40 @@ export default class MemoryPersist {
   constructor({ store = createEmptyStore() } = {}) {
     this.store = store;
 
+    log('creating persistence instance');
+
     if (!this.store.processInstances) {
       throw new Error('A store provided to the persisting-layer needs to have a processInstances key-value which will contain the collection of token instances');
     }
     if (!this.store.tokenInstances) {
       throw new Error('A store provided to the persisting-layer needs to have a tokenInstances key-value which will contain the collection of token instances');
     }
+
+    // setInterval(() => {
+    //   fs.writeFileSync('./processes', JSON.stringify(this.store.processInstances), 'utf-8');
+    //   fs.writeFileSync('./tokens', JSON.stringify(this.store.tokenInstances), 'utf-8');
+    // }, 100);
   }
 
   processInstance = {
     create: (json) => {
+      log('create process');
       this.store.processInstances.push(json);
       return JSON.parse(JSON.stringify(json));
     },
 
     find: (query) => {
+      log('find process', query);
       const processInstance = this.store.processInstances.find(findByProcessId(query.processId));
       return JSON.parse(JSON.stringify(processInstance));
     },
 
     update: (query, obj) => {
+      log('update process', query, obj);
       const json = JSON.parse(JSON.stringify(obj));
 
       const processInstance = this.store.processInstances.find(findByProcessId(query.processId));
+      remapSet(json);
       Object.assign(processInstance, json);
 
       return JSON.parse(JSON.stringify(processInstance));
@@ -81,16 +97,19 @@ export default class MemoryPersist {
 
   tokenInstance = {
     create: (obj) => {
+      log('create token', obj);
       this.store.tokenInstances.push(obj);
       return JSON.parse(JSON.stringify(obj));
     },
 
     find: (query) => {
+      log('find token', query);
       const tokenInstance = this.store.tokenInstances.find(findByQuery(query));
       return tokenInstance && JSON.parse(JSON.stringify(tokenInstance));
     },
 
     update: (query, obj) => {
+      log('update token', query, obj);
       const json = JSON.parse(JSON.stringify(obj));
 
       const tokenInstance = this.store.tokenInstances.find(findByQuery(query));

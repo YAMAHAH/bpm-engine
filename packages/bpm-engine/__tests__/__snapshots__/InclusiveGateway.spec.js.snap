@@ -21,24 +21,6 @@ Array [
     "state": "complete",
   },
   Object {
-    "elementId": "SequenceFlow_0ozinck",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "ready",
-  },
-  Object {
-    "elementId": "SequenceFlow_0ozinck",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "active",
-  },
-  Object {
-    "elementId": "SequenceFlow_0ozinck",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "complete",
-  },
-  Object {
     "elementId": "InclusiveGateway_1sopzs7",
     "lanes": undefined,
     "participant": undefined,
@@ -52,24 +34,6 @@ Array [
   },
   Object {
     "elementId": "InclusiveGateway_1sopzs7",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "complete",
-  },
-  Object {
-    "elementId": "SequenceFlow_06ympix",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "ready",
-  },
-  Object {
-    "elementId": "SequenceFlow_06ympix",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "active",
-  },
-  Object {
-    "elementId": "SequenceFlow_06ympix",
     "lanes": undefined,
     "participant": undefined,
     "state": "complete",
@@ -93,46 +57,10 @@ Array [
     "state": "complete",
   },
   Object {
-    "elementId": "SequenceFlow_01mzaao",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "ready",
-  },
-  Object {
-    "elementId": "SequenceFlow_01mzaao",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "active",
-  },
-  Object {
-    "elementId": "SequenceFlow_01mzaao",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "complete",
-  },
-  Object {
     "elementId": "InclusiveGateway_1uhxkjz",
     "lanes": undefined,
     "participant": undefined,
     "state": "ready",
-  },
-  Object {
-    "elementId": "SequenceFlow_0aqelwg",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "ready",
-  },
-  Object {
-    "elementId": "SequenceFlow_0aqelwg",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "active",
-  },
-  Object {
-    "elementId": "SequenceFlow_0aqelwg",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "complete",
   },
   Object {
     "elementId": "Task_0t7t9b7",
@@ -153,24 +81,6 @@ Array [
     "state": "complete",
   },
   Object {
-    "elementId": "SequenceFlow_01z8ep9",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "ready",
-  },
-  Object {
-    "elementId": "SequenceFlow_01z8ep9",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "active",
-  },
-  Object {
-    "elementId": "SequenceFlow_01z8ep9",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "complete",
-  },
-  Object {
     "elementId": "InclusiveGateway_1uhxkjz",
     "lanes": undefined,
     "participant": undefined,
@@ -181,24 +91,6 @@ Array [
     "lanes": undefined,
     "participant": undefined,
     "state": "active",
-  },
-  Object {
-    "elementId": "SequenceFlow_0saa0yk",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "ready",
-  },
-  Object {
-    "elementId": "SequenceFlow_0saa0yk",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "active",
-  },
-  Object {
-    "elementId": "SequenceFlow_0saa0yk",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "complete",
   },
   Object {
     "elementId": "EndEvent_05zfgny",
@@ -242,24 +134,6 @@ Array [
     "state": "complete",
   },
   Object {
-    "elementId": "SequenceFlow_0ozinck",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "ready",
-  },
-  Object {
-    "elementId": "SequenceFlow_0ozinck",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "active",
-  },
-  Object {
-    "elementId": "SequenceFlow_0ozinck",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "complete",
-  },
-  Object {
     "elementId": "InclusiveGateway_1sopzs7",
     "lanes": undefined,
     "participant": undefined,
@@ -278,24 +152,6 @@ Array [
     "state": "complete",
   },
   Object {
-    "elementId": "SequenceFlow_06ympix",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "ready",
-  },
-  Object {
-    "elementId": "SequenceFlow_06ympix",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "active",
-  },
-  Object {
-    "elementId": "SequenceFlow_06ympix",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "complete",
-  },
-  Object {
     "elementId": "Task_0j4pnbs",
     "lanes": undefined,
     "participant": undefined,
@@ -309,24 +165,6 @@ Array [
   },
   Object {
     "elementId": "Task_0j4pnbs",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "complete",
-  },
-  Object {
-    "elementId": "SequenceFlow_01mzaao",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "ready",
-  },
-  Object {
-    "elementId": "SequenceFlow_01mzaao",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "active",
-  },
-  Object {
-    "elementId": "SequenceFlow_01mzaao",
     "lanes": undefined,
     "participant": undefined,
     "state": "complete",
@@ -342,24 +180,6 @@ Array [
     "lanes": undefined,
     "participant": undefined,
     "state": "active",
-  },
-  Object {
-    "elementId": "SequenceFlow_0saa0yk",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "ready",
-  },
-  Object {
-    "elementId": "SequenceFlow_0saa0yk",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "active",
-  },
-  Object {
-    "elementId": "SequenceFlow_0saa0yk",
-    "lanes": undefined,
-    "participant": undefined,
-    "state": "complete",
   },
   Object {
     "elementId": "EndEvent_05zfgny",

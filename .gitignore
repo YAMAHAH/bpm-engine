@@ -62,3 +62,6 @@ typings/
 **/dist/**/*.js
 **/browser/**/*.js
 **/*/secrets.js
+
+processes
+tokens
