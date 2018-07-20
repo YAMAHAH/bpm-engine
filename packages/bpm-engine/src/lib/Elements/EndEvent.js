@@ -25,6 +25,7 @@ export default class EndEvent extends Event {
       // continue with parent token
       const cleanPayload = this.tokenInstance.payload;
       delete cleanPayload._;
+
       if (parentToken.childs.length === 0) {
         const ti = await this.engine.continueTokenInstance({
           tokenId: parentToken.tokenId,

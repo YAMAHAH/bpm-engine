@@ -35,7 +35,6 @@ export default class SubProcess extends Activity {
     // not looping, not a multi instance
     if (!loop) {
       const ti = await this.engine.createTokenInstance({
-        definition: this.tokenInstance.workflowDefinition,
         payload: this.tokenInstance.payload,
         parent: this.tokenInstance.tokenId,
         processId: this.tokenInstance.processId,
@@ -62,7 +61,6 @@ export default class SubProcess extends Activity {
           payload._.item = item;
 
           const ti = await this.engine.createTokenInstance({
-            workflowDefinition: this.tokenInstance.workflowDefinition,
             payload,
             parent: this.tokenInstance.tokenId,
             processId: this.tokenInstance.processId,
@@ -76,11 +74,9 @@ export default class SubProcess extends Activity {
     }
 
     const childIds = childs.map(child => child.tokenId);
-
     await this.persistChildIdsToParent(childIds);
 
     const funcs = childs.map(child => () => child.execute());
-
-    return serial(funcs);
+    await serial(funcs);
   };
 }

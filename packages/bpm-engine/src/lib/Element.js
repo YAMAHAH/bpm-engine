@@ -43,7 +43,6 @@ export default class Element {
   setupChilds = outgoing =>
     Promise.all(outgoing.map(async (path) => {
       const token = await this.engine.createTokenInstance({
-        workflowDefinition: this.tokenInstance.workflowDefinition,
         payload: this.tokenInstance.payload,
         processId: this.tokenInstance.processId,
         parent: this.tokenInstance.tokenId,

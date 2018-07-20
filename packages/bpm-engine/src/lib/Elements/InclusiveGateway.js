@@ -4,6 +4,9 @@ import serial from 'lib/serial';
 export default class InclusiveGateway extends Gateway {
   makeReady = async () => {
     await this.callPlugins('onReady');
+
+    // if this token has a parent
+    // we pull ourselves out of its childs
     if (this.tokenInstance.parent) {
       const parentToken = await this.persist.tokenInstance.update(
         {
@@ -14,6 +17,9 @@ export default class InclusiveGateway extends Gateway {
         },
       );
 
+      // if there are still childs left
+      // we set us to be paused, since only the last
+      // token should be continued
       if (parentToken.childs.length > 0) {
         this.tokenInstance.status = 'paused';
       }
@@ -41,9 +47,11 @@ export default class InclusiveGateway extends Gateway {
 
   makeComplete = async () => {
     const { outgoing } = this.definition;
+
+    await this.callPlugins('onComplete');
+
     if (outgoing.length > 1) {
       this.tokenInstance.status = 'paused';
-      await this.callPlugins('onComplete');
 
       const next = await this.getNext();
 
@@ -66,8 +74,7 @@ export default class InclusiveGateway extends Gateway {
       });
 
       const funcs = childs.map(child => () => child.execute());
-
-      return serial(funcs);
+      await serial(funcs);
     }
   };
 }

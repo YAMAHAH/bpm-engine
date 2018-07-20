@@ -93,6 +93,12 @@ Array [
     "state": "active",
   },
   Object {
+    "elementId": "InclusiveGateway_1uhxkjz",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "complete",
+  },
+  Object {
     "elementId": "EndEvent_05zfgny",
     "lanes": undefined,
     "participant": undefined,
@@ -180,6 +186,12 @@ Array [
     "lanes": undefined,
     "participant": undefined,
     "state": "active",
+  },
+  Object {
+    "elementId": "InclusiveGateway_1uhxkjz",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "complete",
   },
   Object {
     "elementId": "EndEvent_05zfgny",

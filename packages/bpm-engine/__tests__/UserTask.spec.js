@@ -1,30 +1,37 @@
 import fs from 'fs';
 
 import BPMEngine from 'bpm-engine';
+
 import History from './Plugins/History';
 
 describe('UserTask', () => {
-  it('Pauses a token and controls continuing it', async (done) => {
+  it('Pauses a token and controls continuing it', async () => {
+    // given
     const history = new History();
     const bpm = new BPMEngine({
       plugins: [history],
     });
 
-    // start the process and the flow
     const token = await bpm.createProcessInstance({
       workflowDefinition: fs.readFileSync(`${__dirname}/diagrams/UserTask.bpmn`, 'utf-8'),
     });
+
+    // when
     await token.execute();
 
-    // continue the flow
+    // then
+    expect(token.status).toBe('paused');
+
+    // given
     const continueToken = await bpm.continueTokenInstance({
       tokenId: token.tokenId,
     });
+
+    // when
     await continueToken.execute();
 
-    setTimeout(() => {
-      expect(history.store).toMatchSnapshot();
-      done();
-    }, 100);
+    // then
+    expect(continueToken.status).toBe('ended');
+    expect(history.store).toMatchSnapshot();
   });
 });

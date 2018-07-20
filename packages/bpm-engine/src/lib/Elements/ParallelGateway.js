@@ -4,7 +4,10 @@ import serial from 'lib/serial';
 export default class ParallelGateway extends Gateway {
   makeReady = async () => {
     await this.callPlugins('onReady');
+
     const { incoming } = this.definition;
+
+    // converging
     if (incoming.length > 1) {
       // did any other waiting token arrive here yet?
       const anyOtherToken = await this.persist.tokenInstance.find({
@@ -13,7 +16,8 @@ export default class ParallelGateway extends Gateway {
         currentActivity: this.definition.id,
       });
 
-      // use this token as the first which arrived
+      // no other active tokens have arrived here yet,
+      // so use this token as the first which arrived
       if (!anyOtherToken) {
         const pending = incoming.map(el => el.id);
         const index = pending.indexOf(this.tokenInstance.lastActivity);
@@ -56,11 +60,15 @@ export default class ParallelGateway extends Gateway {
         }
       }
     }
+
+    return Promise.resolve();
   };
 
   makeComplete = async () => {
     await this.callPlugins('onComplete');
+
     const { outgoing } = this.definition;
+
     if (outgoing.length > 1) {
       this.tokenInstance.status = 'paused';
 
@@ -74,5 +82,7 @@ export default class ParallelGateway extends Gateway {
 
       return serial(funcs);
     }
+
+    return Promise.resolve();
   };
 }
