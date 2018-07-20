@@ -32,29 +32,44 @@ class BPMEngine {
     evalCondition = defaults.evalCondition,
     persist = new defaults.MemoryPersist(),
     plugins = [],
-    slowMotion = false,
   } = {}) {
     Object.assign(this, {
       generateId,
       evalCondition,
       persist,
-      slowMotion: slowMotion && (typeof slowMotion === 'number' ? slowMotion : 500),
       plugins: loadPlugins(plugins),
     });
 
     log('Initiated');
   }
 
-  async createProcessInstance({ workflowDefinition, payload = {}, meta } = {}) {
-    if (!workflowDefinition) {
-      throw new Error('Parameter "workflowDefinition" is required');
+  async createProcessInstance({
+    workflowDefinition,
+    workflowDefinitionId,
+    payload = {},
+    meta,
+  } = {}) {
+    let workflowDefinitionXML;
+
+    if (workflowDefinition) {
+      workflowDefinitionXML = workflowDefinition;
+    }
+    else if (workflowDefinitionId) {
+      const deployedWorkflowDefinition = await this.findWorkflowDefinition(workflowDefinitionId);
+      if (deployedWorkflowDefinition) {
+        workflowDefinitionXML = deployedWorkflowDefinition.xml;
+      }
+    }
+
+    if (!workflowDefinitionXML) {
+      throw new Error('Invalid WorkflowDefinition');
     }
 
     const processId = this.generateId();
     log(`Creating processInstance ${processId}`);
     await this.persist.processInstance.create({
       processId,
-      workflowDefinition,
+      workflowDefinition: workflowDefinitionXML,
       payload,
     });
     log(`processInstance ${processId} created`);
@@ -62,7 +77,7 @@ class BPMEngine {
     const tokenInstance = await this.createTokenInstance({
       processId,
       payload,
-      workflowDefinition,
+      workflowDefinition: workflowDefinitionXML,
       meta,
     });
 
@@ -74,19 +89,17 @@ class BPMEngine {
     payload,
     workflowDefinition,
     meta,
-    tokenId,
+    tokenId = this.generateId(),
     status,
     parent,
     isSubProcess,
     currentActivity,
     flowObjects,
   }) {
-    const tid = tokenId || this.generateId();
-
-    log(`Creating tokenInstance ${tid}`);
+    log(`Creating tokenInstance ${tokenId}`);
     const tokenInstance = new TokenInstance({
       processId,
-      tokenId: tid,
+      tokenId,
       payload,
       workflowDefinition,
       meta,
@@ -102,7 +115,7 @@ class BPMEngine {
     else {
       tokenInstance.flowObjects = flowObjects;
     }
-    log(`tokenInstance ${tid} created`);
+    log(`tokenInstance ${tokenId} created`);
 
     return tokenInstance;
   }
@@ -147,6 +160,17 @@ class BPMEngine {
 
   findProcessInstance(processId) {
     return this.persist.processInstance.find({ processId });
+  }
+
+  findWorkflowDefinition(workflowDefinitionId) {
+    return this.persist.workflowDefinition.find({ workflowDefinitionId });
+  }
+
+  deployWorkflowDefinition({ xml, workflowDefinitionId = this.generateId() }) {
+    return this.persist.workflowDefinition.create({
+      xml,
+      workflowDefinitionId,
+    });
   }
 }
 

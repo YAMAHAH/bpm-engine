@@ -25,4 +25,9 @@ export default class MongoosePersist {
       this.schemas.tokenInstance.findOneAndUpdate(query, patch, { new: true }),
     find: query => this.schemas.tokenInstance.findOne(query),
   };
+
+  workflowDefinition = {
+    create: obj => this.schemas.workflowDefinition.create(obj),
+    find: query => this.schemas.workflowDefinition.findOne(query),
+  };
 }

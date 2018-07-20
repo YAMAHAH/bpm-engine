@@ -65,6 +65,22 @@ const ProcessInstanceSchema = new Schema(
   { timestamps: true, minimize: false },
 );
 
+const WorkflowDefinitionSchema = new Schema(
+  {
+    workflowDefinitionId: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+    },
+    xml: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true, minimize: false },
+);
+
 export default (client, names = {}) => ({
   tokenInstance: client.model(
     names.tokenInstance || 'bpmEngine_tokenInstance',
@@ -73,5 +89,9 @@ export default (client, names = {}) => ({
   processInstance: client.model(
     names.processInstance || 'bpmEngine_processInstance',
     ProcessInstanceSchema,
+  ),
+  workflowDefinition: client.model(
+    names.workflowDefinition || 'bpmEngine_workflowDefinition',
+    WorkflowDefinitionSchema,
   ),
 });

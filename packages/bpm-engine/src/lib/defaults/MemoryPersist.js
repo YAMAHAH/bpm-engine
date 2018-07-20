@@ -49,6 +49,7 @@ const createEmptyStore = () =>
   Object.create({
     processInstances: [],
     tokenInstances: [],
+    workflowDefinitions: [],
   });
 
 export default class MemoryPersist {
@@ -62,6 +63,9 @@ export default class MemoryPersist {
     }
     if (!this.store.tokenInstances) {
       throw new Error('A store provided to the persisting-layer needs to have a tokenInstances key-value which will contain the collection of token instances');
+    }
+    if (!this.store.workflowDefinitions) {
+      throw new Error('A store provided to the persisting-layer needs to have a workflowDefinitions key-value which will contain the collection of workflow definitions');
     }
 
     // setInterval(() => {
@@ -124,6 +128,20 @@ export default class MemoryPersist {
       Object.assign(tokenInstance, json);
 
       return JSON.parse(JSON.stringify(tokenInstance));
+    },
+  };
+
+  workflowDefinition = {
+    create: (obj) => {
+      log('create workflowDefinition (deploy)', obj);
+      this.store.workflowDefinitions.push(obj);
+      return JSON.parse(JSON.stringify(obj));
+    },
+
+    find: (query) => {
+      log('find workflowDefinition', query);
+      const workflowDefinition = this.store.workflowDefinitions.find(findByQuery(query));
+      return workflowDefinition && JSON.parse(JSON.stringify(workflowDefinition));
     },
   };
 }

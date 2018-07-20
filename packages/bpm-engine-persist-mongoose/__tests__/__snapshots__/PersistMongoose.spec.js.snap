@@ -1,10 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PersistMongoose Work 1`] = `1`;
+exports[`PersistMongoose Can deploy a workflow definition 1`] = `1`;
 
-exports[`PersistMongoose Work 2`] = `3`;
+exports[`PersistMongoose Creates a process instance by xml 1`] = `1`;
 
-exports[`PersistMongoose Work 3`] = `
+exports[`PersistMongoose Creates a process instance by xml 2`] = `3`;
+
+exports[`PersistMongoose Creates a process instance by xml 3`] = `
 Array [
   Object {
     "elementId": "StartEvent_1",
