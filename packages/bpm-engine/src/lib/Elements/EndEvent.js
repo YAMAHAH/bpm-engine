@@ -30,7 +30,6 @@ export default class EndEvent extends Event {
           tokenId: parentToken.tokenId,
           payload: cleanPayload,
           parent: parentToken.parent,
-          meta: this.tokenInstance.meta,
           processId: this.tokenInstance.processId,
           isSubProcess: parentToken.isSubProcess,
         });

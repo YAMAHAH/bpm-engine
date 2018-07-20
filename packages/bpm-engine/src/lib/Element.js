@@ -45,7 +45,6 @@ export default class Element {
       const token = await this.engine.createTokenInstance({
         workflowDefinition: this.tokenInstance.workflowDefinition,
         payload: this.tokenInstance.payload,
-        meta: this.tokenInstance.meta,
         processId: this.tokenInstance.processId,
         parent: this.tokenInstance.tokenId,
         isSubProcess: this.tokenInstance.isSubProcess,

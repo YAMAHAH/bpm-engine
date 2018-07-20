@@ -39,7 +39,6 @@ export default class SubProcess extends Activity {
         payload: this.tokenInstance.payload,
         parent: this.tokenInstance.tokenId,
         processId: this.tokenInstance.processId,
-        meta: this.tokenInstance.meta,
         flowObjects: this.definition.flowElements,
       });
 
@@ -67,7 +66,6 @@ export default class SubProcess extends Activity {
             payload,
             parent: this.tokenInstance.tokenId,
             processId: this.tokenInstance.processId,
-            meta: this.tokenInstance.meta,
             isSubProcess: true,
             flowObjects: this.definition.flowElements,
           });

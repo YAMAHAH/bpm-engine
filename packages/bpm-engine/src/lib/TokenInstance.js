@@ -78,7 +78,6 @@ export default class TokenInstance {
     tokenId,
     payload,
     workflowDefinition,
-    meta,
     status,
     currentActivity,
     isSubProcess,
@@ -87,7 +86,6 @@ export default class TokenInstance {
   }) {
     this.workflowDefinition = workflowDefinition;
     this.engine = engine;
-    this.meta = meta;
 
     Object.assign(this, {
       tokenId,

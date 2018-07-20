@@ -43,12 +43,7 @@ class BPMEngine {
     log('Initiated');
   }
 
-  async createProcessInstance({
-    workflowDefinition,
-    workflowDefinitionId,
-    payload = {},
-    meta,
-  } = {}) {
+  async createProcessInstance({ workflowDefinition, workflowDefinitionId, payload = {} } = {}) {
     let workflowDefinitionXML;
 
     if (workflowDefinition) {
@@ -78,7 +73,6 @@ class BPMEngine {
       processId,
       payload,
       workflowDefinition: workflowDefinitionXML,
-      meta,
     });
 
     return tokenInstance;
@@ -88,7 +82,6 @@ class BPMEngine {
     processId,
     payload,
     workflowDefinition,
-    meta,
     tokenId = this.generateId(),
     status,
     parent,
@@ -102,7 +95,6 @@ class BPMEngine {
       tokenId,
       payload,
       workflowDefinition,
-      meta,
       status,
       parent,
       isSubProcess,
@@ -120,7 +112,7 @@ class BPMEngine {
     return tokenInstance;
   }
 
-  async continueTokenInstance({ tokenId, payload, meta }) {
+  async continueTokenInstance({ tokenId, payload }) {
     log(`Continuing tokenInstance ${tokenId}`);
     const persistedTokenInstance = await this.findTokenInstance(tokenId);
     const persistedProcessInstance = await this.findProcessInstance(persistedTokenInstance.processId);
@@ -136,7 +128,6 @@ class BPMEngine {
       processId: persistedProcessInstance.processId,
       payload: mergedPayload,
       workflowDefinition,
-      meta,
       tokenId,
       status: 'paused',
       currentActivity: persistedTokenInstance.next,
