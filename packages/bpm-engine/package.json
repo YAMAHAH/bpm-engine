@@ -1,6 +1,6 @@
 {
   "name": "bpm-engine",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Business Process Management Engine for JavaScript",
   "main": "index.js",
   "scripts": {
