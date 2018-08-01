@@ -68,8 +68,14 @@ Object {
 
 exports[`BPMEngine User can define his own method for generation of resource ids 1`] = `
 BPMEngine {
+  "clock": Clock {
+    "interval": 500,
+    "onTick": [Function],
+    "status": "paused",
+  },
   "evalCondition": [Function],
   "generateId": [Function],
+  "onTick": [Function],
   "persist": MemoryPersist {
     "processInstance": Object {
       "create": [Function],
@@ -77,6 +83,12 @@ BPMEngine {
       "update": [Function],
     },
     "store": Object {},
+    "timers": Object {
+      "create": [Function],
+      "find": [Function],
+      "getNext": [Function],
+      "update": [Function],
+    },
     "tokenInstance": Object {
       "create": [Function],
       "find": [Function],
@@ -97,8 +109,14 @@ BPMEngine {
 
 exports[`BPMEngine User can define his own method for validation of conditions 1`] = `
 BPMEngine {
+  "clock": Clock {
+    "interval": 500,
+    "onTick": [Function],
+    "status": "paused",
+  },
   "evalCondition": [Function],
   "generateId": [Function],
+  "onTick": [Function],
   "persist": MemoryPersist {
     "processInstance": Object {
       "create": [Function],
@@ -106,6 +124,12 @@ BPMEngine {
       "update": [Function],
     },
     "store": Object {},
+    "timers": Object {
+      "create": [Function],
+      "find": [Function],
+      "getNext": [Function],
+      "update": [Function],
+    },
     "tokenInstance": Object {
       "create": [Function],
       "find": [Function],
@@ -126,8 +150,14 @@ BPMEngine {
 
 exports[`BPMEngine User can define his own persistance methods 1`] = `
 BPMEngine {
+  "clock": Clock {
+    "interval": 500,
+    "onTick": [Function],
+    "status": "paused",
+  },
   "evalCondition": [Function],
   "generateId": [Function],
+  "onTick": [Function],
   "persist": Object {},
   "plugins": Object {
     "element": Object {},

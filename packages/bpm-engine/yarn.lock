@@ -27,6 +27,12 @@ debug@^3.1.0:
   dependencies:
     ms "2.0.0"
 
+iso8601-repeating-interval@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/iso8601-repeating-interval/-/iso8601-repeating-interval-0.1.4.tgz#67284d6e864d98cf9f824d35aa96f5451dd4fa35"
+  dependencies:
+    moment "^2.17.1"
+
 jexl@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/jexl/-/jexl-1.1.4.tgz#35cf86f881ea219d1e215c7a41e2e747ce6ee8a6"
@@ -49,6 +55,10 @@ moddle@^2.0.0:
   resolved "https://registry.yarnpkg.com/moddle/-/moddle-2.0.0.tgz#8691d1d11a47b354b657734b0efcdd5903d1ae23"
   dependencies:
     lodash "^3.0.0"
+
+moment@^2.17.1:
+  version "2.22.2"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.22.2.tgz#3c257f9839fc0e93ff53149632239eb90783ff66"
 
 ms@2.0.0:
   version "2.0.0"

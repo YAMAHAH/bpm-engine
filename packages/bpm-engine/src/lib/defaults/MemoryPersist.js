@@ -50,6 +50,7 @@ const createEmptyStore = () =>
     processInstances: [],
     tokenInstances: [],
     workflowDefinitions: [],
+    timers: [],
   });
 
 export default class MemoryPersist {
@@ -59,13 +60,16 @@ export default class MemoryPersist {
     log('creating persistence instance');
 
     if (!this.store.processInstances) {
-      throw new Error('A store provided to the persisting-layer needs to have a processInstances key-value which will contain the collection of token instances');
+      throw new Error('A store provided to the persisting-layer needs to have a processInstances key-value which will contain a collection of token instances');
     }
     if (!this.store.tokenInstances) {
-      throw new Error('A store provided to the persisting-layer needs to have a tokenInstances key-value which will contain the collection of token instances');
+      throw new Error('A store provided to the persisting-layer needs to have a tokenInstances key-value which will contain a collection of token instances');
     }
     if (!this.store.workflowDefinitions) {
-      throw new Error('A store provided to the persisting-layer needs to have a workflowDefinitions key-value which will contain the collection of workflow definitions');
+      throw new Error('A store provided to the persisting-layer needs to have a workflowDefinitions key-value which will contain a collection of workflow definitions');
+    }
+    if (!this.store.timers) {
+      throw new Error('A store provided to the persisting-layer needs to have a timers key-value which will contain a collection of timers');
     }
 
     // setInterval(() => {
@@ -142,6 +146,48 @@ export default class MemoryPersist {
       log('find workflowDefinition', query);
       const workflowDefinition = this.store.workflowDefinitions.find(findByQuery(query));
       return workflowDefinition && JSON.parse(JSON.stringify(workflowDefinition));
+    },
+  };
+
+  timers = {
+    create: (obj) => {
+      log('create timer', obj);
+      this.store.timers.push(obj);
+      return JSON.parse(JSON.stringify(obj));
+    },
+
+    find: (query) => {
+      log('find timer', query);
+      const timer = this.store.timers.find(findByQuery(query));
+      return timer && JSON.parse(JSON.stringify(timer));
+    },
+
+    getNext: (time) => {
+      log('find next timer');
+      const timers = this.store.timers
+        .filter(a => a.status !== 'done')
+        .map(a => Object.assign(a, { timeLeft: a.time - time }))
+        .filter(a => a.timeLeft <= 0)
+        .sort((a, b) => a.timeLeft < b.timeLeft);
+      return timers[0] && JSON.parse(JSON.stringify(timers[0]));
+    },
+
+    update: (query, obj) => {
+      log('update timer', query, obj);
+      const json = JSON.parse(JSON.stringify(obj));
+
+      const timer = this.store.timers.find(findByQuery(query));
+
+      if (!timer) {
+        throw new Error(`timer not found ${query.timerId}`);
+      }
+
+      remapSet(json);
+      remapPull(json, timer);
+
+      Object.assign(timer, json);
+
+      return JSON.parse(JSON.stringify(timer));
     },
   };
 }

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="1.10.0">
+  <bpmn:process id="Process_1" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Start">
+      <bpmn:extensionElements>
+        <camunda:properties>
+          <camunda:property />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>SequenceFlow_1rvelmb</bpmn:outgoing>
+      <bpmn:timerEventDefinition>
+        <bpmn:timeCycle xsi:type="bpmn:tFormalExpression">R3/${timestamp}/PT1S</bpmn:timeCycle>
+      </bpmn:timerEventDefinition>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1rvelmb" sourceRef="StartEvent_1" targetRef="Task_1me2wuc" />
+    <bpmn:endEvent id="EndEvent_073fq1n" name="End">
+      <bpmn:incoming>SequenceFlow_0bzzcq5</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0bzzcq5" sourceRef="Task_1me2wuc" targetRef="EndEvent_073fq1n" />
+    <bpmn:task id="Task_1me2wuc" name="Do Something">
+      <bpmn:incoming>SequenceFlow_1rvelmb</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0bzzcq5</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:textAnnotation id="TextAnnotation_1hxw6e4">    <bpmn:text>From moment of deploy, 10 times, start this process instance, once a day</bpmn:text>
+</bpmn:textAnnotation>
+    <bpmn:association id="Association_0fe70qh" sourceRef="StartEvent_1" targetRef="TextAnnotation_1hxw6e4" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="StartEvent_1e559sn_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="271" y="413" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="277" y="449" width="24" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1rvelmb_di" bpmnElement="SequenceFlow_1rvelmb">
+        <di:waypoint xsi:type="dc:Point" x="307" y="431" />
+        <di:waypoint xsi:type="dc:Point" x="363" y="431" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="335" y="409.5" width="0" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_073fq1n_di" bpmnElement="EndEvent_073fq1n">
+        <dc:Bounds x="521" y="413" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="529" y="452" width="20" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0bzzcq5_di" bpmnElement="SequenceFlow_0bzzcq5">
+        <di:waypoint xsi:type="dc:Point" x="463" y="431" />
+        <di:waypoint xsi:type="dc:Point" x="521" y="431" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="492" y="409.5" width="0" height="13" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_1hxw6e4_di" bpmnElement="TextAnnotation_1hxw6e4">
+        <dc:Bounds x="239" y="228" width="100" height="98" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0fe70qh_di" bpmnElement="Association_0fe70qh">
+        <di:waypoint xsi:type="dc:Point" x="289" y="413" />
+        <di:waypoint xsi:type="dc:Point" x="289" y="326" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Task_16bxor6_di" bpmnElement="Task_1me2wuc">
+        <dc:Bounds x="363" y="391" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
