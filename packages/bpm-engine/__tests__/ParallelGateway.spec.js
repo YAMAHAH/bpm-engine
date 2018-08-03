@@ -2,9 +2,10 @@ import fs from 'fs';
 
 import BPMEngine from 'bpm-engine';
 import History from './Plugins/History';
+import sleep from './Plugins/sleep';
 
 describe('ParallelGateway', () => {
-  it('Continues on all paths', async (done) => {
+  it('Continues on all paths', async () => {
     const history = new History();
     const bpm = new BPMEngine({
       plugins: [history],
@@ -15,13 +16,11 @@ describe('ParallelGateway', () => {
     });
 
     await token.execute();
-    setTimeout(() => {
-      expect(history.store).toMatchSnapshot();
-      done();
-    }, 100);
+    await sleep(100);
+    expect(history.store).toMatchSnapshot();
   });
 
-  it('Runs services in parallel', async (done) => {
+  it('Runs services in parallel', async () => {
     const history = new History();
     const bpm = new BPMEngine({
       plugins: [history],
@@ -32,9 +31,8 @@ describe('ParallelGateway', () => {
     });
 
     await token.execute();
-    setTimeout(() => {
-      expect(history.store).toMatchSnapshot();
-      done();
-    }, 100);
+
+    await sleep(100);
+    expect(history.store).toMatchSnapshot();
   });
 });

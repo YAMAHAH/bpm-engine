@@ -1,10 +1,12 @@
 import fs from 'fs';
 
 import BPMEngine from 'bpm-engine';
+
 import History from './Plugins/History';
+import sleep from './Plugins/sleep';
 
 describe('SwimLane', () => {
-  it('Pauses a token and controls continuing it', async (done) => {
+  it('Pauses a token and controls continuing it', async () => {
     const history = new History();
     const bpm = new BPMEngine({
       plugins: [history],
@@ -16,9 +18,7 @@ describe('SwimLane', () => {
     });
     await token.execute();
 
-    setTimeout(() => {
-      expect(history.store).toMatchSnapshot();
-      done();
-    }, 100);
+    await sleep(100);
+    expect(history.store).toMatchSnapshot();
   });
 });

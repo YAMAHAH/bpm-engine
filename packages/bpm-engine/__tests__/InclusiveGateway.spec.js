@@ -2,9 +2,10 @@ import fs from 'fs';
 
 import BPMEngine from 'bpm-engine';
 import History from './Plugins/History';
+import sleep from './Plugins/sleep';
 
 describe('InclusiveGateway', () => {
-  it('Continues on all paths', async (done) => {
+  it('Continues on all paths', async () => {
     const history = new History();
     const bpm = new BPMEngine({
       plugins: [history],
@@ -19,13 +20,11 @@ describe('InclusiveGateway', () => {
     });
 
     await token.execute();
-    setTimeout(() => {
-      expect(history.store).toMatchSnapshot();
-      done();
-    }, 100);
+    await sleep(100);
+    expect(history.store).toMatchSnapshot();
   });
 
-  it('Continues on one path', async (done) => {
+  it('Continues on one path', async () => {
     const history = new History();
     const bpm = new BPMEngine({
       plugins: [history],
@@ -39,9 +38,7 @@ describe('InclusiveGateway', () => {
     });
 
     await token.execute();
-    setTimeout(() => {
-      expect(history.store).toMatchSnapshot();
-      done();
-    }, 100);
+    await sleep(100);
+    expect(history.store).toMatchSnapshot();
   });
 });
