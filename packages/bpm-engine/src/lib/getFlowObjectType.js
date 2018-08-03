@@ -9,6 +9,7 @@ import {
   SequenceFlow,
   InclusiveGateway,
   SubProcess,
+  IntermediateCatchEvent,
 } from 'lib/Elements';
 
 const typeMap = {
@@ -22,6 +23,7 @@ const typeMap = {
   'bpmn:ParallelGateway': ParallelGateway,
   'bpmn:SequenceFlow': SequenceFlow,
   'bpmn:SubProcess': SubProcess,
+  'bpmn:IntermediateCatchEvent': IntermediateCatchEvent,
 };
 
 export default (flowObjectDefinition) => {

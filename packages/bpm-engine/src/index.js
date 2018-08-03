@@ -53,17 +53,19 @@ class BPMEngine {
   }
 
   onTick = async () => {
-    log('tick');
+    log('onTick');
     const currentTimestamp = new Date() / 1;
     const timerEvent = await this.persist.timers.getNext(currentTimestamp);
 
     if (timerEvent) {
       // set this timer to done, so it won't be returned by above `getNext` again
-      await this.handleTimerEvent(timerEvent);
       await this.persist.timers.update({ timerId: timerEvent.timerId }, { status: 'done' });
 
-      // get the next one after the current one
+      await this.handleTimerEvent(timerEvent);
+
+      // // get the next one after the current one
       const interval = makeInterval(timerEvent.interval);
+
       const nextTimerEvent = interval.firstAfter(timerEvent.time + 1);
 
       // if there is no next, complete this tick
@@ -107,7 +109,7 @@ class BPMEngine {
 
     // if a token was created/fetched, continue its execution
     if (token) {
-      await token.execute();
+      token.execute();
     }
   }
 
