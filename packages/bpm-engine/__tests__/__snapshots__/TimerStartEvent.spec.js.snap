@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TimerStartEvent Can start a process with a timer 1`] = `
+History {
+  "onActive": [Function],
+  "onComplete": [Function],
+  "onReady": [Function],
+  "store": Array [
+    Object {
+      "elementId": "StartEvent_1",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "ready",
+    },
+    Object {
+      "elementId": "StartEvent_1",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "active",
+    },
+    Object {
+      "elementId": "StartEvent_1",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "complete",
+    },
+    Object {
+      "elementId": "Task_1me2wuc",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "ready",
+    },
+    Object {
+      "elementId": "Task_1me2wuc",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "active",
+    },
+    Object {
+      "elementId": "Task_1me2wuc",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "complete",
+    },
+    Object {
+      "elementId": "EndEvent_073fq1n",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "ready",
+    },
+    Object {
+      "elementId": "EndEvent_073fq1n",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "active",
+    },
+    Object {
+      "elementId": "EndEvent_073fq1n",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "complete",
+    },
+    Object {
+      "elementId": "StartEvent_1",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "ready",
+    },
+    Object {
+      "elementId": "StartEvent_1",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "active",
+    },
+    Object {
+      "elementId": "StartEvent_1",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "complete",
+    },
+    Object {
+      "elementId": "Task_1me2wuc",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "ready",
+    },
+    Object {
+      "elementId": "Task_1me2wuc",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "active",
+    },
+    Object {
+      "elementId": "Task_1me2wuc",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "complete",
+    },
+    Object {
+      "elementId": "EndEvent_073fq1n",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "ready",
+    },
+    Object {
+      "elementId": "EndEvent_073fq1n",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "active",
+    },
+    Object {
+      "elementId": "EndEvent_073fq1n",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "complete",
+    },
+    Object {
+      "elementId": "StartEvent_1",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "ready",
+    },
+    Object {
+      "elementId": "StartEvent_1",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "active",
+    },
+    Object {
+      "elementId": "StartEvent_1",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "complete",
+    },
+    Object {
+      "elementId": "Task_1me2wuc",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "ready",
+    },
+    Object {
+      "elementId": "Task_1me2wuc",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "active",
+    },
+    Object {
+      "elementId": "Task_1me2wuc",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "complete",
+    },
+    Object {
+      "elementId": "EndEvent_073fq1n",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "ready",
+    },
+    Object {
+      "elementId": "EndEvent_073fq1n",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "active",
+    },
+    Object {
+      "elementId": "EndEvent_073fq1n",
+      "lanes": undefined,
+      "participant": undefined,
+      "state": "complete",
+    },
+  ],
+}
+`;

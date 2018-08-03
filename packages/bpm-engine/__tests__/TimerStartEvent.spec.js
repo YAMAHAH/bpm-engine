@@ -19,6 +19,7 @@ describe('TimerStartEvent', () => {
       // because the timerStart event interval is: R3/${timestamp}/PT1S which equals to
       // repeat 3 times, starting on timestamp of deployment, every 1 second
       expect(engine.persist.store.processInstances.length).toBe(3);
+      expect(history).toMatchSnapshot();
       done();
     }, 4000);
   });
