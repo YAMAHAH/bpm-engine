@@ -81,6 +81,44 @@ const WorkflowDefinitionSchema = new Schema(
   { timestamps: true, minimize: false },
 );
 
+const TimerSchema = new Schema({
+  timerId: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true,
+  },
+  workflowDefinitionId: {
+    type: String,
+    index: true,
+  },
+  tokenId: {
+    type: String,
+    index: true,
+  },
+  intent: {
+    type: String,
+    required: true,
+  },
+  interval: {
+    type: String,
+    required: true,
+  },
+  time: {
+    type: Number,
+    required: true,
+  },
+  status: {
+    type: String,
+  },
+  index: {
+    type: Number,
+  },
+  previousTimerId: {
+    type: String,
+  },
+});
+
 export default (client, names = {}) => ({
   tokenInstance: client.model(
     names.tokenInstance || 'bpmEngine_tokenInstance',
@@ -94,4 +132,5 @@ export default (client, names = {}) => ({
     names.workflowDefinition || 'bpmEngine_workflowDefinition',
     WorkflowDefinitionSchema,
   ),
+  timers: client.model(names.timers || 'bpmEngine_timers', TimerSchema),
 });

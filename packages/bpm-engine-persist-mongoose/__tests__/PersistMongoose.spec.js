@@ -22,6 +22,7 @@ describe('PersistMongoose', () => {
     await persistMongoose.schemas.processInstance.remove({}).exec();
     await persistMongoose.schemas.tokenInstance.remove({}).exec();
     await persistMongoose.schemas.workflowDefinition.remove({}).exec();
+    await persistMongoose.schemas.timers.remove({}).exec();
   });
 
   afterEach(async () => {
@@ -73,5 +74,19 @@ describe('PersistMongoose', () => {
     });
 
     expect(processInstance).not.toBeFalsy();
+  });
+
+  it('Can create a process instance with a timer start event', async (done) => {
+    const bpm = new BPMEngine({
+      persist: persistMongoose,
+    });
+
+    await bpm.deployWorkflowDefinition({
+      xml: fs.readFileSync(`${__dirname}/TimerStartEvent.bpmn`, 'utf-8'),
+    });
+
+    setTimeout(() => {
+      done();
+    }, 4000);
   });
 });

@@ -30,4 +30,20 @@ export default class MongoosePersist {
     create: obj => this.schemas.workflowDefinition.create(obj),
     find: query => this.schemas.workflowDefinition.findOne(query),
   };
+
+  timers = {
+    create: obj => this.schemas.timers.create(obj),
+    find: query => this.schemas.timers.findOne(query),
+    update: (query, patch) => this.schemas.timers.findOneAndUpdate(query, patch, { new: true }),
+    getNext: async (time) => {
+      const allTimers = await this.schemas.timers.find({ status: { $ne: 'done' } });
+
+      const timers = allTimers
+        .map(a => Object.assign(a, { timeLeft: a.time - time }))
+        .filter(a => a.timeLeft <= 0)
+        .sort((a, b) => a.timeLeft < b.timeLeft);
+
+      return timers[0] && JSON.parse(JSON.stringify(timers[0]));
+    },
+  };
 }
