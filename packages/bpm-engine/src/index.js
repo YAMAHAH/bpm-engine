@@ -8,22 +8,7 @@ import Clock from 'lib/Clock';
 import makeInterval from 'iso8601-repeating-interval';
 
 import * as constants from 'lib/constants';
-
-const getNextFlowObjects = (flowObjects, nextId) => {
-  let result;
-  if (flowObjects.find(el => el.id === nextId)) {
-    result = flowObjects;
-  }
-  else {
-    flowObjects.forEach((el) => {
-      if (el.flowElements && !result) {
-        result = getNextFlowObjects(el.flowElements, nextId);
-      }
-    });
-  }
-
-  return result;
-};
+import getNextFlowObjects from 'lib/getNextFlowObjects';
 
 const log = debug('engine');
 
@@ -63,9 +48,10 @@ class BPMEngine {
 
       await this.handleTimerEvent(timerEvent);
 
-      // // get the next one after the current one
+      // get the next timer after the current one
       const interval = makeInterval(timerEvent.interval);
 
+      // the + 1 is to not get the same timer again
       const nextTimerEvent = interval.firstAfter(timerEvent.time + 1);
 
       // if there is no next, complete this tick
@@ -73,9 +59,10 @@ class BPMEngine {
         return;
       }
 
-      // if the next timerEvent index is lower than the repetitions defined in the interval
-      // create the next run in the database (key-concept for timers, schedule next one after current one)
-      if (nextTimerEvent.index < interval._repeatCount) {
+      // if the nextTimerEvent's index is lower than the maximum amount of repetitions
+      // create a next timer event
+      const hasPendingRepetitions = nextTimerEvent.index < interval._repeatCount;
+      if (hasPendingRepetitions) {
         await this.persist.timers.create({
           timerId: this.generateId(),
           index: nextTimerEvent.index,
@@ -234,6 +221,8 @@ class BPMEngine {
       workflowDefinition: xml,
     });
 
+    // initialize the tokenInstance so flowObjects get parsed,
+    // we use them to get all the StartEvents
     await tokenInstance.initialize();
 
     const { flowObjects } = tokenInstance;
@@ -243,16 +232,23 @@ class BPMEngine {
         const { eventDefinitions } = flowObject;
         if (eventDefinitions) {
           const firstEventDefinition = eventDefinitions[0];
+          // if this start event has timereventdefinitions
           if (firstEventDefinition.$type === 'bpmn:TimerEventDefinition') {
+            // if it's timer is of type cycle (repetition)
             if (firstEventDefinition.timeCycle) {
-              const fnBody = `return \`${firstEventDefinition.timeCycle.body}\`;`;
-              const f = new Function('timestamp', fnBody);
-              const intervalString = f(new Date().toISOString());
+              // evaluate the interval
+              const intervalExpression = `return \`${firstEventDefinition.timeCycle.body}\`;`;
+              const intervalExpressionFunction = new Function('timestamp', intervalExpression);
+              const intervalString = intervalExpressionFunction(new Date().toISOString());
 
+              // create the interval and get the first iteration
               const interval = makeInterval(intervalString);
-              const firstAfter = interval.firstAfter(new Date() / 1 - 1000);
+              const firstAfter = interval.firstAfter(new Date() - 1000);
 
-              if (firstAfter.index < interval._repeatCount) {
+              // if the first iteration is not bigger than the max amount of repetitions
+              const hasPendingRepetitions = firstAfter.index < interval._repeatCount;
+              if (hasPendingRepetitions) {
+                // create a timer event
                 await this.persist.timers.create({
                   timerId: this.generateId(),
                   index: firstAfter.index,
@@ -270,7 +266,6 @@ class BPMEngine {
   }
 
   async deployWorkflowDefinition({ xml, workflowDefinitionId = this.generateId() }) {
-    // create start events
     await this.createStartEvents(xml, workflowDefinitionId);
 
     return this.persist.workflowDefinition.create({
