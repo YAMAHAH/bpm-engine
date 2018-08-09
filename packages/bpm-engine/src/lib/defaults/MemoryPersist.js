@@ -1,5 +1,4 @@
 import debug from 'lib/debug';
-import fs from 'fs';
 
 const log = debug('persist');
 
@@ -51,6 +50,7 @@ const createEmptyStore = () =>
     tokenInstances: [],
     workflowDefinitions: [],
     timers: [],
+    tasks: [],
   });
 
 export default class MemoryPersist {
@@ -71,11 +71,9 @@ export default class MemoryPersist {
     if (!this.store.timers) {
       throw new Error('A store provided to the persisting-layer needs to have a timers key-value which will contain a collection of timers');
     }
-
-    // setInterval(() => {
-    //   fs.writeFileSync('./processes', JSON.stringify(this.store.processInstances), 'utf-8');
-    //   fs.writeFileSync('./tokens', JSON.stringify(this.store.tokenInstances), 'utf-8');
-    // }, 100);
+    if (!this.store.tasks) {
+      throw new Error('A store provided to the persisting-layer needs to have a tasks key-value which will contain a collection of tasks');
+    }
   }
 
   processInstance = {
@@ -188,6 +186,14 @@ export default class MemoryPersist {
       Object.assign(timer, json);
 
       return JSON.parse(JSON.stringify(timer));
+    },
+  };
+
+  tasks = {
+    create: (obj) => {
+      log('create task', obj);
+      this.store.tasks.push(obj);
+      return JSON.parse(JSON.stringify(obj));
     },
   };
 }

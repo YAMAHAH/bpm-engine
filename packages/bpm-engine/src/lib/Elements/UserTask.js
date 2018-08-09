@@ -8,5 +8,15 @@ export default class UserTask extends Activity {
       { tokenId: this.tokenInstance.tokenId },
       { $set: this.tokenInstance.toJSON() },
     );
+
+    await this.engine.persist.tasks.create({
+      taskId: this.engine.generateId(),
+      definition: JSON.stringify(this.definition),
+      processId: this.tokenInstance.processId,
+      tokenId: this.tokenInstance.tokenId,
+      createdAt: new Date(),
+      payload: this.tokenInstance.payload,
+      status: 'created',
+    });
   };
 }

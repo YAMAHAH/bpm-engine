@@ -81,43 +81,82 @@ const WorkflowDefinitionSchema = new Schema(
   { timestamps: true, minimize: false },
 );
 
-const TimerSchema = new Schema({
-  timerId: {
-    type: String,
-    required: true,
-    unique: true,
-    index: true,
+const TimerSchema = new Schema(
+  {
+    timerId: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+    },
+    workflowDefinitionId: {
+      type: String,
+      index: true,
+    },
+    tokenId: {
+      type: String,
+      index: true,
+    },
+    intent: {
+      type: String,
+      required: true,
+    },
+    interval: {
+      type: String,
+      required: true,
+    },
+    time: {
+      type: Number,
+      required: true,
+    },
+    status: {
+      type: String,
+    },
+    index: {
+      type: Number,
+    },
+    previousTimerId: {
+      type: String,
+    },
   },
-  workflowDefinitionId: {
-    type: String,
-    index: true,
+  {
+    timestamps: true,
+    minimize: false,
   },
-  tokenId: {
-    type: String,
-    index: true,
+);
+
+const TaskSchema = new Schema(
+  {
+    taskId: {
+      type: String,
+      unique: true,
+      index: true,
+    },
+    definition: {
+      type: String,
+    },
+    processId: {
+      type: String,
+      required: true,
+      index: true,
+    },
+    tokenId: {
+      type: String,
+      required: true,
+      index: true,
+    },
+    payload: {
+      type: String,
+    },
+    status: {
+      type: String,
+    },
   },
-  intent: {
-    type: String,
-    required: true,
+  {
+    timestamps: true,
+    minimize: false,
   },
-  interval: {
-    type: String,
-    required: true,
-  },
-  time: {
-    type: Number,
-    required: true,
-  },
-  status: {
-    type: String,
-  },
-  index: {
-    type: Number,
-  },
-  previousTimerId: {
-    type: String,
-  },
-});
+);
 
 export default (client, names = {}) => ({
   tokenInstance: client.model(
@@ -133,4 +172,5 @@ export default (client, names = {}) => ({
     WorkflowDefinitionSchema,
   ),
   timers: client.model(names.timers || 'bpmEngine_timers', TimerSchema),
+  tasks: client.model(names.tasks || 'bpmEngine_tasks', TaskSchema),
 });

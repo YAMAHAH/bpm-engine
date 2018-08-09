@@ -22,6 +22,8 @@ describe('UserTask', () => {
     // then
     expect(token.status).toBe('paused');
 
+    expect(bpm.persist.store.tasks.length).toBe(1);
+
     // given
     const continueToken = await bpm.continueTokenInstance({
       tokenId: token.tokenId,

@@ -30,9 +30,9 @@ export default class IntermediateCatchEvent extends Event {
       if (timeDuration) {
         const intervalString = evaluateIntervalString(timeDuration.body);
         const interval = makeInterval(intervalString);
-        const firstAfter = interval.firstAfter(new Date() / 1 - 1000);
+        const firstAfter = interval.firstAfter(new Date() - 1000);
 
-        if (firstAfter) {
+        if (firstAfter && firstAfter.index === 0) {
           await this.persist.timers.create({
             timerId: this.engine.generateId(),
             index: firstAfter.index,
