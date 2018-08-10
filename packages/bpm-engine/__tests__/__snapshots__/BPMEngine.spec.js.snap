@@ -11,6 +11,7 @@ exports[`BPMEngine Can not instantiate a new processInstance without a workflowD
 
 exports[`BPMEngine Deploys a valid workflow definition with a custom id 1`] = `
 Object {
+  "processName": "Process_1",
   "workflowDefinitionId": "test",
   "xml": "<?xml version=\\"1.0\\" encoding=\\"UTF-8\\"?>
 <bpmn:definitions xmlns:bpmn=\\"http://www.omg.org/spec/BPMN/20100524/MODEL\\" xmlns:bpmndi=\\"http://www.omg.org/spec/BPMN/20100524/DI\\" xmlns:di=\\"http://www.omg.org/spec/DD/20100524/DI\\" xmlns:dc=\\"http://www.omg.org/spec/DD/20100524/DC\\" xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" id=\\"Definitions_1\\" targetNamespace=\\"http://bpmn.io/schema/bpmn\\" exporter=\\"Camunda Modeler\\" exporterVersion=\\"1.10.0\\">
@@ -85,6 +86,7 @@ BPMEngine {
     "store": Object {},
     "tasks": Object {
       "create": [Function],
+      "find": [Function],
     },
     "timers": Object {
       "create": [Function],
@@ -129,6 +131,7 @@ BPMEngine {
     "store": Object {},
     "tasks": Object {
       "create": [Function],
+      "find": [Function],
     },
     "timers": Object {
       "create": [Function],

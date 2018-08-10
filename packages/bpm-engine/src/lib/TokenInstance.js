@@ -124,6 +124,8 @@ export default class TokenInstance {
           rootEl.$type === 'bpmn:Process' &&
             rootEl.flowElements.find(flowEl => flowEl.$type === 'bpmn:StartEvent'));
 
+        this.processName = rootElement.id;
+
         this.flowObjects = rootElement.get('flowElements');
 
         parseParticipantsAndLanes(rootElements);

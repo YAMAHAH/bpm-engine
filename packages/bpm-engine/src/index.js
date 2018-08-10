@@ -215,17 +215,8 @@ class BPMEngine {
   }
 
   // create listeners for timer and message start events
-  async createStartEvents(xml, workflowDefinitionId) {
-    // create a TokenInstance to parse the flowObjects
-    const tokenInstance = new TokenInstance({
-      workflowDefinition: xml,
-    });
-
-    // initialize the tokenInstance so flowObjects get parsed,
-    // we use them to get all the StartEvents
-    await tokenInstance.initialize();
-
-    const { flowObjects } = tokenInstance;
+  async createStartEvents(dummyTokenInstance, workflowDefinitionId) {
+    const { flowObjects, processName } = dummyTokenInstance;
 
     flowObjects.forEach(async (flowObject) => {
       if (flowObject.$type === 'bpmn:StartEvent') {
@@ -256,6 +247,7 @@ class BPMEngine {
                   interval: intervalString,
                   intent: constants.START_PROCESS_INSTANCE_INTENT,
                   workflowDefinitionId,
+                  processName,
                 });
               }
             }
@@ -265,13 +257,35 @@ class BPMEngine {
     });
   }
 
-  async deployWorkflowDefinition({ xml, workflowDefinitionId = this.generateId() }) {
-    await this.createStartEvents(xml, workflowDefinitionId);
+  async clearExistingStartEvents(dummyTokenInstance) {
+    const { processName } = dummyTokenInstance;
 
-    return this.persist.workflowDefinition.create({
+    await this.persist.timers.update({ processName }, { status: 'done' });
+  }
+
+  async deployWorkflowDefinition({ xml, workflowDefinitionId = this.generateId() }) {
+    const dummyTokenInstance = new TokenInstance({
+      workflowDefinition: xml,
+    });
+
+    // initialize the tokenInstance so flowObjects get parsed,
+    // we use them to get all the StartEvents
+    await dummyTokenInstance.initialize();
+
+    const workflowDefinition = await this.persist.workflowDefinition.create({
       xml,
+      processName: dummyTokenInstance.processName,
       workflowDefinitionId,
     });
+
+    // remove already existing start events for this workflowDefinition
+    await this.clearExistingStartEvents(dummyTokenInstance);
+
+    // we need to create the start events after the creation of the workflowDefinition
+    // so that a timer can not happen before the workflowDefinition is deployed.
+    await this.createStartEvents(dummyTokenInstance, workflowDefinitionId);
+
+    return workflowDefinition;
   }
 }
 

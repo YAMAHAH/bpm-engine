@@ -12,14 +12,14 @@ export default class Element {
     this.persist = this.engine.persist;
   }
 
-  callPlugins = (fn) => {
+  callPlugins = (fn, extra) => {
     log(`${this.tokenInstance.tokenId} > ${this.definition.id} > ${fn}`);
 
     const promises = [];
     Object.keys(this.plugins).forEach((pluginName) => {
       if (this.plugins[pluginName][fn]) {
         const plugin = this.plugins[pluginName][fn];
-        promises.push(plugin(this.definition, this.tokenInstance));
+        promises.push(plugin(this.definition, this.tokenInstance, extra));
       }
     });
     return Promise.all(promises);

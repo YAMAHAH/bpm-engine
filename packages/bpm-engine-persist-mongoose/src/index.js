@@ -1,7 +1,7 @@
 import 'source-map-support/register';
 import mongoose from 'mongoose';
 
-import schemas from 'schemas';
+import schemaInitializer from './schema-initializer';
 
 export default class MongoosePersist {
   constructor(options, connectionOptions = {}, names) {
@@ -9,7 +9,7 @@ export default class MongoosePersist {
       options,
       connectionOptions,
     );
-    this.schemas = schemas(this.connection, names);
+    this.schemas = schemaInitializer(this.connection, names);
   }
 
   processInstance = {
@@ -43,7 +43,12 @@ export default class MongoosePersist {
         .filter(a => a.timeLeft <= 0)
         .sort((a, b) => a.timeLeft < b.timeLeft);
 
-      return timers[0] && JSON.parse(JSON.stringify(timers[0]));
+      return timers[0];
     },
+  };
+
+  tasks = {
+    create: obj => this.schemas.tasks.create(obj),
+    find: query => this.schemas.tasks.find(query),
   };
 }

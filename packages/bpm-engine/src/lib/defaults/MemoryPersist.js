@@ -176,16 +176,14 @@ export default class MemoryPersist {
 
       const timer = this.store.timers.find(findByQuery(query));
 
-      if (!timer) {
-        throw new Error(`timer not found ${query.timerId}`);
+      if (timer) {
+        remapSet(json);
+        remapPull(json, timer);
+
+        Object.assign(timer, json);
+
+        return JSON.parse(JSON.stringify(timer));
       }
-
-      remapSet(json);
-      remapPull(json, timer);
-
-      Object.assign(timer, json);
-
-      return JSON.parse(JSON.stringify(timer));
     },
   };
 
@@ -194,6 +192,11 @@ export default class MemoryPersist {
       log('create task', obj);
       this.store.tasks.push(obj);
       return JSON.parse(JSON.stringify(obj));
+    },
+
+    find: (query) => {
+      log('find tasks', query);
+      return this.store.tasks.find(findByQuery(query));
     },
   };
 }
