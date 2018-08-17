@@ -1,4 +1,4 @@
-![](images/engine.gif)
+![](images/engine.gif | width=100)
 
 # BPM Engine
 
