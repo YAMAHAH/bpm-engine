@@ -40,7 +40,8 @@ const bpm = new BPMEngine();
 const token = await bpm
   .createProcessInstance({
     workflowDefinition: 'valid bpmn'
-  }).catch(console.error);
+  })
+  .catch(console.error);
 
 // Tell the initial token to continue execution
 await token.execute().catch(console.error);
@@ -70,7 +71,7 @@ await token.execute().catch(console.error);
 - [ ] MessageIntermediateThrow
 - [ ] MessageIntermediateCatch
 - [ ] MessageEnd
-- [ ] TimerIntermediateCatch
+- [x] TimerIntermediateCatch
 - [ ] EscalationIntermediateThrow
 - [ ] EscalationEnd
 - [ ] ErrorEnd
@@ -82,7 +83,7 @@ await token.execute().catch(console.error);
 - [ ] SignalIntermediateThrow
 - [ ] SignalIntermediateCatch
 - [ ] MessageStart
-- [ ] TimerStart
+- [x] TimerStart
 - [ ] ConditionalStart
 - [ ] SignalStart
 - [ ] SignalEnd
@@ -125,13 +126,16 @@ You can install one of the following packages to add persistency to the state of
 Use one of the persistency plugins in the BPM Engine:
 
 ```js
-const BPM = require('bpm-engine');
+const BPMEngine = require('bpm-engine');
 const PersistMongoose = require('bpm-engine-persist-mongoose');
 
-const persistMongoose = new PersistMongoose(<mongodb:url>);
+const persistMongoose = new PersistMongoose(
+  '<mongodb:url>',
+  mongooseConnectionOptions
+);
 
-const bpm = new BPM({
-  persist: persistMongoose,
+const engine = new BPMEngine({
+  persist: persistMongoose
 });
 ```
 
@@ -171,10 +175,10 @@ class History extends BPMEngine.Plugins.Element {
 
 const history = new History();
 
-const bpm = new BPMEngine({ plugins: [history] });
+const engine = new BPMEngine({ plugins: [history] });
 ```
 
-The above plugin will push executed elements' id's into an array, which serves as some kind of log.
+The above plugin will push executed element's id's into an array, which serves as some kind of log.
 
 ##### Plugin methods
 

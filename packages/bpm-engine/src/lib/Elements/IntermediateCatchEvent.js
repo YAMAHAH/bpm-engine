@@ -3,7 +3,7 @@ import makeInterval from 'iso8601-repeating-interval';
 import * as constants from 'lib/constants';
 
 const evaluateIntervalString = (body) => {
-  const extendedBody = `R/\${timestamp}/${body}`;
+  const extendedBody = `R2/\${timestamp}/${body}`;
 
   const fnBody = `return \`${extendedBody}\`;`;
   const f = new Function('timestamp', fnBody);
@@ -15,6 +15,7 @@ export default class IntermediateCatchEvent extends Event {
   makeActive = async () => {
     await this.callPlugins('onActive');
     this.tokenInstance.status = 'paused';
+
     await this.engine.persist.tokenInstance.update(
       { tokenId: this.tokenInstance.tokenId },
       { $set: this.tokenInstance.toJSON() },
@@ -33,10 +34,12 @@ export default class IntermediateCatchEvent extends Event {
         const firstAfter = interval.firstAfter(new Date() - 1000);
 
         if (firstAfter && firstAfter.index === 0) {
+          const secondAfter = interval.firstAfter(firstAfter.time + 500);
+
           await this.persist.timers.create({
             timerId: this.engine.generateId(),
-            index: firstAfter.index,
-            time: firstAfter.date / 1,
+            index: secondAfter.index,
+            time: secondAfter.date / 1,
             interval: intervalString,
             intent: constants.CONTINUE_TOKEN_INSTANCE_INTENT,
             tokenId: this.tokenInstance.tokenId,

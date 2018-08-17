@@ -18,11 +18,13 @@ describe('TimerCatchEvent', () => {
 
     await token.execute();
 
+    await sleep(1000);
+
     // after 1 second, the process should still not be ended,
     // since its supposed to be waiting for execution at the timer catch event
     expect(engine.persist.store.processInstances[0].status).not.toBe('ended');
 
-    await sleep(1000);
+    await sleep(3000);
 
     expect(engine.persist.store.processInstances[0].status).toBe('ended');
   });

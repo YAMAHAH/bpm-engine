@@ -31,7 +31,7 @@ class BPMEngine {
     });
 
     if (enableClock) {
-      this.clock = new Clock({ onTick: this.onTick, interval: 500 });
+      this.clock = new Clock({ onTick: this.onTick, interval: 100 });
     }
 
     log('Initiated');
@@ -62,7 +62,7 @@ class BPMEngine {
       // if the nextTimerEvent's index is lower than the maximum amount of repetitions
       // create a next timer event
       const hasPendingRepetitions = nextTimerEvent.index < interval._repeatCount;
-      if (hasPendingRepetitions) {
+      if (hasPendingRepetitions && timerEvent.intent !== constants.CONTINUE_TOKEN_INSTANCE_INTENT) {
         await this.persist.timers.create({
           timerId: this.generateId(),
           index: nextTimerEvent.index,
@@ -215,8 +215,8 @@ class BPMEngine {
   }
 
   // create listeners for timer and message start events
-  async createStartEvents(dummyTokenInstance, workflowDefinitionId) {
-    const { flowObjects, processName } = dummyTokenInstance;
+  async createStartEvents(dummyTokenInstance, workflowDefinitionId, processName) {
+    const { flowObjects } = dummyTokenInstance;
 
     flowObjects.forEach(async (flowObject) => {
       if (flowObject.$type === 'bpmn:StartEvent') {
@@ -237,7 +237,8 @@ class BPMEngine {
               const firstAfter = interval.firstAfter(new Date() - 1000);
 
               // if the first iteration is not bigger than the max amount of repetitions
-              const hasPendingRepetitions = firstAfter.index < interval._repeatCount;
+              const hasPendingRepetitions = firstAfter.index <= interval._repeatCount;
+
               if (hasPendingRepetitions) {
                 // create a timer event
                 await this.persist.timers.create({
@@ -257,13 +258,7 @@ class BPMEngine {
     });
   }
 
-  async clearExistingStartEvents(dummyTokenInstance) {
-    const { processName } = dummyTokenInstance;
-
-    await this.persist.timers.update({ processName }, { status: 'done' });
-  }
-
-  async deployWorkflowDefinition({ xml, workflowDefinitionId = this.generateId() }) {
+  async deployWorkflowDefinition({ xml, workflowDefinitionId = this.generateId(), processName }) {
     const dummyTokenInstance = new TokenInstance({
       workflowDefinition: xml,
     });
@@ -272,18 +267,38 @@ class BPMEngine {
     // we use them to get all the StartEvents
     await dummyTokenInstance.initialize();
 
-    const workflowDefinition = await this.persist.workflowDefinition.create({
-      xml,
-      processName: dummyTokenInstance.processName,
-      workflowDefinitionId,
+    const alreadyExistingWorkflowDefinition = await this.persist.workflowDefinition.find({
+      processName,
     });
 
+    let workflowDefinition;
+
+    if (alreadyExistingWorkflowDefinition) {
+      workflowDefinition = await this.persist.workflowDefinition.update(
+        { processName },
+        {
+          xml,
+        },
+      );
+    }
+    else {
+      workflowDefinition = await this.persist.workflowDefinition.create({
+        xml,
+        processName,
+        workflowDefinitionId,
+      });
+    }
+
     // remove already existing start events for this workflowDefinition
-    await this.clearExistingStartEvents(dummyTokenInstance);
+    await this.persist.timers.update({ processName }, { status: 'done' });
 
     // we need to create the start events after the creation of the workflowDefinition
     // so that a timer can not happen before the workflowDefinition is deployed.
-    await this.createStartEvents(dummyTokenInstance, workflowDefinitionId);
+    await this.createStartEvents(
+      dummyTokenInstance,
+      workflowDefinition.workflowDefinitionId,
+      processName,
+    );
 
     return workflowDefinition;
   }

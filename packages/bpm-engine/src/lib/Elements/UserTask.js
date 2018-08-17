@@ -14,7 +14,7 @@ export default class UserTask extends Activity {
       processId: this.tokenInstance.processId,
       tokenId: this.tokenInstance.tokenId,
       createdAt: new Date(),
-      payload: this.tokenInstance.payload,
+      payload: JSON.stringify(this.tokenInstance.payload),
     });
 
     await this.callPlugins('onActive', task);

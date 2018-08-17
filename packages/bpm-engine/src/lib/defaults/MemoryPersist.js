@@ -145,6 +145,22 @@ export default class MemoryPersist {
       const workflowDefinition = this.store.workflowDefinitions.find(findByQuery(query));
       return workflowDefinition && JSON.parse(JSON.stringify(workflowDefinition));
     },
+
+    update: (query, obj) => {
+      log('update workflowDefinition', query, obj);
+      const json = JSON.parse(JSON.stringify(obj));
+
+      const workflowDefinition = this.store.timers.find(findByQuery(query));
+
+      if (workflowDefinition) {
+        remapSet(json);
+        remapPull(json, workflowDefinition);
+
+        Object.assign(workflowDefinition, json);
+
+        return JSON.parse(JSON.stringify(workflowDefinition));
+      }
+    },
   };
 
   timers = {
@@ -167,6 +183,7 @@ export default class MemoryPersist {
         .map(a => Object.assign(a, { timeLeft: a.time - time }))
         .filter(a => a.timeLeft <= 0)
         .sort((a, b) => a.timeLeft < b.timeLeft);
+
       return timers[0] && JSON.parse(JSON.stringify(timers[0]));
     },
 

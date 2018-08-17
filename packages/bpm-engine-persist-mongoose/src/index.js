@@ -1,6 +1,8 @@
 import 'source-map-support/register';
 import mongoose from 'mongoose';
 
+// mongoose.set('debug', true);
+
 import schemaInitializer from './schema-initializer';
 
 export default class MongoosePersist {
@@ -29,6 +31,8 @@ export default class MongoosePersist {
   workflowDefinition = {
     create: obj => this.schemas.workflowDefinition.create(obj),
     find: query => this.schemas.workflowDefinition.findOne(query),
+    update: (query, patch) =>
+      this.schemas.workflowDefinition.findOneAndUpdate(query, patch, { new: true }),
   };
 
   timers = {

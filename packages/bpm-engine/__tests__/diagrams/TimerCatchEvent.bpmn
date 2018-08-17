@@ -14,7 +14,7 @@
       <bpmn:incoming>SequenceFlow_1uithk1</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1jugsyh</bpmn:outgoing>
       <bpmn:timerEventDefinition>
-        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT5S</bpmn:timeDuration>
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT3S</bpmn:timeDuration>
       </bpmn:timerEventDefinition>
     </bpmn:intermediateCatchEvent>
     <bpmn:task id="Task_1piwswb" name="Task 2">

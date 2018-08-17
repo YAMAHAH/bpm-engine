@@ -55,6 +55,7 @@ describe('PersistMongoose', () => {
 
     await bpm.deployWorkflowDefinition({
       xml: fs.readFileSync(`${__dirname}/ParallelServices.bpmn`, 'utf-8'),
+      processName: 'Hello World',
     });
 
     expect((await persistMongoose.schemas.workflowDefinition.find()).length).toMatchSnapshot();
@@ -67,6 +68,7 @@ describe('PersistMongoose', () => {
 
     const deployedWorkflowDefinition = await bpm.deployWorkflowDefinition({
       xml: fs.readFileSync(`${__dirname}/ParallelServices.bpmn`, 'utf-8'),
+      processName: 'Hello World',
     });
 
     const processInstance = await bpm.createProcessInstance({
@@ -83,6 +85,7 @@ describe('PersistMongoose', () => {
 
     await bpm.deployWorkflowDefinition({
       xml: fs.readFileSync(`${__dirname}/TimerStartEvent.bpmn`, 'utf-8'),
+      processName: 'Hello World',
     });
 
     setTimeout(() => {
