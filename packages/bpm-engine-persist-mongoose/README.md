@@ -1,6 +1,6 @@
 # bpm-engine-persist-mongoose
 
-Persistency module to save all process and token instances state of the BPM Engine in a mongoose database.
+Persistency module to save all engine state in a MongoDB database.
 
 ## Installation
 
@@ -22,16 +22,18 @@ const persistMongoose = new PersistMongoose(
     port: '<server port number>'
   },
   {
+    /* mongoose connection options */
+  },
+  {
     processInstance: 'PI',
     tokenInstance: 'TI'
   }
 );
 
-// The second argument is optional and can be used to define different key names which
-// you'd like BPMEngine to use, by default its always processInstance.<processInstanceId> and tokenInstance.<processInstanceId>.<tokenInstanceId>, so the above example
-// would change that to PI.<processInstanceId> and TI.<processInstanceId>.<tokenInstanceId>
+// Third argument is optional and can be used to define different collection names which
+// you'd like BPMEngine to use, by default its always bpmengine_processinstances and bpmengine_tokeninstances.
 
-const bpm = new BPMEngine({
+const engine = new BPMEngine({
   persist: persistMongoose
 });
 ```

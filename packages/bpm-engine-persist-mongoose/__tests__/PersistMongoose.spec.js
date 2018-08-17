@@ -14,9 +14,7 @@ describe('PersistMongoose', () => {
   let persistMongoose;
 
   beforeEach(async () => {
-    persistMongoose = new PersistMongoose('mongodb://localhost:27017/bpm-engine-testing', {
-      useMongoClient: true,
-    });
+    persistMongoose = new PersistMongoose('mongodb://localhost:27017/bpm-engine-testing');
 
     // clear process instances, token instances and deployed workflowDefinitions
     await persistMongoose.schemas.processInstance.remove({}).exec();

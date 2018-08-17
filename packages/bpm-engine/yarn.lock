@@ -9,13 +9,17 @@ babel-runtime@^6.26.0:
     core-js "^2.4.0"
     regenerator-runtime "^0.11.0"
 
-bpmn-moddle@2:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/bpmn-moddle/-/bpmn-moddle-2.0.1.tgz#1d088d2c1a38f2fed40e7c9d77a0467a368f654d"
+bpmn-moddle@^4.x.x:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/bpmn-moddle/-/bpmn-moddle-4.0.0.tgz#a129724ca432e0a806bd03681ce838d0bf166fac"
   dependencies:
-    lodash "^3.0.0"
-    moddle "^2.0.0"
-    moddle-xml "^4.0.0"
+    min-dash "^2.0.1"
+    moddle "^3.0.0"
+    moddle-xml "^6.0.0"
+
+buffer-from@^1.0.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.1.tgz#32713bc028f75c02fdb710d7c7bcec1f2c6070ef"
 
 core-js@^2.4.0:
   version "2.5.3"
@@ -37,24 +41,24 @@ jexl@^1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/jexl/-/jexl-1.1.4.tgz#35cf86f881ea219d1e215c7a41e2e747ce6ee8a6"
 
-lodash@^3.0.0:
-  version "3.10.1"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
+min-dash@^2.0.1:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/min-dash/-/min-dash-2.4.0.tgz#d6c69c3c2d624ab31cde5c4b8b150691f14f9e97"
 
-moddle-xml@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/moddle-xml/-/moddle-xml-4.0.0.tgz#667ac15aa6fa7a7f8749d5173b0aa721d42eb7d8"
+moddle-xml@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/moddle-xml/-/moddle-xml-6.0.0.tgz#365abd537f8a55f23f7e107aaa5cd9e531fa8218"
   dependencies:
-    lodash "^3.0.0"
-    moddle "^2.0.0"
-    saxen "^5.3.2"
+    min-dash "^2.0.1"
+    moddle "^3.0.0"
+    saxen "^7.0.1"
     tiny-stack "^0.1.0"
 
-moddle@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/moddle/-/moddle-2.0.0.tgz#8691d1d11a47b354b657734b0efcdd5903d1ae23"
+moddle@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/moddle/-/moddle-3.0.0.tgz#110b89a21af1bb697d5de61a6062de2df1de5874"
   dependencies:
-    lodash "^3.0.0"
+    min-dash "^2.0.1"
 
 moment@^2.17.1:
   version "2.22.2"
@@ -64,22 +68,29 @@ ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"
 
+nanoid@^1.0.7:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-1.2.1.tgz#922bf6c10e35f7b208993768dad643577c907adf"
+
 regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
 
-saxen@^5.3.2:
-  version "5.5.0"
-  resolved "https://registry.yarnpkg.com/saxen/-/saxen-5.5.0.tgz#644c72c7d93929aed0efb737e5329bd085b3a71f"
+saxen@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/saxen/-/saxen-7.0.1.tgz#5206dbd5073ffa65b56b7838546e27cd33ccfd31"
 
 shortid@^2.2.8:
-  version "2.2.8"
-  resolved "https://registry.yarnpkg.com/shortid/-/shortid-2.2.8.tgz#033b117d6a2e975804f6f0969dbe7d3d0b355131"
+  version "2.2.13"
+  resolved "https://registry.yarnpkg.com/shortid/-/shortid-2.2.13.tgz#b2441e71c664ace458a341d343959f677910ef5b"
+  dependencies:
+    nanoid "^1.0.7"
 
 source-map-support@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.0.tgz#2018a7ad2bdf8faf2691e5fddab26bed5a2bacab"
+  version "0.5.8"
+  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.8.tgz#04f5581713a8a65612d0175fbf3a01f80a162613"
   dependencies:
+    buffer-from "^1.0.0"
     source-map "^0.6.0"
 
 source-map@^0.6.0:

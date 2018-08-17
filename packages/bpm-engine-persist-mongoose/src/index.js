@@ -7,10 +7,7 @@ import schemaInitializer from './schema-initializer';
 
 export default class MongoosePersist {
   constructor(options, connectionOptions = {}, names) {
-    this.connection = mongoose.connect(
-      options,
-      connectionOptions,
-    );
+    this.connection = mongoose.createConnection(options, connectionOptions);
     this.schemas = schemaInitializer(this.connection, names);
   }
 
@@ -40,11 +37,16 @@ export default class MongoosePersist {
     find: query => this.schemas.timers.findOne(query),
     update: (query, patch) => this.schemas.timers.findOneAndUpdate(query, patch, { new: true }),
     getNext: async (time) => {
+      // get undone timers
       const allTimers = await this.schemas.timers.find({ status: { $ne: 'done' } });
 
       const timers = allTimers
+        // calculate how many seconds each timer has left until it needs to be handled
         .map(a => Object.assign(a, { timeLeft: a.time - time }))
+        // filter out only timers which are expired or expiring just now, other timers
+        // need to be handled in the future.
         .filter(a => a.timeLeft <= 0)
+        // from all those filtered, get the oldest one, which has the highest urgency to get handled
         .sort((a, b) => a.timeLeft < b.timeLeft);
 
       return timers[0];
