@@ -1,4 +1,4 @@
-![](images/engine.gif | width=100)
+<img src="images/engine.gif" alt="drawing" width="50%"/>
 
 # BPM Engine
 
