@@ -84,11 +84,11 @@ BPMEngine {
       "update": [Function],
     },
     "store": Object {},
-    "tasks": Object {
+    "task": Object {
       "create": [Function],
       "find": [Function],
     },
-    "timers": Object {
+    "timer": Object {
       "create": [Function],
       "find": [Function],
       "getNext": [Function],
@@ -130,11 +130,11 @@ BPMEngine {
       "update": [Function],
     },
     "store": Object {},
-    "tasks": Object {
+    "task": Object {
       "create": [Function],
       "find": [Function],
     },
-    "timers": Object {
+    "timer": Object {
       "create": [Function],
       "find": [Function],
       "getNext": [Function],

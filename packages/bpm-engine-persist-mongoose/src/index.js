@@ -32,13 +32,13 @@ export default class MongoosePersist {
       this.schemas.workflowDefinition.findOneAndUpdate(query, patch, { new: true }),
   };
 
-  timers = {
-    create: obj => this.schemas.timers.create(obj),
-    find: query => this.schemas.timers.findOne(query),
-    update: (query, patch) => this.schemas.timers.findOneAndUpdate(query, patch, { new: true }),
+  timer = {
+    create: obj => this.schemas.timer.create(obj),
+    find: query => this.schemas.timer.findOne(query),
+    update: (query, patch) => this.schemas.timer.findOneAndUpdate(query, patch, { new: true }),
     getNext: async (time) => {
       // get undone timers
-      const allTimers = await this.schemas.timers.find({ status: { $ne: 'done' } });
+      const allTimers = await this.schemas.timer.find({ status: { $ne: 'done' } });
 
       const timers = allTimers
         // calculate how many seconds each timer has left until it needs to be handled
@@ -54,7 +54,7 @@ export default class MongoosePersist {
   };
 
   tasks = {
-    create: obj => this.schemas.tasks.create(obj),
-    find: query => this.schemas.tasks.find(query),
+    create: obj => this.schemas.task.create(obj),
+    find: query => this.schemas.task.find(query),
   };
 }

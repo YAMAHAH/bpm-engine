@@ -20,7 +20,8 @@ describe('PersistMongoose', () => {
     await persistMongoose.schemas.processInstance.remove({}).exec();
     await persistMongoose.schemas.tokenInstance.remove({}).exec();
     await persistMongoose.schemas.workflowDefinition.remove({}).exec();
-    await persistMongoose.schemas.timers.remove({}).exec();
+    await persistMongoose.schemas.timer.remove({}).exec();
+    await persistMongoose.schemas.task.remove({}).exec();
   });
 
   afterEach(async () => {

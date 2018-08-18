@@ -40,11 +40,11 @@ class BPMEngine {
   onTick = async () => {
     log('onTick');
     const currentTimestamp = new Date() / 1;
-    const timerEvent = await this.persist.timers.getNext(currentTimestamp);
+    const timerEvent = await this.persist.timer.getNext(currentTimestamp);
 
     if (timerEvent) {
       // set this timer to done, so it won't be returned by above `getNext` again
-      await this.persist.timers.update({ timerId: timerEvent.timerId }, { status: 'done' });
+      await this.persist.timer.update({ timerId: timerEvent.timerId }, { status: 'done' });
 
       await this.handleTimerEvent(timerEvent);
 
@@ -63,7 +63,7 @@ class BPMEngine {
       // create a next timer event
       const hasPendingRepetitions = nextTimerEvent.index < interval._repeatCount;
       if (hasPendingRepetitions && timerEvent.intent !== constants.CONTINUE_TOKEN_INSTANCE_INTENT) {
-        await this.persist.timers.create({
+        await this.persist.timer.create({
           timerId: this.generateId(),
           index: nextTimerEvent.index,
           interval: timerEvent.interval,
@@ -241,7 +241,7 @@ class BPMEngine {
 
               if (hasPendingRepetitions) {
                 // create a timer event
-                await this.persist.timers.create({
+                await this.persist.timer.create({
                   timerId: this.generateId(),
                   index: firstAfter.index,
                   time: firstAfter.date / 1,
@@ -290,7 +290,7 @@ class BPMEngine {
     }
 
     // remove already existing start events for this workflowDefinition
-    await this.persist.timers.update({ processName }, { status: 'done' });
+    await this.persist.timer.update({ processName }, { status: 'done' });
 
     // we need to create the start events after the creation of the workflowDefinition
     // so that a timer can not happen before the workflowDefinition is deployed.

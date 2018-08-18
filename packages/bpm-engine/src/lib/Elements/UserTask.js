@@ -12,7 +12,7 @@ export default class UserTask extends Activity {
     const def = this.definition;
     def.attrs = attrs;
 
-    const task = await this.engine.persist.tasks.create({
+    const task = await this.engine.persist.task.create({
       taskId: this.engine.generateId(),
       definition: JSON.stringify(def),
       processId: this.tokenInstance.processId,

@@ -17,6 +17,6 @@ export default (client, names = {}) => ({
     names.workflowDefinition || 'bpmEngine_workflowDefinitions',
     WorkflowDefinitionSchema,
   ),
-  timers: client.model(names.timers || 'bpmEngine_timers', TimerSchema),
-  tasks: client.model(names.tasks || 'bpmEngine_tasks', TaskSchema),
+  timer: client.model(names.timer || 'bpmEngine_timers', TimerSchema),
+  task: client.model(names.task || 'bpmEngine_tasks', TaskSchema),
 });

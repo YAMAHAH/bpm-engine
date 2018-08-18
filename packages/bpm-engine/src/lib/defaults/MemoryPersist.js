@@ -163,7 +163,7 @@ export default class MemoryPersist {
     },
   };
 
-  timers = {
+  timer = {
     create: (obj) => {
       log('create timer', obj);
       this.store.timers.push(obj);
@@ -204,7 +204,7 @@ export default class MemoryPersist {
     },
   };
 
-  tasks = {
+  task = {
     create: (obj) => {
       log('create task', obj);
       this.store.tasks.push(obj);
