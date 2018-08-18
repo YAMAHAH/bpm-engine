@@ -8,9 +8,13 @@ export default class UserTask extends Activity {
       { $set: this.tokenInstance.toJSON() },
     );
 
+    const attrs = this.definition.$attrs;
+    const def = this.definition;
+    def.attrs = attrs;
+
     const task = await this.engine.persist.tasks.create({
       taskId: this.engine.generateId(),
-      definition: JSON.stringify(this.definition),
+      definition: JSON.stringify(def),
       processId: this.tokenInstance.processId,
       tokenId: this.tokenInstance.tokenId,
       createdAt: new Date(),
