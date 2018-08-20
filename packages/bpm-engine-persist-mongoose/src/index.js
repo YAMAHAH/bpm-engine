@@ -53,7 +53,7 @@ export default class MongoosePersist {
     },
   };
 
-  tasks = {
+  task = {
     create: obj => this.schemas.task.create(obj),
     find: query => this.schemas.task.find(query),
   };
