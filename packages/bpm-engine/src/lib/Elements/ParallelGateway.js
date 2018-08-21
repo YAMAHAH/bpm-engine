@@ -74,10 +74,14 @@ export default class ParallelGateway extends Gateway {
 
       const childs = await this.setupChilds(outgoing);
 
-      const funcs = childs.map(child => async () => {
-        await this.persist.tokenInstance.create(child.toJSON());
-        await child.execute();
-      });
+      const funcs = childs.map(child => async () =>
+        new Promise((resolve) => {
+          setTimeout(async () => {
+            await this.persist.tokenInstance.create(child.toJSON());
+            await child.execute();
+            return resolve();
+          }, 0);
+        }));
 
       return serial(funcs);
     }
