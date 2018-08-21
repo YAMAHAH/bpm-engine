@@ -16,10 +16,7 @@ export default class IntermediateCatchEvent extends Event {
     await this.callPlugins('onActive');
     this.tokenInstance.status = 'paused';
 
-    await this.engine.persist.tokenInstance.update(
-      { tokenId: this.tokenInstance.tokenId },
-      { $set: this.tokenInstance.toJSON() },
-    );
+    await this.tokenInstance.persistUpdate();
 
     // create the timer event so the process continues at some point
     const { eventDefinitions } = this.definition;

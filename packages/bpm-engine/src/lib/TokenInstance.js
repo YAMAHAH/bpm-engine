@@ -217,4 +217,9 @@ export default class TokenInstance {
 
     return Promise.resolve();
   };
+
+  persistUpdate = () =>
+    this.engine.persist.tokenInstance.update({ tokenId: this.tokenId }, { $set: this.toJSON() });
+
+  persistCreate = () => this.engine.persist.tokenInstance.create(this.toJSON());
 }

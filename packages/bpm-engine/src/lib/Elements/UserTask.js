@@ -3,10 +3,8 @@ import Activity from 'lib/Elements/Activity';
 export default class UserTask extends Activity {
   makeActive = async () => {
     this.tokenInstance.status = 'paused';
-    await this.engine.persist.tokenInstance.update(
-      { tokenId: this.tokenInstance.tokenId },
-      { $set: this.tokenInstance.toJSON() },
-    );
+
+    await this.tokenInstance.persistUpdate();
 
     const attrs = this.definition.$attrs;
     const def = this.definition;

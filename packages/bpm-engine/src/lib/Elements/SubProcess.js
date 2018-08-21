@@ -30,18 +30,18 @@ export default class SubProcess extends Activity {
 
     const loop = this.definition.loopCharacteristics;
 
-    let childs = [];
+    let childTokenInstances = [];
 
     // not looping, not a multi instance
     if (!loop) {
-      const ti = await this.engine.createTokenInstance({
+      const tokenInstance = await this.engine.createTokenInstance({
         payload: this.tokenInstance.payload,
         parent: this.tokenInstance.tokenId,
         processId: this.tokenInstance.processId,
         flowObjects: this.definition.flowElements,
       });
 
-      childs.push(ti);
+      childTokenInstances.push(tokenInstance);
     }
     else {
       // get cardinality or collection
@@ -51,7 +51,7 @@ export default class SubProcess extends Activity {
         this.tokenInstance.status = 'running';
       }
       else {
-        childs = await Promise.all(subProcessItems.map(async (item) => {
+        childTokenInstances = await Promise.all(subProcessItems.map(async (item) => {
           const payload = JSON.parse(JSON.stringify(this.tokenInstance.payload));
 
           if (!payload._) {
@@ -60,7 +60,7 @@ export default class SubProcess extends Activity {
 
           payload._.item = item;
 
-          const ti = await this.engine.createTokenInstance({
+          const tokenInstance = await this.engine.createTokenInstance({
             payload,
             parent: this.tokenInstance.tokenId,
             processId: this.tokenInstance.processId,
@@ -68,15 +68,19 @@ export default class SubProcess extends Activity {
             flowObjects: this.definition.flowElements,
           });
 
-          return ti;
+          return tokenInstance;
         }));
       }
     }
 
-    const childIds = childs.map(child => child.tokenId);
-    await this.persistChildIdsToParent(childIds);
+    const childTokenInstancesIds = childTokenInstances.map(child => child.tokenId);
+    await this.persistChildIdsToParent(childTokenInstancesIds);
 
-    const funcs = childs.map(child => () => child.execute());
+    childTokenInstances.forEach(async (childTokenInstance) => {
+      await childTokenInstance.persistCreate();
+    });
+
+    const funcs = childTokenInstances.map(childTokenInstance => childTokenInstance.execute);
     await serial(funcs);
   };
 }

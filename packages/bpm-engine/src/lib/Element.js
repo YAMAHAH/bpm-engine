@@ -40,7 +40,7 @@ export default class Element {
       },
     );
 
-  setupChilds = outgoing =>
+  instantiateChildTokenInstances = outgoing =>
     Promise.all(outgoing.map(async (path) => {
       const token = await this.engine.createTokenInstance({
         payload: this.tokenInstance.payload,

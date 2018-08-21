@@ -60,8 +60,6 @@ export default class ParallelGateway extends Gateway {
         }
       }
     }
-
-    return Promise.resolve();
   };
 
   makeComplete = async () => {
@@ -72,20 +70,14 @@ export default class ParallelGateway extends Gateway {
     if (outgoing.length > 1) {
       this.tokenInstance.status = 'paused';
 
-      const childs = await this.setupChilds(outgoing);
+      const childTokenInstances = await this.instantiateChildTokenInstances(outgoing);
+      const childTokenInstancesIds = childTokenInstances.map(childTokenInstance => childTokenInstance.tokenId);
 
-      const funcs = childs.map(child => async () =>
-        new Promise((resolve) => {
-          setTimeout(async () => {
-            await this.persist.tokenInstance.create(child.toJSON());
-            await child.execute();
-            return resolve();
-          }, 0);
-        }));
+      await this.persistChildIdsToParent(childTokenInstancesIds);
 
-      return serial(funcs);
+      await Promise.all(childTokenInstances.map(childTokenInstance => childTokenInstance.persistCreate()));
+
+      await serial(childTokenInstances.map(childTokenInstance => childTokenInstance.execute));
     }
-
-    return Promise.resolve();
   };
 }

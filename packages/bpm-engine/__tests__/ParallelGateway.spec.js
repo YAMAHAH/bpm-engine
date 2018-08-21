@@ -1,6 +1,7 @@
 import fs from 'fs';
 
 import BPMEngine from 'bpm-engine';
+
 import History from './Plugins/History';
 import sleep from './Plugins/sleep';
 
@@ -16,7 +17,7 @@ describe('ParallelGateway', () => {
     });
 
     await token.execute();
-    await sleep(100);
+    await sleep(200);
     expect(history.store).toMatchSnapshot();
   });
 
@@ -32,7 +33,7 @@ describe('ParallelGateway', () => {
 
     await token.execute();
 
-    await sleep(100);
+    await sleep(200);
     expect(history.store).toMatchSnapshot();
   });
 });

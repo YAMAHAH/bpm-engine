@@ -64,16 +64,16 @@ export default class InclusiveGateway extends Gateway {
         }
       }
 
-      const childs = await this.setupChilds(next);
-      const childIds = childs.map(child => child.tokenId);
+      const childTokenInstances = await this.instantiateChildTokenInstances(next);
+      const childTokenInstancesIds = childTokenInstances.map(childTokenInstance => childTokenInstance.tokenId);
+      await this.persistChildIdsToParent(childTokenInstancesIds);
 
-      await this.persistChildIdsToParent(childIds);
-
-      await childs.forEach(async (child) => {
-        await this.persist.tokenInstance.create(child.toJSON());
+      childTokenInstances.forEach(async (childTokenInstance) => {
+        await childTokenInstance.persistCreate();
       });
 
-      const funcs = childs.map(child => () => child.execute());
+      const funcs = childTokenInstances.map(childTokenInstance => childTokenInstance.execute);
+
       await serial(funcs);
     }
   };

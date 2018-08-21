@@ -5,13 +5,9 @@ export default class EndEvent extends Event {
     this.tokenInstance.status = 'ended';
     await this.callPlugins('onComplete');
 
-    await this.persist.tokenInstance.update(
-      {
-        tokenId: this.tokenInstance.tokenId,
-      },
-      { $set: this.tokenInstance.toJSON() },
-    );
+    await this.tokenInstance.persistUpdate();
 
+    // if this end-event is inside a sub process, continue with the outer flow
     if (this.tokenInstance.parent && this.tokenInstance.isSubProcess) {
       const parentToken = await this.persist.tokenInstance.update(
         {
