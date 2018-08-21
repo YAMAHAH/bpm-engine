@@ -1,5 +1,4 @@
 import Gateway from 'lib/Elements/Gateway';
-import serial from 'lib/serial';
 
 export default class InclusiveGateway extends Gateway {
   makeReady = async () => {
@@ -51,8 +50,6 @@ export default class InclusiveGateway extends Gateway {
     await this.callPlugins('onComplete');
 
     if (outgoing.length > 1) {
-      this.tokenInstance.status = 'paused';
-
       const next = await this.getNext();
 
       if (!next.length) {
@@ -65,16 +62,8 @@ export default class InclusiveGateway extends Gateway {
       }
 
       const childTokenInstances = await this.instantiateChildTokenInstances(next);
-      const childTokenInstancesIds = childTokenInstances.map(childTokenInstance => childTokenInstance.tokenId);
-      await this.persistChildIdsToParent(childTokenInstancesIds);
-
-      childTokenInstances.forEach(async (childTokenInstance) => {
-        await childTokenInstance.persistCreate();
-      });
-
-      const funcs = childTokenInstances.map(childTokenInstance => childTokenInstance.execute);
-
-      await serial(funcs);
+      this.tokenInstance.status = 'paused';
+      await this.processChilds(childTokenInstances);
     }
   };
 }

@@ -1,5 +1,4 @@
 import Gateway from 'lib/Elements/Gateway';
-import serial from 'lib/serial';
 
 export default class ParallelGateway extends Gateway {
   makeReady = async () => {
@@ -68,16 +67,9 @@ export default class ParallelGateway extends Gateway {
     const { outgoing } = this.definition;
 
     if (outgoing.length > 1) {
-      this.tokenInstance.status = 'paused';
-
       const childTokenInstances = await this.instantiateChildTokenInstances(outgoing);
-      const childTokenInstancesIds = childTokenInstances.map(childTokenInstance => childTokenInstance.tokenId);
-
-      await this.persistChildIdsToParent(childTokenInstancesIds);
-
-      await Promise.all(childTokenInstances.map(childTokenInstance => childTokenInstance.persistCreate()));
-
-      await serial(childTokenInstances.map(childTokenInstance => childTokenInstance.execute));
+      this.tokenInstance.status = 'paused';
+      await this.processChilds(childTokenInstances);
     }
   };
 }

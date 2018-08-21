@@ -1,5 +1,4 @@
 import Activity from 'lib/Elements/Activity';
-import serial from 'lib/serial';
 
 export default class SubProcess extends Activity {
   async getSubProcessItems(loop) {
@@ -26,7 +25,6 @@ export default class SubProcess extends Activity {
 
   makeActive = async () => {
     await this.callPlugins('onActive');
-    this.tokenInstance.status = 'paused';
 
     const loop = this.definition.loopCharacteristics;
 
@@ -73,14 +71,7 @@ export default class SubProcess extends Activity {
       }
     }
 
-    const childTokenInstancesIds = childTokenInstances.map(child => child.tokenId);
-    await this.persistChildIdsToParent(childTokenInstancesIds);
-
-    childTokenInstances.forEach(async (childTokenInstance) => {
-      await childTokenInstance.persistCreate();
-    });
-
-    const funcs = childTokenInstances.map(childTokenInstance => childTokenInstance.execute);
-    await serial(funcs);
+    this.tokenInstance.status = 'paused';
+    await this.processChilds(childTokenInstances);
   };
 }

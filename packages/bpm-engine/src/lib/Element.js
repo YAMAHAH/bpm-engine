@@ -1,4 +1,5 @@
 import debug from 'lib/debug';
+import serial from 'lib/serial';
 
 const log = debug('process:plugins');
 
@@ -36,9 +37,17 @@ export default class Element {
         $set: {
           currentActivity: this.definition.id,
           childs: childIds,
+          status: this.tokenInstance.status,
         },
       },
     );
+
+  processChilds = async (childTokenInstances) => {
+    const childTokenInstancesIds = childTokenInstances.map(child => child.tokenId);
+    await this.persistChildIdsToParent(childTokenInstancesIds);
+    await Promise.all(childTokenInstances.map(childTokenInstance => childTokenInstance.persistCreate()));
+    await serial(childTokenInstances.map(childTokenInstance => childTokenInstance.execute));
+  };
 
   instantiateChildTokenInstances = outgoing =>
     Promise.all(outgoing.map(async (path) => {
