@@ -1,6 +1,6 @@
 {
   "name": "bpm-engine-persist-mongoose",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "mongoose"
   ],
   "dependencies": {
-    "bpm-engine": "^1.1.6",
+    "bpm-engine": "^1.1.7",
     "mongoose": "^5.2.9",
     "source-map-support": "^0.5.0"
   },
