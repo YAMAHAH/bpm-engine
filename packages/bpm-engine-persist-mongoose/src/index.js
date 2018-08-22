@@ -37,19 +37,22 @@ export default class MongoosePersist {
     find: query => this.schemas.timer.findOne(query),
     update: (query, patch) => this.schemas.timer.findOneAndUpdate(query, patch, { new: true }),
     getNext: async (time) => {
-      // get undone timers
-      const allTimers = await this.schemas.timer.find({ status: { $ne: 'done' } });
+      // get all timers where status is not 'done'
+      // add a calculated field which is the time of creation of the timer and the time provided in this method as an argument
+      // filter out only timers which are lower than or equal 0
+      // sort the older ones on top
+      // only give the oldest
+      const aggregation = [
+        { $match: { status: { $ne: 'done' } } },
+        { $addFields: { timeLeft: { $subtract: ['$time', time] } } },
+        { $match: { timeLeft: { $lte: 0 } } },
+        { $sort: { timeLeft: 1 } },
+        { $limit: 1 },
+      ];
 
-      const timers = allTimers
-        // calculate how many seconds each timer has left until it needs to be handled
-        .map(a => Object.assign(a, { timeLeft: a.time - time }))
-        // filter out only timers which are expired or expiring just now, other timers
-        // need to be handled in the future.
-        .filter(a => a.timeLeft <= 0)
-        // from all those filtered, get the oldest one, which has the highest urgency to get handled
-        .sort((a, b) => a.timeLeft < b.timeLeft);
+      const timer = await this.schemas.timer.aggregate(aggregation);
 
-      return timers[0];
+      return timer[0];
     },
   };
 

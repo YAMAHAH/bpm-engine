@@ -14,7 +14,9 @@ describe('PersistMongoose', () => {
   let persistMongoose;
 
   beforeEach(async () => {
-    persistMongoose = new PersistMongoose('mongodb://localhost:27017/bpm-engine-testing');
+    persistMongoose = new PersistMongoose('mongodb://localhost:27017/bpm-engine-testing', {
+      useNewUrlParser: true,
+    });
 
     // clear process instances, token instances and deployed workflowDefinitions
     await persistMongoose.schemas.processInstance.remove({}).exec();
@@ -87,8 +89,10 @@ describe('PersistMongoose', () => {
       processName: 'Hello World',
     });
 
-    setTimeout(() => {
+    setTimeout(async () => {
+      const results = await persistMongoose.schemas.processInstance.find();
+      expect(results.length).toBe(3);
       done();
-    }, 4000);
+    }, 3000);
   });
 });
