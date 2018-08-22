@@ -71,6 +71,7 @@ class BPMEngine {
           previousTimerId: timerEvent.timerId,
           intent: timerEvent.intent,
           workflowDefinitionId: timerEvent.workflowDefinitionId,
+          processName: timerEvent.processName,
         });
       }
     }
