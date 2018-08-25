@@ -11,3 +11,4 @@ export { default as ParallelGateway } from 'lib/Elements/ParallelGateway';
 export { default as Event } from 'lib/Elements/Event';
 export { default as ServiceTask } from 'lib/Elements/ServiceTask';
 export { default as IntermediateCatchEvent } from 'lib/Elements/IntermediateCatchEvent';
+export { default as ScriptTask } from 'lib/Elements/ScriptTask';

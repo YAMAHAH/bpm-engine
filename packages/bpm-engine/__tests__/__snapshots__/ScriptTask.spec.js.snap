@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ScriptTask should break when using a unsupported script format 1`] = `[Error: Unsupported script format: PHP. Allowed script formats: JavaScript, NodeJS]`;
+
+exports[`ScriptTask should run a script task successfullt 1`] = `
+Object {
+  "a": 1,
+}
+`;
