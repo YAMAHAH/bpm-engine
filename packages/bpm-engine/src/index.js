@@ -12,6 +12,23 @@ import getNextFlowObjects from 'lib/getNextFlowObjects';
 
 const log = debug('engine');
 
+const isTimerStartEvent = (flowObject) => {
+  if (flowObject.$type === 'bpmn:StartEvent') {
+    const { eventDefinitions } = flowObject;
+    if (eventDefinitions) {
+      const firstEventDefinition = eventDefinitions[0];
+      // if this start event has timereventdefinitions
+      if (firstEventDefinition.$type === 'bpmn:TimerEventDefinition') {
+        // if it's timer is of type cycle (repetition)
+        if (firstEventDefinition.timeCycle) {
+          return firstEventDefinition;
+        }
+      }
+    }
+  }
+  return false;
+};
+
 /**
  *
  */
@@ -70,7 +87,7 @@ class BPMEngine {
           time: nextTimerEvent.date / 1,
           previousTimerId: timerEvent.timerId,
           intent: timerEvent.intent,
-          workflowDefinitionId: timerEvent.workflowDefinitionId
+          workflowDefinitionId: timerEvent.workflowDefinitionId,
         });
       }
     }
@@ -219,39 +236,30 @@ class BPMEngine {
     const { flowObjects } = dummyTokenInstance;
 
     flowObjects.forEach(async (flowObject) => {
-      if (flowObject.$type === 'bpmn:StartEvent') {
-        const { eventDefinitions } = flowObject;
-        if (eventDefinitions) {
-          const firstEventDefinition = eventDefinitions[0];
-          // if this start event has timereventdefinitions
-          if (firstEventDefinition.$type === 'bpmn:TimerEventDefinition') {
-            // if it's timer is of type cycle (repetition)
-            if (firstEventDefinition.timeCycle) {
-              // evaluate the interval
-              const intervalExpression = `return \`${firstEventDefinition.timeCycle.body}\`;`;
-              const intervalExpressionFunction = new Function('timestamp', intervalExpression);
-              const intervalString = intervalExpressionFunction(new Date().toISOString());
+      const eventDefinition = isTimerStartEvent(flowObject);
+      if (eventDefinition) {
+        // evaluate the interval
+        const intervalExpression = `return \`${eventDefinition.timeCycle.body}\`;`;
+        const intervalExpressionFunction = new Function('timestamp', intervalExpression);
+        const intervalString = intervalExpressionFunction(new Date().toISOString());
 
-              // create the interval and get the first iteration
-              const interval = makeInterval(intervalString);
-              const firstAfter = interval.firstAfter(new Date() - 1000);
+        // create the interval and get the first iteration
+        const interval = makeInterval(intervalString);
+        const firstAfter = interval.firstAfter(new Date() - 1000);
 
-              // if the first iteration is not bigger than the max amount of repetitions
-              const hasPendingRepetitions = firstAfter.index <= interval._repeatCount;
+        // if the first iteration is not bigger than the max amount of repetitions
+        const hasPendingRepetitions = firstAfter.index <= interval._repeatCount;
 
-              if (hasPendingRepetitions) {
-                // create a timer event
-                await this.persist.timer.create({
-                  timerId: this.generateId(),
-                  index: firstAfter.index,
-                  time: firstAfter.date / 1,
-                  interval: intervalString,
-                  intent: constants.START_PROCESS_INSTANCE_INTENT,
-                  workflowDefinitionId,
-                });
-              }
-            }
-          }
+        if (hasPendingRepetitions) {
+          // create a timer event
+          await this.persist.timer.create({
+            timerId: this.generateId(),
+            index: firstAfter.index,
+            time: firstAfter.date / 1,
+            interval: intervalString,
+            intent: constants.START_PROCESS_INSTANCE_INTENT,
+            workflowDefinitionId,
+          });
         }
       }
     });
@@ -292,10 +300,7 @@ class BPMEngine {
 
     // we need to create the start events after the creation of the workflowDefinition
     // so that a timer can not happen before the workflowDefinition is deployed.
-    await this.createStartEvents(
-      dummyTokenInstance,
-      workflowDefinition.workflowDefinitionId,
-    );
+    await this.createStartEvents(dummyTokenInstance, workflowDefinition.workflowDefinitionId);
 
     return workflowDefinition;
   }
