@@ -39,9 +39,6 @@ const TimerSchema = new Schema(
     previousTimerId: {
       type: String,
     },
-    processName: {
-      type: String,
-    },
   },
   {
     timestamps: true,

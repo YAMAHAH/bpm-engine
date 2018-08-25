@@ -9,6 +9,7 @@ mongoose.Promise = Promise;
 import PersistMongoose from 'bpm-engine-persist-mongoose';
 
 import History from '../../bpm-engine/__tests__/Plugins/History';
+import sleep from '../../bpm-engine/__tests__/Plugins/sleep';
 
 describe('PersistMongoose', () => {
   let persistMongoose;
@@ -56,7 +57,6 @@ describe('PersistMongoose', () => {
 
     await bpm.deployWorkflowDefinition({
       xml: fs.readFileSync(`${__dirname}/ParallelServices.bpmn`, 'utf-8'),
-      processName: 'Hello World',
     });
 
     expect((await persistMongoose.schemas.workflowDefinition.find()).length).toMatchSnapshot();
@@ -69,7 +69,6 @@ describe('PersistMongoose', () => {
 
     const deployedWorkflowDefinition = await bpm.deployWorkflowDefinition({
       xml: fs.readFileSync(`${__dirname}/ParallelServices.bpmn`, 'utf-8'),
-      processName: 'Hello World',
     });
 
     const processInstance = await bpm.createProcessInstance({
@@ -79,20 +78,48 @@ describe('PersistMongoose', () => {
     expect(processInstance).not.toBeFalsy();
   });
 
-  it('Can create a process instance with a timer start event', async (done) => {
+  it('Can create a process instance with a timer start event', async () => {
     const bpm = new BPMEngine({
       persist: persistMongoose,
     });
 
     await bpm.deployWorkflowDefinition({
       xml: fs.readFileSync(`${__dirname}/TimerStartEvent.bpmn`, 'utf-8'),
-      processName: 'Hello World',
     });
 
-    setTimeout(async () => {
-      const results = await persistMongoose.schemas.processInstance.find();
-      expect(results.length).toBe(3);
-      done();
-    }, 3000);
+    await sleep(3000);
+    const results = await persistMongoose.schemas.processInstance.find();
+    expect(results.length).toBe(3);
+  });
+
+  it('multiple deploys of the same workfowDefinition should replace existing timers', async () => {
+    const engine = new BPMEngine({
+      persist: persistMongoose,
+    });
+
+    await engine.deployWorkflowDefinition({
+      xml: fs.readFileSync(`${__dirname}/TimerStartEvent.bpmn`, 'utf-8'),
+      workflowDefinitionId: 'timerStartEvent',
+    });
+
+    await sleep(1500);
+    let timers = await persistMongoose.schemas.timer.find();
+    let lastTimer = timers[2];
+
+    expect(lastTimer.status).toBeFalsy();
+
+    await engine.deployWorkflowDefinition({
+      xml: fs.readFileSync(`${__dirname}/TimerStartEvent.bpmn`, 'utf-8'),
+      workflowDefinitionId: 'timerStartEvent',
+    });
+
+    timers = await persistMongoose.schemas.timer.find();
+    lastTimer = timers[2];
+    expect(lastTimer.status).toEqual('done');
+
+    await sleep(1500);
+    timers = await persistMongoose.schemas.timer.find();
+    lastTimer = timers[5];
+    expect(lastTimer.status).toBeFalsy();
   });
 });

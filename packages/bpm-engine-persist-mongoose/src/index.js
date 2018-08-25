@@ -35,7 +35,8 @@ export default class MongoosePersist {
   timer = {
     create: obj => this.schemas.timer.create(obj),
     find: query => this.schemas.timer.findOne(query),
-    update: (query, patch) => this.schemas.timer.findOneAndUpdate(query, patch, { new: true }),
+    update: (query, patch, options = {}) =>
+      this.schemas.timer.update(query, patch, { ...options, new: true }),
     getNext: async (time) => {
       // get all timers where status is not 'done'
       // add a calculated field which is the time of creation of the timer and the time provided in this method as an argument

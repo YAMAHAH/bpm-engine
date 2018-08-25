@@ -44,7 +44,6 @@ describe('BPMEngine', () => {
     const bpm = new BPMEngine();
     const deployedWorkflowDefinition = await bpm.deployWorkflowDefinition({
       xml: UserTaskDiagram,
-      processName: 'Hello World',
       workflowDefinitionId: 'test',
     });
     const workflowDefinition = await bpm.persist.workflowDefinition.find({
@@ -57,7 +56,6 @@ describe('BPMEngine', () => {
     const bpm = new BPMEngine();
     const deployedWorkflowDefinition = await bpm.deployWorkflowDefinition({
       xml: UserTaskDiagram,
-      processName: 'Hello World',
     });
     const workflowDefinition = await bpm.persist.workflowDefinition.find({
       workflowDefinitionId: deployedWorkflowDefinition.workflowDefinitionId,
@@ -69,7 +67,6 @@ describe('BPMEngine', () => {
     const bpm = new BPMEngine();
     const deployedWorkflowDefinition = await bpm.deployWorkflowDefinition({
       xml: UserTaskDiagram,
-      processName: 'Hello World',
     });
 
     const token = await bpm.createProcessInstance({

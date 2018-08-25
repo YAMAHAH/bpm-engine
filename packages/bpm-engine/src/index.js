@@ -70,8 +70,7 @@ class BPMEngine {
           time: nextTimerEvent.date / 1,
           previousTimerId: timerEvent.timerId,
           intent: timerEvent.intent,
-          workflowDefinitionId: timerEvent.workflowDefinitionId,
-          processName: timerEvent.processName,
+          workflowDefinitionId: timerEvent.workflowDefinitionId
         });
       }
     }
@@ -216,7 +215,7 @@ class BPMEngine {
   }
 
   // create listeners for timer and message start events
-  async createStartEvents(dummyTokenInstance, workflowDefinitionId, processName) {
+  async createStartEvents(dummyTokenInstance, workflowDefinitionId) {
     const { flowObjects } = dummyTokenInstance;
 
     flowObjects.forEach(async (flowObject) => {
@@ -249,7 +248,6 @@ class BPMEngine {
                   interval: intervalString,
                   intent: constants.START_PROCESS_INSTANCE_INTENT,
                   workflowDefinitionId,
-                  processName,
                 });
               }
             }
@@ -259,7 +257,7 @@ class BPMEngine {
     });
   }
 
-  async deployWorkflowDefinition({ xml, workflowDefinitionId = this.generateId(), processName }) {
+  async deployWorkflowDefinition({ xml, workflowDefinitionId = this.generateId() }) {
     const dummyTokenInstance = new TokenInstance({
       workflowDefinition: xml,
     });
@@ -269,14 +267,14 @@ class BPMEngine {
     await dummyTokenInstance.initialize();
 
     const alreadyExistingWorkflowDefinition = await this.persist.workflowDefinition.find({
-      processName,
+      workflowDefinitionId,
     });
 
     let workflowDefinition;
 
     if (alreadyExistingWorkflowDefinition) {
       workflowDefinition = await this.persist.workflowDefinition.update(
-        { processName },
+        { workflowDefinitionId },
         {
           xml,
         },
@@ -285,20 +283,18 @@ class BPMEngine {
     else {
       workflowDefinition = await this.persist.workflowDefinition.create({
         xml,
-        processName,
         workflowDefinitionId,
       });
     }
 
     // remove already existing start events for this workflowDefinition
-    await this.persist.timer.update({ processName }, { status: 'done' });
+    await this.persist.timer.update({ workflowDefinitionId }, { status: 'done' }, { multi: true });
 
     // we need to create the start events after the creation of the workflowDefinition
     // so that a timer can not happen before the workflowDefinition is deployed.
     await this.createStartEvents(
       dummyTokenInstance,
       workflowDefinition.workflowDefinitionId,
-      processName,
     );
 
     return workflowDefinition;

@@ -10,11 +10,6 @@ const WorkflowDefinitionSchema = new Schema(
       unique: true,
       index: true,
     },
-    processName: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     xml: {
       type: String,
       required: true,
