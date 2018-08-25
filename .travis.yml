@@ -1,0 +1,19 @@
+language: node_js
+
+node_js:
+  - 4
+  - 6
+  - 7
+  - 8
+  - 9
+
+install:
+  - npm install
+  - npm install lerna -g
+
+script:
+  - npm run deps
+  - npm run build
+  - npm test
+
+after_success: npm run codeclimate

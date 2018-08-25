@@ -10,6 +10,7 @@
     "test:watch": "jest --watchAll",
     "build": "lerna exec --parallel \"npm run build\"",
     "watch": "lerna exec --parallel \"npm run watch\"",
+    "deps": "lerna exec --parallel \"npm install\"",
     "codeclimate": "codeclimate-test-reporter < ./coverage/lcov.info",
     "publish": "lerna publish"
   },
