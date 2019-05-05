@@ -98,7 +98,7 @@ await token.execute().catch(console.error);
 - [ ] Send
 - [ ] Receive
 - [ ] BusinessRule
-- [ ] Script
+- [x] Script
 
 ### Gateways:
 
@@ -119,7 +119,7 @@ await token.execute().catch(console.error);
 
 ## Persistency layer
 
-You can install one of the following packages to add persistency to the state of your processes.
+You can install the following package to add a persistency layer to the state of your processes.
 
 - bpm-engine-persist-mongoose
 
