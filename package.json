@@ -2,7 +2,7 @@
   "name": "bpm-engine-build",
   "private": true,
   "version": "0.0.1",
-  "description": "Business Process Management Engine Build",
+  "description": "Business Process Management Execution Engine written in JavaScript",
   "main": "index.js",
   "scripts": {
     "test": "jest",

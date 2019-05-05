@@ -56,7 +56,7 @@ class BPMEngine {
 
   onTick = async () => {
     log('onTick');
-    const currentTimestamp = new Date() / 1;
+    const currentTimestamp = new Date().getTime();
     const timerEvent = await this.persist.timer.getNext(currentTimestamp);
 
     if (timerEvent) {

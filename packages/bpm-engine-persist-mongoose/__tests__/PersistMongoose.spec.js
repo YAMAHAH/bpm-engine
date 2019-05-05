@@ -4,12 +4,12 @@ import Promise from 'bluebird';
 
 import mongoose from 'mongoose';
 
-mongoose.Promise = Promise;
-
 import PersistMongoose from 'bpm-engine-persist-mongoose';
 
 import History from '../../bpm-engine/__tests__/Plugins/History';
 import sleep from '../../bpm-engine/__tests__/Plugins/sleep';
+
+mongoose.Promise = Promise;
 
 describe('PersistMongoose', () => {
   let persistMongoose;
@@ -19,12 +19,12 @@ describe('PersistMongoose', () => {
       useNewUrlParser: true,
     });
 
-    // clear process instances, token instances and deployed workflowDefinitions
-    await persistMongoose.schemas.processInstance.remove({}).exec();
-    await persistMongoose.schemas.tokenInstance.remove({}).exec();
-    await persistMongoose.schemas.workflowDefinition.remove({}).exec();
-    await persistMongoose.schemas.timer.remove({}).exec();
-    await persistMongoose.schemas.task.remove({}).exec();
+    // clear collections
+    await persistMongoose.schemas.processInstance.remove({});
+    await persistMongoose.schemas.tokenInstance.remove({});
+    await persistMongoose.schemas.workflowDefinition.remove({});
+    await persistMongoose.schemas.timer.remove({});
+    await persistMongoose.schemas.task.remove({});
   });
 
   afterEach(async () => {
