@@ -22,11 +22,11 @@ describe('PersistMongoose', () => {
     });
 
     // clear collections
-    await persistMongoose.schemas.processInstance.remove({}).exec();
-    await persistMongoose.schemas.tokenInstance.remove({}).exec();
-    await persistMongoose.schemas.workflowDefinition.remove({}).exec();
-    await persistMongoose.schemas.timer.remove({}).exec();
-    await persistMongoose.schemas.task.remove({}).exec();
+    await persistMongoose.schemas.processInstance.deleteMany().exec();
+    await persistMongoose.schemas.tokenInstance.deleteMany().exec();
+    await persistMongoose.schemas.workflowDefinition.deleteMany().exec();
+    await persistMongoose.schemas.timer.deleteMany().exec();
+    await persistMongoose.schemas.task.deleteMany().exec();
   });
 
   afterEach(async () => {
