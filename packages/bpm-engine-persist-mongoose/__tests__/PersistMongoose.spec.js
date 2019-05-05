@@ -17,14 +17,16 @@ describe('PersistMongoose', () => {
   beforeEach(async () => {
     persistMongoose = new PersistMongoose('mongodb://localhost:27017/bpm-engine-testing', {
       useNewUrlParser: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
     });
 
     // clear collections
-    await persistMongoose.schemas.processInstance.remove({});
-    await persistMongoose.schemas.tokenInstance.remove({});
-    await persistMongoose.schemas.workflowDefinition.remove({});
-    await persistMongoose.schemas.timer.remove({});
-    await persistMongoose.schemas.task.remove({});
+    await persistMongoose.schemas.processInstance.remove({}).exec();
+    await persistMongoose.schemas.tokenInstance.remove({}).exec();
+    await persistMongoose.schemas.workflowDefinition.remove({}).exec();
+    await persistMongoose.schemas.timer.remove({}).exec();
+    await persistMongoose.schemas.task.remove({}).exec();
   });
 
   afterEach(async () => {

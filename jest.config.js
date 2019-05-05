@@ -16,4 +16,5 @@ module.exports = {
   },
   rootDir: __dirname,
   testMatch: ['<rootDir>/packages/*/__tests__/**/*spec.js'],
+  testEnvironment: 'node',
 };
