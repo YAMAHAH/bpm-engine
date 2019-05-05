@@ -10,6 +10,9 @@ node_js:
   - 11
   - 12
 
+services:
+  - mongodb
+
 install:
   - npm install
   - npm install lerna -g
