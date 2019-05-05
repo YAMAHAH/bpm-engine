@@ -119,6 +119,101 @@ Array [
 ]
 `;
 
+exports[`InclusiveGateway Continues on default path 1`] = `
+Array [
+  Object {
+    "elementId": "StartEvent_1",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "ready",
+  },
+  Object {
+    "elementId": "StartEvent_1",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "active",
+  },
+  Object {
+    "elementId": "StartEvent_1",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "complete",
+  },
+  Object {
+    "elementId": "InclusiveGateway_1sopzs7",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "ready",
+  },
+  Object {
+    "elementId": "InclusiveGateway_1sopzs7",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "active",
+  },
+  Object {
+    "elementId": "InclusiveGateway_1sopzs7",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "complete",
+  },
+  Object {
+    "elementId": "Task_1pi7ms1",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "ready",
+  },
+  Object {
+    "elementId": "Task_1pi7ms1",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "active",
+  },
+  Object {
+    "elementId": "Task_1pi7ms1",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "complete",
+  },
+  Object {
+    "elementId": "InclusiveGateway_1uhxkjz",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "ready",
+  },
+  Object {
+    "elementId": "InclusiveGateway_1uhxkjz",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "active",
+  },
+  Object {
+    "elementId": "InclusiveGateway_1uhxkjz",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "complete",
+  },
+  Object {
+    "elementId": "EndEvent_05zfgny",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "ready",
+  },
+  Object {
+    "elementId": "EndEvent_05zfgny",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "active",
+  },
+  Object {
+    "elementId": "EndEvent_05zfgny",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "complete",
+  },
+]
+`;
+
 exports[`InclusiveGateway Continues on one path 1`] = `
 Array [
   Object {
@@ -207,6 +302,47 @@ Array [
   },
   Object {
     "elementId": "EndEvent_05zfgny",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "complete",
+  },
+]
+`;
+
+exports[`InclusiveGateway Does not continue if there is no default path and no path expression matched 1`] = `
+Array [
+  Object {
+    "elementId": "StartEvent_1bgx6wg",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "ready",
+  },
+  Object {
+    "elementId": "StartEvent_1bgx6wg",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "active",
+  },
+  Object {
+    "elementId": "StartEvent_1bgx6wg",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "complete",
+  },
+  Object {
+    "elementId": "InclusiveGateway_1iqp50g",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "ready",
+  },
+  Object {
+    "elementId": "InclusiveGateway_1iqp50g",
+    "lanes": undefined,
+    "participant": undefined,
+    "state": "active",
+  },
+  Object {
+    "elementId": "InclusiveGateway_1iqp50g",
     "lanes": undefined,
     "participant": undefined,
     "state": "complete",

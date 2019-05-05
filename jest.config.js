@@ -1,5 +1,5 @@
 module.exports = {
-  collectCoverageFrom: ['packages/*/src/**/*.js'],
+  collectCoverageFrom: ['packages/*/dist/**/*.js'],
   coverageDirectory: 'coverage',
   coverageReporters: ['html', 'lcov', 'text-summary'],
   coverageThreshold: {

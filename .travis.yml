@@ -19,6 +19,6 @@ install:
 script:
   - npm run deps
   - npm run build
-  - npm test
+  - npm run test:coverage
 
 after_success: npm run codeclimate
