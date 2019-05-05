@@ -296,7 +296,11 @@ class BPMEngine {
     }
 
     // remove already existing start events for this workflowDefinition
-    await this.persist.timer.update({ workflowDefinitionId }, { status: 'done' }, { multi: true });
+    await this.persist.timer.update(
+      { workflowDefinitionId },
+      { status: 'done' },
+      { multi: true },
+    );
 
     // we need to create the start events after the creation of the workflowDefinition
     // so that a timer can not happen before the workflowDefinition is deployed.
