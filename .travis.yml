@@ -21,4 +21,4 @@ script:
   - npm run build
   - npm run test:coverage
 
-after_success: npm run codeclimate
+after_success: CODECLIMATE_REPO_TOKEN=$CODECLIMATE_REPO_TOKEN npm run codeclimate
