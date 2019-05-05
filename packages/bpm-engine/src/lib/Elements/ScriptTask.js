@@ -8,7 +8,7 @@ export default class ScriptTask extends Activity {
 
     const { scriptFormat, script } = this.definition;
 
-    if (scriptingEngines.includes(scriptFormat)) {
+    if (scriptingEngines.indexOf(scriptFormat) > -1) {
       // TODO: ...
       if (scriptFormat === 'JavaScript') {
         const fn = new Function('payload', script);
