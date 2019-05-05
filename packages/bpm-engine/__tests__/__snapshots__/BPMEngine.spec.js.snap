@@ -71,7 +71,7 @@ BPMEngine {
   "clock": Clock {
     "interval": 100,
     "onTick": [Function],
-    "status": "paused",
+    "timeout": 13,
   },
   "evalCondition": [Function],
   "generateId": [Function],
@@ -117,7 +117,7 @@ BPMEngine {
   "clock": Clock {
     "interval": 100,
     "onTick": [Function],
-    "status": "paused",
+    "timeout": 8,
   },
   "evalCondition": [Function],
   "generateId": [Function],
@@ -163,7 +163,7 @@ BPMEngine {
   "clock": Clock {
     "interval": 100,
     "onTick": [Function],
-    "status": "paused",
+    "timeout": 3,
   },
   "evalCondition": [Function],
   "generateId": [Function],
