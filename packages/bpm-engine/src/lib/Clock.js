@@ -24,4 +24,4 @@ class Clock {
   }
 }
 
-export default 
+export default Clock;
