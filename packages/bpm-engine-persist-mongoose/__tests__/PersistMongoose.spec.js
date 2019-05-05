@@ -22,11 +22,14 @@ describe('PersistMongoose', () => {
     });
 
     // clear collections
-    await persistMongoose.schemas.processInstance.deleteMany().exec();
-    await persistMongoose.schemas.tokenInstance.deleteMany().exec();
-    await persistMongoose.schemas.workflowDefinition.deleteMany().exec();
-    await persistMongoose.schemas.timer.deleteMany().exec();
-    await persistMongoose.schemas.task.deleteMany().exec();
+    const clearCollections = [];
+    clearCollections.push(persistMongoose.schemas.processInstance.deleteMany({}).exec());
+    clearCollections.push(persistMongoose.schemas.tokenInstance.deleteMany({}).exec());
+    clearCollections.push(persistMongoose.schemas.workflowDefinition.deleteMany({}).exec());
+    clearCollections.push(persistMongoose.schemas.timer.deleteMany({}).exec());
+    clearCollections.push(persistMongoose.schemas.task.deleteMany({}).exec());
+
+    await Promise.all(clearCollections);
   });
 
   afterEach(async () => {
@@ -36,12 +39,12 @@ describe('PersistMongoose', () => {
   it('Creates a process instance by xml', async () => {
     const history = new History();
 
-    const bpm = new BPMEngine({
+    const engine = new BPMEngine({
       plugins: [history],
       persist: persistMongoose,
     });
 
-    const processInstance = await bpm.createProcessInstance({
+    const processInstance = await engine.createProcessInstance({
       workflowDefinition: fs.readFileSync(`${__dirname}/ParallelServices.bpmn`, 'utf-8'),
     });
 
@@ -50,34 +53,37 @@ describe('PersistMongoose', () => {
     expect((await persistMongoose.schemas.processInstance.find()).length).toMatchSnapshot();
     expect((await persistMongoose.schemas.tokenInstance.find()).length).toMatchSnapshot();
     expect(history.store).toMatchSnapshot();
+    engine.clock.stop();
   });
 
   it('Can deploy a workflow definition', async () => {
-    const bpm = new BPMEngine({
+    const engine = new BPMEngine({
       persist: persistMongoose,
     });
 
-    await bpm.deployWorkflowDefinition({
+    await engine.deployWorkflowDefinition({
       xml: fs.readFileSync(`${__dirname}/ParallelServices.bpmn`, 'utf-8'),
     });
 
     expect((await persistMongoose.schemas.workflowDefinition.find()).length).toMatchSnapshot();
+    engine.clock.stop();
   });
 
   it('Can create a process instance from a deployed workflowDefinition', async () => {
-    const bpm = new BPMEngine({
+    const engine = new BPMEngine({
       persist: persistMongoose,
     });
 
-    const deployedWorkflowDefinition = await bpm.deployWorkflowDefinition({
+    const deployedWorkflowDefinition = await engine.deployWorkflowDefinition({
       xml: fs.readFileSync(`${__dirname}/ParallelServices.bpmn`, 'utf-8'),
     });
 
-    const processInstance = await bpm.createProcessInstance({
+    const processInstance = await engine.createProcessInstance({
       workflowDefinitionId: deployedWorkflowDefinition.workflowDefinitionId,
     });
 
     expect(processInstance).not.toBeFalsy();
+    engine.clock.stop();
   });
 
   it('Can create a process instance with a timer start event', async () => {
@@ -92,6 +98,7 @@ describe('PersistMongoose', () => {
     await sleep(3000);
     const results = await persistMongoose.schemas.processInstance.find();
     expect(results.length).toBe(3);
+    bpm.clock.stop();
   });
 
   it('multiple deploys of the same workfowDefinition should replace existing timers', async () => {
@@ -123,5 +130,6 @@ describe('PersistMongoose', () => {
     timers = await persistMongoose.schemas.timer.find();
     lastTimer = timers[5];
     expect(lastTimer.status).toBeFalsy();
+    engine.clock.stop();
   });
 });

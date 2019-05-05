@@ -3,9 +3,7 @@ const DEFAULTS = {
   interval: 1000,
 };
 
-export default class Clock {
-  status = 'paused';
-
+class Clock {
   constructor({ onTick = DEFAULTS.ONTICK, interval = DEFAULTS.INTERVAL }) {
     this.onTick = onTick;
     this.interval = interval;
@@ -13,9 +11,17 @@ export default class Clock {
   }
 
   tick() {
-    setTimeout(async () => {
+    this.timeout = setTimeout(async () => {
       await this.onTick();
       this.tick();
     }, this.interval);
   }
+
+  stop() {
+    if (this.timeout) {
+      clearTimeout(this.timeout);
+    }
+  }
 }
+
+export default 
