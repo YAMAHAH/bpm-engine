@@ -2,13 +2,13 @@ import Activity from 'lib/Elements/Activity';
 
 const scriptingEngines = ['JavaScript', 'NodeJS'];
 
-export default class ScriptTask extends Activity {
+class ScriptTask extends Activity {
   makeActive = async () => {
     await this.callPlugins('onActive');
 
     const { scriptFormat, script } = this.definition;
 
-    if (scriptingEngines.indexOf(scriptFormat) > -1) {
+    if (scriptingEngines.includes(scriptFormat)) {
       // TODO: ...
       if (scriptFormat === 'JavaScript') {
         const fn = new Function('payload', script);
@@ -27,3 +27,5 @@ export default class ScriptTask extends Activity {
     }
   };
 }
+
+export default ScriptTask;
