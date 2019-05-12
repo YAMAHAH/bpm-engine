@@ -12,21 +12,22 @@ import getNextFlowObjects from 'lib/getNextFlowObjects';
 
 const log = debug('engine');
 
-const isTimerStartEvent = (flowObject) => {
-  if (flowObject.$type === 'bpmn:StartEvent') {
-    const { eventDefinitions } = flowObject;
-    if (eventDefinitions) {
-      const firstEventDefinition = eventDefinitions[0];
+const getTimerEventDefinition = (flowObject) => {
+  let timerEventDefinition;
+
+  const { eventDefinitions } = flowObject;
+  if (eventDefinitions) {
+    eventDefinitions.forEach((eventDefinition) => {
       // if this start event has timereventdefinitions
-      if (firstEventDefinition.$type === 'bpmn:TimerEventDefinition') {
+      if (eventDefinition.$type === constants.BPMN_EVENT_DEFINITION_TIMER) {
         // if it's timer is of type cycle (repetition)
-        if (firstEventDefinition.timeCycle) {
-          return firstEventDefinition;
+        if (eventDefinition.timeCycle) {
+          timerEventDefinition = eventDefinition;
         }
       }
-    }
+    });
   }
-  return false;
+  return timerEventDefinition;
 };
 
 /**
@@ -235,34 +236,38 @@ class BPMEngine {
   async createStartEvents(dummyTokenInstance, workflowDefinitionId) {
     const { flowObjects } = dummyTokenInstance;
 
-    flowObjects.forEach(async (flowObject) => {
-      const eventDefinition = isTimerStartEvent(flowObject);
-      if (eventDefinition) {
-        // evaluate the interval
-        const intervalExpression = `return \`${eventDefinition.timeCycle.body}\`;`;
-        const intervalExpressionFunction = new Function('timestamp', intervalExpression);
-        const intervalString = intervalExpressionFunction(new Date().toISOString());
+    flowObjects
+      .filter(flowObject => flowObject.$type === constants.BPMN_EVENT_START)
+      .forEach(async (flowObject) => {
+        const timerEventDefinition = getTimerEventDefinition(flowObject);
+        if (timerEventDefinition) {
+          if (timerEventDefinition.timeCycle) {
+            // evaluate the interval
+            const intervalExpression = `return \`${timerEventDefinition.timeCycle.body}\`;`;
+            const intervalExpressionFunction = new Function('timestamp', intervalExpression);
+            const intervalString = intervalExpressionFunction(new Date().toISOString());
 
-        // create the interval and get the first iteration
-        const interval = makeInterval(intervalString);
-        const firstAfter = interval.firstAfter(new Date() - 1000);
+            // create the interval and get the first iteration
+            const interval = makeInterval(intervalString);
+            const firstAfter = interval.firstAfter(new Date() - 1000);
 
-        // if the first iteration is not bigger than the max amount of repetitions
-        const hasPendingRepetitions = firstAfter.index <= interval._repeatCount;
+            // if the first iteration is not bigger than the max amount of repetitions
+            const hasPendingRepetitions = firstAfter.index <= interval._repeatCount;
 
-        if (hasPendingRepetitions) {
-          // create a timer event
-          await this.persist.timer.create({
-            timerId: this.generateId(),
-            index: firstAfter.index,
-            time: firstAfter.date / 1,
-            interval: intervalString,
-            intent: constants.START_PROCESS_INSTANCE_INTENT,
-            workflowDefinitionId,
-          });
+            if (hasPendingRepetitions) {
+              // create a timer event
+              this.persist.timer.create({
+                timerId: this.generateId(),
+                index: firstAfter.index,
+                time: firstAfter.date / 1,
+                interval: intervalString,
+                intent: constants.START_PROCESS_INSTANCE_INTENT,
+                workflowDefinitionId,
+              });
+            }
+          }
         }
-      }
-    });
+      });
   }
 
   async deployWorkflowDefinition({ xml, workflowDefinitionId = this.generateId() }) {
@@ -287,6 +292,13 @@ class BPMEngine {
           xml,
         },
       );
+
+      // remove already existing start events for this workflowDefinition
+      await this.persist.timer.update(
+        { workflowDefinitionId },
+        { status: 'done' },
+        { multi: true },
+      );
     }
     else {
       workflowDefinition = await this.persist.workflowDefinition.create({
@@ -294,9 +306,6 @@ class BPMEngine {
         workflowDefinitionId,
       });
     }
-
-    // remove already existing start events for this workflowDefinition
-    await this.persist.timer.update({ workflowDefinitionId }, { status: 'done' }, { multi: true });
 
     // we need to create the start events after the creation of the workflowDefinition
     // so that a timer can not happen before the workflowDefinition is deployed.

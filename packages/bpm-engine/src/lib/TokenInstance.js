@@ -2,6 +2,7 @@ import BPMNModdle from 'bpmn-moddle';
 import debug from 'lib/debug';
 import getFlowObjectType from 'lib/getFlowObjectType';
 import { UserTask, ServiceTask } from 'lib/Elements';
+import * as constants from 'lib/constants';
 
 const log = debug('engine');
 
@@ -46,7 +47,7 @@ const getNexts = flowObject =>
 const parseParticipantsAndLanes = (rootElements) => {
   // set participant for all flowElements
   rootElements.forEach((el) => {
-    if (el.$type === 'bpmn:Collaboration') {
+    if (el.$type === constants.BPMN_COLLABORATION) {
       el.get('participants').forEach(({ id, name, processRef }) => {
         setParticipants(processRef.flowElements, id, name);
       });
@@ -55,7 +56,7 @@ const parseParticipantsAndLanes = (rootElements) => {
 
   // set lanes for all flowElements
   rootElements.forEach((el) => {
-    if (el.$type === 'bpmn:Process') {
+    if (el.$type === constants.BPMN_PROCESS) {
       el.get('laneSets').forEach((laneSet) => {
         if (laneSet.lanes) {
           laneSet.lanes.forEach((lane) => {
@@ -113,7 +114,7 @@ export default class TokenInstance {
 
   initialize = () =>
     new Promise((resolve, reject) => {
-      moddle.fromXML(this.workflowDefinition, 'bpmn:Definitions', (err, definitions) => {
+      moddle.fromXML(this.workflowDefinition, constants.BPMN_DEFINITIONS, (err, definitions) => {
         if (err) {
           return reject(err);
         }
@@ -121,8 +122,8 @@ export default class TokenInstance {
         const rootElements = definitions.get('rootElements');
 
         const rootElement = rootElements.find(rootEl =>
-          rootEl.$type === 'bpmn:Process' &&
-            rootEl.flowElements.find(flowEl => flowEl.$type === 'bpmn:StartEvent'));
+          rootEl.$type === constants.BPMN_PROCESS &&
+            rootEl.flowElements.find(flowEl => flowEl.$type === constants.BPMN_EVENT_START));
 
         this.flowObjects = rootElement.get('flowElements');
 
@@ -161,7 +162,7 @@ export default class TokenInstance {
       this.lastActivity = this.next.id;
     }
     if (!this.status) {
-      this.next = this.flowObjects.find(el => el.$type === 'bpmn:StartEvent');
+      this.next = this.flowObjects.find(el => el.$type === constants.BPMN_EVENT_START);
     }
     else if (this.nexts) {
       if (this.nexts.length === 1) {
