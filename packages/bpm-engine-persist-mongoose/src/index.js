@@ -11,28 +11,28 @@ export default class MongoosePersist {
     this.schemas = schemaInitializer(this.connection, names);
   }
 
-  processInstance = {
+  processInstances = {
     create: obj => this.schemas.processInstance.create(obj),
     update: (query, patch) =>
       this.schemas.processInstance.findOneAndUpdate(query, patch, { new: true }).lean(),
     find: query => this.schemas.processInstance.findOne(query).lean(),
   };
 
-  tokenInstance = {
+  tokenInstances = {
     create: obj => this.schemas.tokenInstance.create(obj),
     update: (query, patch) =>
       this.schemas.tokenInstance.findOneAndUpdate(query, patch, { new: true }).lean(),
     find: query => this.schemas.tokenInstance.findOne(query).lean(),
   };
 
-  workflowDefinition = {
+  workflowDefinitions = {
     create: obj => this.schemas.workflowDefinition.create(obj),
     find: query => this.schemas.workflowDefinition.findOne(query).lean(),
     update: (query, patch) =>
       this.schemas.workflowDefinition.findOneAndUpdate(query, patch, { new: true }).lean(),
   };
 
-  timer = {
+  timers = {
     create: obj => this.schemas.timer.create(obj),
     find: query => this.schemas.timer.findOne(query),
     update: (query, patch, options = {}) =>
@@ -57,7 +57,7 @@ export default class MongoosePersist {
     },
   };
 
-  task = {
+  tasks = {
     create: obj => this.schemas.task.create(obj),
     find: query => this.schemas.task.find(query).lean(),
   };

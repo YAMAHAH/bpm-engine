@@ -46,7 +46,7 @@ describe('BPMEngine', () => {
       xml: UserTaskDiagram,
       workflowDefinitionId: 'test',
     });
-    const workflowDefinition = await bpm.persist.workflowDefinition.find({
+    const workflowDefinition = await bpm.persist.workflowDefinitions.find({
       workflowDefinitionId: deployedWorkflowDefinition.workflowDefinitionId,
     });
     expect(workflowDefinition).toMatchSnapshot();
@@ -57,7 +57,7 @@ describe('BPMEngine', () => {
     const deployedWorkflowDefinition = await bpm.deployWorkflowDefinition({
       xml: UserTaskDiagram,
     });
-    const workflowDefinition = await bpm.persist.workflowDefinition.find({
+    const workflowDefinition = await bpm.persist.workflowDefinitions.find({
       workflowDefinitionId: deployedWorkflowDefinition.workflowDefinitionId,
     });
     expect(workflowDefinition).not.toBeFalsy();

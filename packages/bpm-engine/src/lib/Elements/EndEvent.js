@@ -9,7 +9,7 @@ export default class EndEvent extends Event {
 
     // if this end-event is inside a sub process, continue with the outer flow
     if (this.tokenInstance.parent && this.tokenInstance.isSubProcess) {
-      const parentToken = await this.persist.tokenInstance.update(
+      const parentToken = await this.persist.tokenInstances.update(
         {
           tokenId: this.tokenInstance.parent,
         },
@@ -35,7 +35,7 @@ export default class EndEvent extends Event {
       }
     }
     else {
-      await this.persist.processInstance.update(
+      await this.persist.processInstances.update(
         {
           processId: this.tokenInstance.processId,
         },

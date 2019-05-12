@@ -218,7 +218,7 @@ export default class TokenInstance {
   };
 
   persistUpdate = () =>
-    this.engine.persist.tokenInstance.update({ tokenId: this.tokenId }, { $set: this.toJSON() });
+    this.engine.persist.tokenInstances.update({ tokenId: this.tokenId }, { $set: this.toJSON() });
 
-  persistCreate = () => this.engine.persist.tokenInstance.create(this.toJSON());
+  persistCreate = () => this.engine.persist.tokenInstances.create(this.toJSON());
 }

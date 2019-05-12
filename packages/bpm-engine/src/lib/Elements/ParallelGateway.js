@@ -9,7 +9,7 @@ export default class ParallelGateway extends Gateway {
     // converging
     if (incoming.length > 1) {
       // did any other waiting token arrive here yet?
-      const anyOtherToken = await this.persist.tokenInstance.find({
+      const anyOtherToken = await this.persist.tokenInstances.find({
         processId: this.tokenInstance.processId,
         status: 'paused',
         currentActivity: this.definition.id,
@@ -25,7 +25,7 @@ export default class ParallelGateway extends Gateway {
           pending.splice(index, 1);
         }
 
-        await this.persist.tokenInstance.update(
+        await this.persist.tokenInstances.update(
           {
             tokenId: this.tokenInstance.tokenId,
           },
@@ -43,7 +43,7 @@ export default class ParallelGateway extends Gateway {
         // else if (anyOtherToken.pending.length === 0) {
         //   this.tokenInstance.status = 'paused';
         // }
-        const updatedOtherToken = await this.persist.tokenInstance.update(
+        const updatedOtherToken = await this.persist.tokenInstances.update(
           {
             tokenId: anyOtherToken.tokenId,
           },

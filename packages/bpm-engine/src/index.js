@@ -58,11 +58,11 @@ class BPMEngine {
   onTick = async () => {
     log('onTick');
     const currentTimestamp = new Date().getTime();
-    const timerEvent = await this.persist.timer.getNext(currentTimestamp);
+    const timerEvent = await this.persist.timers.getNext(currentTimestamp);
 
     if (timerEvent) {
       // set this timer to done, so it won't be returned by above `getNext` again
-      await this.persist.timer.update({ timerId: timerEvent.timerId }, { status: 'done' });
+      await this.persist.timers.update({ timerId: timerEvent.timerId }, { status: 'done' });
 
       await this.handleTimerEvent(timerEvent);
 
@@ -81,7 +81,7 @@ class BPMEngine {
       // create a next timer event
       const hasPendingRepetitions = nextTimerEvent.index < interval._repeatCount;
       if (hasPendingRepetitions && timerEvent.intent !== constants.CONTINUE_TOKEN_INSTANCE_INTENT) {
-        await this.persist.timer.create({
+        await this.persist.timers.create({
           timerId: this.generateId(),
           index: nextTimerEvent.index,
           interval: timerEvent.interval,
@@ -137,7 +137,7 @@ class BPMEngine {
 
     const processId = this.generateId();
     log(`Creating processInstance ${processId}`);
-    await this.persist.processInstance.create({
+    await this.persist.processInstances.create({
       processId,
       workflowDefinition: workflowDefinitionXML,
       payload,
@@ -221,15 +221,15 @@ class BPMEngine {
   }
 
   findTokenInstance(tokenId) {
-    return this.persist.tokenInstance.find({ tokenId });
+    return this.persist.tokenInstances.find({ tokenId });
   }
 
   findProcessInstance(processId) {
-    return this.persist.processInstance.find({ processId });
+    return this.persist.processInstances.find({ processId });
   }
 
   findWorkflowDefinition(workflowDefinitionId) {
-    return this.persist.workflowDefinition.find({ workflowDefinitionId });
+    return this.persist.workflowDefinitions.find({ workflowDefinitionId });
   }
 
   // create listeners for timer and message start events
@@ -256,7 +256,7 @@ class BPMEngine {
 
             if (hasPendingRepetitions) {
               // create a timer event
-              this.persist.timer.create({
+              this.persist.timers.create({
                 timerId: this.generateId(),
                 index: firstAfter.index,
                 time: firstAfter.date / 1,
@@ -279,14 +279,14 @@ class BPMEngine {
     // we use them to get all the StartEvents
     await dummyTokenInstance.initialize();
 
-    const alreadyExistingWorkflowDefinition = await this.persist.workflowDefinition.find({
+    const alreadyExistingWorkflowDefinition = await this.persist.workflowDefinitions.find({
       workflowDefinitionId,
     });
 
     let workflowDefinition;
 
     if (alreadyExistingWorkflowDefinition) {
-      workflowDefinition = await this.persist.workflowDefinition.update(
+      workflowDefinition = await this.persist.workflowDefinitions.update(
         { workflowDefinitionId },
         {
           xml,
@@ -294,14 +294,14 @@ class BPMEngine {
       );
 
       // remove already existing start events for this workflowDefinition
-      await this.persist.timer.update(
+      await this.persist.timers.update(
         { workflowDefinitionId },
         { status: 'done' },
         { multi: true },
       );
     }
     else {
-      workflowDefinition = await this.persist.workflowDefinition.create({
+      workflowDefinition = await this.persist.workflowDefinitions.create({
         xml,
         workflowDefinitionId,
       });

@@ -33,7 +33,7 @@ export default class IntermediateCatchEvent extends Event {
         if (firstAfter && firstAfter.index === 0) {
           const secondAfter = interval.firstAfter(firstAfter.time + 500);
 
-          await this.persist.timer.create({
+          await this.persist.timers.create({
             timerId: this.engine.generateId(),
             index: secondAfter.index,
             time: secondAfter.date / 1,

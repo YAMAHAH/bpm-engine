@@ -31,7 +31,7 @@ export default class Element {
   makeComplete = () => this.callPlugins('onComplete');
 
   persistChildIdsToParent = childIds =>
-    this.persist.tokenInstance.update(
+    this.persist.tokenInstances.update(
       { tokenId: this.tokenInstance.tokenId },
       {
         $set: {

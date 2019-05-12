@@ -6,6 +6,6 @@ export default class StartEvent extends Event {
 
     await this.callPlugins('onReady');
 
-    await this.persist.tokenInstance.create(this.tokenInstance.toJSON());
+    await this.persist.tokenInstances.create(this.tokenInstance.toJSON());
   };
 }

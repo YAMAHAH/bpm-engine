@@ -1,4 +1,5 @@
 import debug from 'lib/debug';
+import clone from 'lib/utils/clone';
 
 const log = debug('persist');
 
@@ -76,47 +77,47 @@ export default class MemoryPersist {
     }
   }
 
-  processInstance = {
+  processInstances = {
     create: (json) => {
       log('create process');
       this.store.processInstances.push(json);
-      return JSON.parse(JSON.stringify(json));
+      return clone(json);
     },
 
     find: (query) => {
       log('find process', query);
       const processInstance = this.store.processInstances.find(findByProcessId(query.processId));
-      return JSON.parse(JSON.stringify(processInstance));
+      return clone(processInstance);
     },
 
     update: (query, obj) => {
       log('update process', query, obj);
-      const json = JSON.parse(JSON.stringify(obj));
+      const json = clone(obj);
 
       const processInstance = this.store.processInstances.find(findByProcessId(query.processId));
       remapSet(json);
       Object.assign(processInstance, json);
 
-      return JSON.parse(JSON.stringify(processInstance));
+      return clone(processInstance);
     },
   };
 
-  tokenInstance = {
+  tokenInstances = {
     create: (obj) => {
       log('create token', obj);
       this.store.tokenInstances.push(obj);
-      return JSON.parse(JSON.stringify(obj));
+      return clone(obj);
     },
 
     find: (query) => {
       log('find token', query);
       const tokenInstance = this.store.tokenInstances.find(findByQuery(query));
-      return tokenInstance && JSON.parse(JSON.stringify(tokenInstance));
+      return tokenInstance && clone(tokenInstance);
     },
 
     update: (query, obj) => {
       log('update token', query, obj);
-      const json = JSON.parse(JSON.stringify(obj));
+      const json = clone(obj);
 
       const tokenInstance = this.store.tokenInstances.find(findByQuery(query));
 
@@ -129,26 +130,26 @@ export default class MemoryPersist {
 
       Object.assign(tokenInstance, json);
 
-      return JSON.parse(JSON.stringify(tokenInstance));
+      return clone(tokenInstance);
     },
   };
 
-  workflowDefinition = {
+  workflowDefinitions = {
     create: (obj) => {
       log('create workflowDefinition (deploy)', obj);
       this.store.workflowDefinitions.push(obj);
-      return JSON.parse(JSON.stringify(obj));
+      return clone(obj);
     },
 
     find: (query) => {
       log('find workflowDefinition', query);
       const workflowDefinition = this.store.workflowDefinitions.find(findByQuery(query));
-      return workflowDefinition && JSON.parse(JSON.stringify(workflowDefinition));
+      return workflowDefinition && clone(workflowDefinition);
     },
 
     update: (query, obj) => {
       log('update workflowDefinition', query, obj);
-      const json = JSON.parse(JSON.stringify(obj));
+      const json = clone(obj);
 
       const workflowDefinition = this.store.timers.find(findByQuery(query));
 
@@ -158,22 +159,22 @@ export default class MemoryPersist {
 
         Object.assign(workflowDefinition, json);
 
-        return JSON.parse(JSON.stringify(workflowDefinition));
+        return clone(workflowDefinition);
       }
     },
   };
 
-  timer = {
+  timers = {
     create: (obj) => {
       log('create timer', obj);
       this.store.timers.push(obj);
-      return JSON.parse(JSON.stringify(obj));
+      return clone(obj);
     },
 
     find: (query) => {
       log('find timer', query);
       const timer = this.store.timers.find(findByQuery(query));
-      return timer && JSON.parse(JSON.stringify(timer));
+      return timer && clone(timer);
     },
 
     getNext: (time) => {
@@ -184,12 +185,12 @@ export default class MemoryPersist {
         .filter(a => a.timeLeft <= 0)
         .sort((a, b) => a.timeLeft < b.timeLeft);
 
-      return timers[0] && JSON.parse(JSON.stringify(timers[0]));
+      return timers[0] && clone(timers[0]);
     },
 
     update: (query, obj) => {
       log('update timer', query, obj);
-      const json = JSON.parse(JSON.stringify(obj));
+      const json = clone(obj);
 
       const timer = this.store.timers.find(findByQuery(query));
 
@@ -199,16 +200,16 @@ export default class MemoryPersist {
 
         Object.assign(timer, json);
 
-        return JSON.parse(JSON.stringify(timer));
+        return clone(timer);
       }
     },
   };
 
-  task = {
+  tasks = {
     create: (obj) => {
       log('create task', obj);
       this.store.tasks.push(obj);
-      return JSON.parse(JSON.stringify(obj));
+      return clone(obj);
     },
 
     find: (query) => {

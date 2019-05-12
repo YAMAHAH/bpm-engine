@@ -7,7 +7,7 @@ export default class InclusiveGateway extends Gateway {
     // if this token has a parent
     // we pull ourselves out of its childs
     if (this.tokenInstance.parent) {
-      const parentToken = await this.persist.tokenInstance.update(
+      const parentToken = await this.persist.tokenInstances.update(
         {
           tokenId: this.tokenInstance.parent,
         },

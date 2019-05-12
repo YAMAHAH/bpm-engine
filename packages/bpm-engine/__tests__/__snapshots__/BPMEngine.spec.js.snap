@@ -77,28 +77,28 @@ BPMEngine {
   "generateId": [Function],
   "onTick": [Function],
   "persist": MemoryPersist {
-    "processInstance": Object {
+    "processInstances": Object {
       "create": [Function],
       "find": [Function],
       "update": [Function],
     },
     "store": Object {},
-    "task": Object {
+    "tasks": Object {
       "create": [Function],
       "find": [Function],
     },
-    "timer": Object {
+    "timers": Object {
       "create": [Function],
       "find": [Function],
       "getNext": [Function],
       "update": [Function],
     },
-    "tokenInstance": Object {
+    "tokenInstances": Object {
       "create": [Function],
       "find": [Function],
       "update": [Function],
     },
-    "workflowDefinition": Object {
+    "workflowDefinitions": Object {
       "create": [Function],
       "find": [Function],
       "update": [Function],
@@ -123,28 +123,28 @@ BPMEngine {
   "generateId": [Function],
   "onTick": [Function],
   "persist": MemoryPersist {
-    "processInstance": Object {
+    "processInstances": Object {
       "create": [Function],
       "find": [Function],
       "update": [Function],
     },
     "store": Object {},
-    "task": Object {
+    "tasks": Object {
       "create": [Function],
       "find": [Function],
     },
-    "timer": Object {
+    "timers": Object {
       "create": [Function],
       "find": [Function],
       "getNext": [Function],
       "update": [Function],
     },
-    "tokenInstance": Object {
+    "tokenInstances": Object {
       "create": [Function],
       "find": [Function],
       "update": [Function],
     },
-    "workflowDefinition": Object {
+    "workflowDefinitions": Object {
       "create": [Function],
       "find": [Function],
       "update": [Function],
